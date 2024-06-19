@@ -9,14 +9,16 @@ import { useRouter } from 'next/navigation'
 
 export function AuthForm() {
     const { register, handleSubmit } = useForm()
-    const { signIn } = useContext(AuthContext)
+    const { signIn, isAuthenticated, user } = useContext(AuthContext)
 
     const router = useRouter()
 
     async function handleSingin(data: any) {
         try {
             await signIn(data)
-            router.push('/app')
+            console.log(`isAuthenticated: ${isAuthenticated}`)
+            console.log(`user: ${user}`)
+            /// router.push('/app')
         } catch (error) {
             console.log(`Erro na pagina AuthForm ${error}`)
         }
