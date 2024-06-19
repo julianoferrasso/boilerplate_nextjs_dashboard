@@ -3,3 +3,4 @@
 - Nextjs
 - Tailwind CSS
 - Shadcn/ui
+- Axios

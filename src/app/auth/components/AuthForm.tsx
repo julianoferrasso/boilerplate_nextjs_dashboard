@@ -5,16 +5,18 @@ import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
 import { AuthContext } from "@/contexts/AuthContext"
-import Router from "next/router"
+import { useRouter } from 'next/navigation'
 
 export function AuthForm() {
     const { register, handleSubmit } = useForm()
     const { signIn } = useContext(AuthContext)
 
+    const router = useRouter()
+
     async function handleSingin(data: any) {
         try {
             await signIn(data)
-            Router.push('/app')
+            router.push('/app')
         } catch (error) {
             console.log(`Erro na pagina AuthForm ${error}`)
         }
