@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState, ReactNode } from "react"
 import { setCookie, parseCookies } from 'nookies'
-import { ReactNode } from 'react'
 import axios from 'axios'
+import { api } from "@/lib/utils";
 
 type SignIndata = {
     email: string;
@@ -24,33 +24,32 @@ export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null)
-
     const isAuthenticated = !!user;
 
     useEffect(() => {
         const { 'boilerplateNext_token': token } = parseCookies()
-        console.log('boilerplateNext_token:', token);
+        console.log('boilerplateNext_token: #', token);
 
         async function getProfile() {
             try {
                 if (token) {
-                    const response = axios.get('http://localhost:3333/api/user/profile', {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
+                    console.log('vai chamar getUserProfile')
+                    const response = await api.get('/user/profile')
                     console.log('Dados do perfil:', response.data);
-                    //setUser
+                    setUser(response.data);
+                    console.log('Passou pelo response.data .....');
                 }
             } catch (error) {
                 console.error('Erro ao obter o perfil:', error);
             }
         }
         getProfile()
+        console.log('Passou pelo useEffect .....');
     }, [])
 
     async function signIn({ email, password }: SignIndata) {
         try {
+            // const response = await api.post()
             const response = await axios.post('http://localhost:3333/api/auth/login', { email, password })
             console.log("login com sucesso: ", response.data)
             const { token, user } = response.data
@@ -61,8 +60,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // param4 = options
             setCookie(undefined, 'boilerplateNext_token', token, {
                 maxAge: 60 * 60 * 1, //1 hour
-                //httpOnly: true
+                // path: '/', // Certifique-se de que o cookie esteja disponível em todas as páginas
+                // httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
             })
+            console.log(`Chamou funcao signIn dentro de AuthProvider`)
             console.log(`user: ${user}`)
             console.log(`token: ${token}`)
             setUser(user)

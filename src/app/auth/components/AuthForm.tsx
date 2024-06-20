@@ -5,20 +5,17 @@ import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
 import { AuthContext } from "@/contexts/AuthContext"
-import { useRouter } from 'next/navigation'
 
 export function AuthForm() {
     const { register, handleSubmit } = useForm()
     const { signIn, isAuthenticated, user } = useContext(AuthContext)
-
-    const router = useRouter()
 
     async function handleSingin(data: any) {
         try {
             await signIn(data)
             console.log(`isAuthenticated: ${isAuthenticated}`)
             console.log(`user: ${user}`)
-            /// router.push('/app')
+            console.log(`data: ${JSON.stringify(data)}`)
         } catch (error) {
             console.log(`Erro na pagina AuthForm ${error}`)
         }
@@ -64,7 +61,7 @@ export function AuthForm() {
                         <p className="mt-6 text-center text-sm text-gray-500">
                             Não é um membro?{' '}<br />
                             <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                                Inicie uma avaliação de 14 dias gratuitos
+                                Inicie uma avaliação gratuita de 14 dias
                             </a>
                         </p>
                     </div>
