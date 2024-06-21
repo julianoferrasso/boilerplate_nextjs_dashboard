@@ -28,19 +28,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         const { 'boilerplateNext_token': token } = parseCookies()
-        console.log('boilerplateNext_token: #', token);
+        // console.log('boilerplateNext_token: #', token);
 
         async function getProfile() {
             try {
                 if (token) {
-                    console.log('vai chamar getUserProfile')
+                    console.log('vai chamar /user/profile ###########')
                     const response = await api.get('/user/profile')
-                    console.log('Dados do perfil:', response.data);
-                    setUser(response.data);
+                    console.log('Dados do perfil:', response);
+                    //setUser(response);
                     console.log('Passou pelo response.data .....');
                 }
             } catch (error) {
-                console.error('Erro ao obter o perfil:', error);
+                console.log('Erro ao chamar /user/profile:', error.message);
             }
         }
         getProfile()
@@ -49,9 +49,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function signIn({ email, password }: SignIndata) {
         try {
-            // const response = await api.post()
-            const response = await axios.post('http://localhost:3333/api/auth/login', { email, password })
-            console.log("login com sucesso: ", response.data)
+            const response = await api.post('/auth/login', { email, password })
+            console.log("login com sucesso AuthContext function sigIn: ", response.data)
             const { token, user } = response.data
             // setCookie params
             // param1 = contexto da req - no lado do cliente
@@ -68,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.log(`token: ${token}`)
             setUser(user)
         } catch (error) {
-            console.error("login error na pagina Contexto: ", error)
+            console.log("login error na pagina Contexto: ", error.message)
         }
     }
 

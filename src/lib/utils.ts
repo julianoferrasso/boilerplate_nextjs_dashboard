@@ -13,8 +13,14 @@ export const api = axios.create({
   baseURL: 'http://localhost:3333/api',
 });
 
+api.interceptors.request.use(config => {
+  console.log(`config dentro utils: ${JSON.stringify(config)}`)
+
+  return config
+})
+
 if (token) {
-  api.defaults.headers['Authorization'] = `Bearer tem o token ${token}`
+  api.defaults.headers['Authorization'] = `Bearer ${token}`
 }
 
-console.log(`Bearer ${token}`)
+console.log(`dentro de UTILS: Bearer ${token}`)
