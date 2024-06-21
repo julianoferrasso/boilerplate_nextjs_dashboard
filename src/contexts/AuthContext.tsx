@@ -12,6 +12,7 @@ type User = {
     id: string;
     name: string;
     email: string;
+    avatarUrl: string;
 }
 
 type AuthContextType = {
@@ -28,23 +29,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         const { 'boilerplateNext_token': token } = parseCookies()
-        // console.log('boilerplateNext_token: #', token);
 
         async function getProfile() {
             try {
                 if (token) {
-                    console.log('vai chamar /user/profile ###########')
                     const response = await api.get('/user/profile')
-                    console.log('Dados do perfil:', response);
-                    //setUser(response);
-                    console.log('Passou pelo response.data .....');
+                    console.log('Dados do perfil:', response.data);
+                    setUser(response.data);
                 }
             } catch (error) {
-                console.log('Erro ao chamar /user/profile:', error.message);
+                console.log('Erro ao chamar /user/profile:', error.response.data.message);
             }
         }
         getProfile()
-        console.log('Passou pelo useEffect .....');
     }, [])
 
     async function signIn({ email, password }: SignIndata) {
@@ -67,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.log(`token: ${token}`)
             setUser(user)
         } catch (error) {
-            console.log("login error na pagina Contexto: ", error.message)
+            console.log("login error na pagina Contexto: ", error.response.data.message)
         }
     }
 
