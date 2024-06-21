@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState, ReactNode } from "react"
 import { setCookie, parseCookies } from 'nookies'
-import axios from 'axios'
 import { api } from "@/lib/utils";
+import { useRouter } from 'next/navigation';
 
-type SignIndata = {
+type SignInData = {
     email: string;
     password: string;
 }
@@ -18,7 +18,7 @@ type User = {
 type AuthContextType = {
     user: User | null;
     isAuthenticated: boolean;
-    signIn: (data: SignIndata) => Promise<void>;
+    signIn: (data: SignInData) => Promise<void>;
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -26,6 +26,7 @@ export const AuthContext = createContext({} as AuthContextType)
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null)
     const isAuthenticated = !!user;
+    const router = useRouter();
 
     useEffect(() => {
         const { 'boilerplateNext_token': token } = parseCookies()
@@ -34,8 +35,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             try {
                 if (token) {
                     const response = await api.get('/user/profile')
-                    console.log('Dados do perfil:', response.data);
+                    //console.log('Dados do perfil:', response.data);
                     setUser(response.data);
+                    //console.log('Dados do estato user:', JSON.stringify(user));
+                    router.push('/app')
                 }
             } catch (error) {
                 console.log('Erro ao chamar /user/profile:', error.response.data.message);
@@ -44,10 +47,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         getProfile()
     }, [])
 
-    async function signIn({ email, password }: SignIndata) {
+    async function signIn({ email, password }: SignInData) {
         try {
             const response = await api.post('/auth/login', { email, password })
-            console.log("login com sucesso AuthContext function sigIn: ", response.data)
             const { token, user } = response.data
             // setCookie params
             // param1 = contexto da req - no lado do cliente
@@ -59,10 +61,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 // path: '/', // Certifique-se de que o cookie esteja disponível em todas as páginas
                 // httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
             })
-            console.log(`Chamou funcao signIn dentro de AuthProvider`)
-            console.log(`user: ${user}`)
-            console.log(`token: ${token}`)
+
+            api.defaults.headers['Authorization'] = `Bearer ${token}`
+            // console.log('Dados do response:', response.data);
             setUser(user)
+            // console.log('Dados do estato user:', JSON.stringify(user));
+            // console.log(`user: ${JSON.stringify(user)}`)
+            // console.log(`token: ${token}`)
+            // console.log(`user no estado: ${user}`)
+            router.push('/app')
         } catch (error) {
             console.log("login error na pagina Contexto: ", error.response.data.message)
         }

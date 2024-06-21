@@ -13,7 +13,7 @@ export function AuthForm() {
     async function handleSingin(data: any) {
         try {
             await signIn(data)
-            console.log(`Fazendo sigIn np AuthForm`)
+            // console.log(`Fazendo sigIn no AuthForm`)
             // console.log(`isAuthenticated: ${isAuthenticated}`)
             // console.log(`user: ${user}`)
             // console.log(`data: ${JSON.stringify(data)}`)
