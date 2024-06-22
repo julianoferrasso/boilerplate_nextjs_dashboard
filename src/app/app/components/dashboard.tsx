@@ -12,7 +12,6 @@ import {
     Transition,
 } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { GetServerSideProps } from 'next'
 import { useContext } from 'react'
 
 const navigation = [
@@ -208,13 +207,4 @@ export default function Dashboard() {
             </div>
         </>
     )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    console.log("context")
-    console.log(context)
-
-    return {
-        props: {}
-    }
 }
