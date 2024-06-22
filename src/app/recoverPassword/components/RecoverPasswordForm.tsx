@@ -18,22 +18,22 @@ const recoverPasswordSchema = z.object({
 type RecoverPasswordSchema = z.infer<typeof recoverPasswordSchema>
 
 export function RecoverPasswordForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm<RecoverPasswordSchema>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<RecoverPasswordSchema>({
         resolver: zodResolver(recoverPasswordSchema)
     })
     const [isLoading, setIsLoading] = useState(false)
     const [isErrorMessage, setIsErrorMessage] = useState('')
+    const [isSuccessMessage, setIsSuccessMessage] = useState('')
 
     async function handleRecoverPassword(data: RecoverPasswordSchema) {
         try {
             const { email } = data
-            setIsLoading(true);
-            setIsErrorMessage('');
+            setIsLoading(true)
+            setIsErrorMessage('')
             const response = await api.post('/auth/recoverPassword', { email })
             console.log(response.data.message)
-
-            // limpar input
-            // exibir retangulo verdo com mensagem de sucesso
+            reset()
+            setIsSuccessMessage('Email de recuperação enviado com sucesso! Acesse o link dentro de 1 hora e redefina sua senha.')
 
         } catch (error: any) {
             console.log(`Error  ${error.response.data.message}`)
@@ -64,7 +64,7 @@ export function RecoverPasswordForm() {
                             <EmailIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                             <Input
                                 type="email"
-                                placeholder="Senha"
+                                placeholder="Email"
                                 className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 {...register('email')}
                             />
@@ -76,20 +76,35 @@ export function RecoverPasswordForm() {
                                     <div className="text-red-400">{isErrorMessage}</div>
                                 </div>
                             )}
-                        </div>
-                        <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
-                            {isLoading ? (
-                                <FaSpinner className="animate-spin mx-auto" />
-                            ) : (
-                                'Enviar'
+                            {isSuccessMessage && (
+                                <div>
+                                    <div className="text-green-700 mt-4 text-center">{isSuccessMessage}</div>
+                                    <Button className="w-full py-2 mt-4 text-white bg-green-600 rounded-md hover:bg-green-800" name="login" type="submit">
+                                        <Link href="/auth">
+                                            Voltar para login
+                                        </Link>
+                                    </Button>
+                                </div>
                             )}
-                        </Button>
+                        </div>
+                        {!isSuccessMessage &&
+                            <div>
+                                <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
+                                    {isLoading ? (
+                                        <FaSpinner className="animate-spin mx-auto" />
+                                    ) : (
+                                        'Enviar'
+                                    )}
+                                </Button>
+                                <p className="mt-10 text-center text-sm text-gray-500">
+                                    Informe seu email cadastrado que enviaremos um link para você recuperar sua senha
+                                </p>
+                            </div>
+                        }
                     </div>
                 </form>
 
-                <p className="mt-10 text-center text-sm text-gray-500">
-                    Informe seu email cadastrado que enviaremos um link para você recuperar sua senha
-                </p>
+
             </div>
         </div>
     )
