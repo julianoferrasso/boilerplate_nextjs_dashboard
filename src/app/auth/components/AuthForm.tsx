@@ -10,7 +10,7 @@ export function AuthForm() {
     const { register, handleSubmit } = useForm()
     const { signIn, isAuthenticated, user } = useContext(AuthContext)
 
-    async function handleSingin(data: any) {
+    async function handleSignIn(data: any) {
         try {
             await signIn(data)
             // console.log(`Fazendo sigIn no AuthForm`)
@@ -30,7 +30,7 @@ export function AuthForm() {
         <div className="flex items-center justify-center min-h-screen bg-blue-500">
             <div className="w-full max-w-sm p-8 bg-white rounded-lg shadow-lg">
                 <h2 className="mb-6 text-xl font-bold text-center">Entre com seu email e senha</h2>
-                <form onSubmit={handleSubmit(handleSingin)}>
+                <form onSubmit={handleSubmit(handleSignIn)}>
                     <div className="space-y-4">
                         <div className="relative">
                             <UserIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />

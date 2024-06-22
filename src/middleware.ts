@@ -7,7 +7,8 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get('boilerplateNext_token');
 
     console.log("TOKEN da requisicao: ", token);
-// Tratar o token - se é valido conforme o backend
+    // Tratar o token - se é valido conforme o backend
+
     // Apenas renderiza a página de login se o usuário não estiver autenticado.
     if (request.nextUrl.pathname.startsWith('/auth') && token) {
         return NextResponse.redirect(new URL('/app', request.url));

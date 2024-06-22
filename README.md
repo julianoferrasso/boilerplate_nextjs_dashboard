@@ -7,6 +7,15 @@
 
 
 TO-DO:
-
-[] - signOut
+[[ ]] V1
+[] - tratar o token no middleware para verificar se o token é valido
+[] - exibir mensagem de erro se user/senha incorreto
+[x] - signOut
+[] - recoverPassword
 [] - emailVerified
+[] - Transformar cookie http only
+[] - refresh token
+[] - checkbox "manter logado"
+[] - Publicar
+
+[[]] V2

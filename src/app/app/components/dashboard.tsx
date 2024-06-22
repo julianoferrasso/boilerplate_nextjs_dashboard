@@ -15,7 +15,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useContext } from 'react'
 
 const navigation = [
-    { name: 'Prinicpal', href: '#', current: true },
+    { name: 'Principal', href: '#', current: true },
     { name: 'Contas', href: '#', current: false },
     { name: 'Produtos', href: '#', current: false },
     { name: 'Relatórios', href: '#', current: false },
@@ -32,8 +32,12 @@ function classNames(...classes: any[]) {
 }
 
 export default function Dashboard() {
-    const { user } = useContext(AuthContext)
+    const { user, signOut } = useContext(AuthContext)
     // console.log(`user dentro de dashboard ${JSON.stringify(user)}`)
+
+    async function handleSignOut() {
+        signOut()
+    }
 
     return (
         <>
@@ -112,7 +116,8 @@ export default function Dashboard() {
                                                             <MenuItem key={item.name}>
                                                                 {({ focus }) => (
                                                                     <a
-                                                                        href={item.href}
+                                                                        href={item.name === 'Sair' ? '#' : item.href}
+                                                                        onClick={item.name === 'Sair' ? handleSignOut : undefined}
                                                                         className={classNames(
                                                                             focus ? 'bg-gray-100' : '',
                                                                             'block px-4 py-2 text-sm text-gray-700',

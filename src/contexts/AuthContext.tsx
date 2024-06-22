@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, ReactNode } from "react"
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { api } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
 
@@ -19,6 +19,7 @@ type AuthContextType = {
     user: User | null;
     isAuthenticated: boolean;
     signIn: (data: SignInData) => Promise<void>;
+    signOut: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -75,8 +76,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
+    async function signOut() {
+        try {
+            // Remover o cookie do token
+            destroyCookie(undefined, 'boilerplateNext_token')
+
+            // Remover o token do cabeçalho padrão da API
+            api.defaults.headers['Authorization'] = undefined
+
+            // Resetar o estado do usuário
+            setUser(null)
+
+            // Redirecionar o usuário para a página de login
+            router.push('/auth')
+
+        } catch (error) {
+            console.log("logout error na pagina Contexto: ", error.message)
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     )
