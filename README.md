@@ -4,3 +4,9 @@
 - Tailwind CSS
 - Shadcn/ui
 - Axios
+
+
+TO-DO:
+
+[] - signOut
+[] - emailVerified
