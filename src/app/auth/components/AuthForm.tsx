@@ -4,13 +4,26 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { FaSpinner } from 'react-icons/fa';
 import { AuthContext } from "@/contexts/AuthContext"
 
-export function AuthForm() {
-    const { register, handleSubmit } = useForm()
-    const { signIn, isAuthenticated, user } = useContext(AuthContext)
+// Definindo o esquema de validação com zod
+const loginSchema = z.object({
+    email: z.string().email({ message: 'Email inválido' }).min(1, { message: 'Email é obrigatório' }),
+    password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' })
+});
 
-    async function handleSignIn(data: any) {
+type LoginSchema = z.infer<typeof loginSchema>
+
+export function AuthForm() {
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({
+        resolver: zodResolver(loginSchema)
+    })
+    const { signIn, isAuthenticated, user, isLoading, isErrorLogin } = useContext(AuthContext)
+
+    async function handleSignIn(data: LoginSchema) {
         try {
             await signIn(data)
             // console.log(`Fazendo sigIn no AuthForm`)
@@ -40,6 +53,9 @@ export function AuthForm() {
                                 className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 {...register('email')}
                             />
+                            {errors.email && (
+                                <span className="text-red-400 text-sm">{errors.email.message}</span>
+                            )}
                         </div>
                         <div className="relative">
                             <LockIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
@@ -49,9 +65,23 @@ export function AuthForm() {
                                 className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 {...register('password')}
                             />
+                            {errors.password && (
+                                <span className="text-red-400 text-sm">{errors.password.message}</span>
+                            )}
                         </div>
-                        <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">Entrar</Button>
+                        <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
+                            {isLoading ? (
+                                <FaSpinner className="animate-spin mx-auto" />
+                            ) : (
+                                'Entrar'
+                            )}
+                        </Button>
                     </div>
+                    {isErrorLogin != '' && (
+                        <div className="flex items-center justify-center">
+                            <div className="text-red-400">{isErrorLogin}</div>
+                        </div>
+                    )}
                 </form>
                 <form onSubmit={handleSubmit(handleRegister)}>
                     <Button className="w-full py-2 mt-4 text-white bg-indigo-600 rounded-md hover:bg-blue-800" name="recoverPassord" type="submit">Crie sua conta</Button>

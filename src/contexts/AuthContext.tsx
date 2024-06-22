@@ -18,6 +18,8 @@ type User = {
 type AuthContextType = {
     user: User | null;
     isAuthenticated: boolean;
+    isLoading: boolean;
+    isErrorLogin: string;
     signIn: (data: SignInData) => Promise<void>;
     signOut: () => void;
 }
@@ -26,7 +28,11 @@ export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isErrorLogin, setIsErrorLogin] = useState<string>("")
     const isAuthenticated = !!user;
+
+
     const router = useRouter();
 
     useEffect(() => {
@@ -50,7 +56,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function signIn({ email, password }: SignInData) {
         try {
+            setIsLoading(true);
+            setIsErrorLogin('')
             const response = await api.post('/auth/login', { email, password })
+            console.log('dados response:', response.data)
             const { token, user } = response.data
             // setCookie params
             // param1 = contexto da req - no lado do cliente
@@ -72,7 +81,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // console.log(`user no estado: ${user}`)
             router.push('/app')
         } catch (error) {
-            console.log("login error na pagina Contexto: ", error.response.data.message)
+            if (error.response && error.response.status === 401) {
+                setIsErrorLogin('Usuário ou senha incorretos')
+                console.log('Usuário ou senha incorretos');
+                // setErrorMessage('Usuário ou senha incorretos');
+            } else {
+                console.log('Erro ao fazer login, tente novamente.');
+                // setErrorMessage('Erro ao fazer login, tente novamente.');
+            }
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -96,7 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, isLoading, isErrorLogin, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     )

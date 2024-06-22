@@ -8,8 +8,8 @@
 
 TO-DO:
 [[ ]] V1
+[x] - exibir mensagem de erro se user/senha incorreto
 [] - tratar o token no middleware para verificar se o token é valido
-[] - exibir mensagem de erro se user/senha incorreto
 [x] - signOut
 [] - recoverPassword
 [] - emailVerified
