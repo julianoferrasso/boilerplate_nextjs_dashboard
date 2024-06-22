@@ -12,7 +12,7 @@
   }
   ```
 */
-export function AuthFormVariant() {
+export function SignUpForm() {
     return (
         <>
             {/*
@@ -31,7 +31,7 @@ export function AuthFormVariant() {
                         alt="Your Company"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Entre com seu email e senha
+                        Crie sua conta
                     </h2>
                 </div>
 

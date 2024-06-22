@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                     //console.log('Dados do estato user:', JSON.stringify(user));
                     router.push('/app')
                 }
-            } catch (error) {
+            } catch (error: any) {
                 console.log('Erro ao chamar /user/profile:', error.response.data.message);
             }
         }
@@ -80,8 +80,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // console.log(`token: ${token}`)
             // console.log(`user no estado: ${user}`)
             router.push('/app')
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
+        } catch (error: any) {
+            if (error.response && c === 401) {
                 setIsErrorLogin('Usuário ou senha incorretos')
                 console.log('Usuário ou senha incorretos');
                 // setErrorMessage('Usuário ou senha incorretos');
@@ -108,10 +108,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // Redirecionar o usuário para a página de login
             router.push('/auth')
 
-        } catch (error) {
+        } catch (error: any) {
             console.log("logout error na pagina Contexto: ", error.message)
         }
     }
+
+
 
     return (
         <AuthContext.Provider value={{ user, isAuthenticated, isLoading, isErrorLogin, signIn, signOut }}>

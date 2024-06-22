@@ -8,6 +8,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FaSpinner } from 'react-icons/fa';
 import { AuthContext } from "@/contexts/AuthContext"
+import Link from 'next/link';
+import Image from "next/image";
+import logo from "../../../../public/logo.png"
 
 // Definindo o esquema de validação com zod
 const loginSchema = z.object({
@@ -41,9 +44,16 @@ export function AuthForm() {
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-blue-500">
-            <div className="w-full max-w-sm p-8 bg-white rounded-lg shadow-lg">
+            <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-lg">
+                <Image
+                    src={logo}
+                    width={300}
+                    height={300}
+                    alt="Logo do SaaS"
+                />
                 <h2 className="mb-6 text-xl font-bold text-center">Entre com seu email e senha</h2>
                 <form onSubmit={handleSubmit(handleSignIn)}>
+
                     <div className="space-y-4">
                         <div className="relative">
                             <UserIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
@@ -83,12 +93,16 @@ export function AuthForm() {
                         </div>
                     )}
                 </form>
-                <form onSubmit={handleSubmit(handleRegister)}>
-                    <Button className="w-full py-2 mt-4 text-white bg-indigo-600 rounded-md hover:bg-blue-800" name="recoverPassord" type="submit">Crie sua conta</Button>
+                <div >
+                    <Button className="w-full py-2 mt-4 text-white bg-indigo-600 rounded-md hover:bg-blue-800" name="signUp" type="submit">
+                        <Link href="/signUp">
+                            Crie sua conta
+                        </Link>
+                    </Button>
                     <div className="mt-6 text-center text-sm text-gray-500">
-                        <a href="#" className="hover:underline">
+                        <Link href="/recoverPassword">
                             Esqueci minha senha
-                        </a>
+                        </Link>
                         <p className="mt-6 text-center text-sm text-gray-500">
                             Não é um membro?{' '}<br />
                             <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
@@ -96,7 +110,7 @@ export function AuthForm() {
                             </a>
                         </p>
                     </div>
-                </form>
+                </div>
             </div>
         </div >
     )
