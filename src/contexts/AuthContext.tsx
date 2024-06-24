@@ -35,9 +35,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const router = useRouter();
 
+    // atualizar os dados do usuario
     useEffect(() => {
         const { 'boilerplateNext_token': token } = parseCookies()
-
         async function getProfile() {
             try {
                 if (token) {
@@ -52,14 +52,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
         }
         getProfile()
-    }, [])
+        // verficar necessidade de router como dependencia
+    }, [router])
 
     async function signIn({ email, password }: SignInData) {
         try {
             setIsLoading(true);
             setIsErrorLogin('')
             const response = await api.post('/auth/login', { email, password })
-            console.log('dados response:', response.data)
+            // console.log('dados response:', response.data)
             const { token, user } = response.data
             // setCookie params
             // param1 = contexto da req - no lado do cliente
@@ -73,7 +74,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             })
 
             api.defaults.headers['Authorization'] = `Bearer ${token}`
-            // console.log('Dados do response:', response.data);
             setUser(user)
             // console.log('Dados do estato user:', JSON.stringify(user));
             // console.log(`user: ${JSON.stringify(user)}`)
@@ -81,13 +81,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // console.log(`user no estado: ${user}`)
             router.push('/app')
         } catch (error: any) {
-            if (error.response && c === 401) {
-                setIsErrorLogin('Usuário ou senha incorretos')
-                console.log('Usuário ou senha incorretos');
-                // setErrorMessage('Usuário ou senha incorretos');
+            if (error.response.status === 401) {
+                setIsErrorLogin('Usuário ou senha incorreta')
             } else {
                 console.log('Erro ao fazer login, tente novamente.');
-                // setErrorMessage('Erro ao fazer login, tente novamente.');
             }
         } finally {
             setIsLoading(false);
@@ -100,7 +97,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             destroyCookie(undefined, 'boilerplateNext_token')
 
             // Remover o token do cabeçalho padrão da API
-            api.defaults.headers['Authorization'] = undefined
+            // api.defaults.headers['Authorization'] = undefined
+            delete api.defaults.headers['Authorization']
 
             // Resetar o estado do usuário
             setUser(null)

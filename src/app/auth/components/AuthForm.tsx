@@ -38,10 +38,6 @@ export function AuthForm() {
         }
     }
 
-    function handleRegister(data: any) {
-        console.log(data)
-    }
-
     return (
         <div className="flex items-center justify-center min-h-screen bg-blue-500">
             <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-lg">
@@ -78,6 +74,11 @@ export function AuthForm() {
                             {errors.password && (
                                 <span className="text-red-400 text-sm">{errors.password.message}</span>
                             )}
+                            {isErrorLogin != '' && (
+                                <div className="rounded-md py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-red-400">
+                                    <div className="text-red-600">{isErrorLogin}</div>
+                                </div>
+                            )}
                         </div>
                         <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
                             {isLoading ? (
@@ -87,11 +88,7 @@ export function AuthForm() {
                             )}
                         </Button>
                     </div>
-                    {isErrorLogin != '' && (
-                        <div className="flex items-center justify-center">
-                            <div className="text-red-400">{isErrorLogin}</div>
-                        </div>
-                    )}
+
                 </form>
                 <div >
                     <Button className="w-full py-2 mt-4 text-white bg-indigo-600 rounded-md hover:bg-blue-800" name="signUp" type="submit">

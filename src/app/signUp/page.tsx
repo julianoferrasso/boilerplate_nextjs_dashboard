@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from '@/contexts/AuthContext'
 import { useRouter } from "next/navigation";
 
-import { SignUpForm } from "./components/SignUpForm"
+import { SignUpForm } from "./components/signUpForm"
 
 export default function SignUp() {
     const { isAuthenticated } = useContext(AuthContext)
@@ -15,7 +15,7 @@ export default function SignUp() {
         if (isAuthenticated) {
             router.push('/app')
         }
-    }, [router])
+    }, [])
 
     return (
         <SignUpForm />
