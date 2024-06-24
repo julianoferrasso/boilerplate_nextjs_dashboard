@@ -13,53 +13,49 @@ import Image from "next/image";
 import logo from "../../../../public/logo.png"
 
 // Definindo o esquema de validação com zod
+// const celularSchema = z.string().regex(/^\+?[0-9]+$/, { message: 'Celular inválido' }).min(10, { message: 'Celular deve ter pelo menos 10 dígitos' });
+// const cpfCnpjSchema = z.string().regex(/^[0-9]{11,14}$/, { message: 'CPF/CNPJ inválido' }).min(11, { message: 'CPF/CNPJ deve ter pelo menos 11 dígitos' });
 
-const celularSchema = z.string().regex(/^\+?[0-9]+$/, { message: 'Celular inválido' }).min(10, { message: 'Celular deve ter pelo menos 10 dígitos' });
-const cpfCnpjSchema = z.string().regex(/^[0-9]{11,14}$/, { message: 'CPF/CNPJ inválido' }).min(11, { message: 'CPF/CNPJ deve ter pelo menos 11 dígitos' });
 const signUpSchema = z.object({
-    nome: z.string().min(1, { message: 'Nome é obrigatório' }),
+    // nome Captaliza prima letra da cada nome
+    name: z.string()
+        .min(1, { message: 'Nome é obrigatório' })
+        .transform(name => {
+            return name.trim().split(' ').map(word => {
+                return word[0].toLocaleUpperCase().concat(word.substring(1))
+            }).join('')
+        }),
     email: z.string().email({ message: 'Email inválido' }).min(1, { message: 'Email é obrigatório' }),
     celular: z.string().min(10, { message: 'Celular deve ter pelo menos 10 dígitos' }),
-    cpf_cnpj: cpfCnpjSchema,
+    cpf_cnpj: z.string().min(1, { message: 'CPF/CNPJ é obrigatório' }),
     password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' }),
-    confirmPassword: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' })
-}).superRefine(({ confirmPassword, password }, ctx) => {
-    if (confirmPassword !== password) {
-        ctx.addIssue({
-            code: "custom",
-            message: "The passwords did not match",
-            path: ['confirmPassword']
-        });
-    }
-});
+    confirmPassword: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' }).refine(data => data.password === data.confirmPassword, {
+        message: 'As senhas devem ser iguais',
+        path: ['confirmPassword'], // Define onde a mensagem de erro será exibida
+    })
+})
 
 type SignUpSchema = z.infer<typeof signUpSchema>
 
 export function SignUpForm() {
-    const { control, register, handleSubmit, formState: { errors } } = useForm<SignUpSchema>({
+    const { signIn, isAuthenticated, user, isLoading, isErrorLogin } = useContext(AuthContext)
+
+    const {
+        control,
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<SignUpSchema>({
         resolver: zodResolver(signUpSchema)
     })
-    const { signIn, isAuthenticated, user, isLoading, isErrorLogin } = useContext(AuthContext)
 
     async function handleSignUp(data: SignUpSchema) {
         try {
             await signIn(data)
-            // console.log(`Fazendo sigIn no AuthForm`)
-            // console.log(`isAuthenticated: ${isAuthenticated}`)
-            // console.log(`user: ${user}`)
-            // console.log(`data: ${JSON.stringify(data)}`)
         } catch (error) {
             console.log(`Erro na pagina AuthForm ${error}`)
         }
     }
-
-    // mascara de celular
-    const handleInputChange = (e: any) => {
-        let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
-        value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // Coloca o código de área entre parênteses
-        value = value.replace(/(\d)(\d{4})$/, '$1-$2'); // Coloca o hífen entre o quarto e o quinto dígitos
-        e.target.value = value;
-    };
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-blue-500">
@@ -77,17 +73,17 @@ export function SignUpForm() {
                 <form onSubmit={handleSubmit(handleSignUp)}>
                     <div className="space-y-4">
 
-                        {/* Input nome */}
+                        {/* Input name */}
                         <div className="relative">
                             <UserIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                             <Input
                                 type="text"
                                 placeholder="Nome Completo"
                                 className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                {...register('nome')}
+                                {...register('name')}
                             />
-                            {errors.nome && (
-                                <span className="text-red-400 text-sm">{errors.nome.message}</span>
+                            {errors.name && (
+                                <span className="text-red-400 text-sm">{errors.name.message}</span>
                             )}
                         </div>
 
@@ -105,23 +101,6 @@ export function SignUpForm() {
                             )}
                         </div>
 
-                        {/* Input celular */}
-                        {/* <Controller
-                            name="celular"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    placeholder="(99) 99999-9999"
-                                    onChange={(e) => {
-                                        handleInputChange(e);
-                                        field.onChange(e.target.value);
-                                    }}
-                                />
-                            )}
-                        /> */}
                         <div className="relative">
                             <CelularIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                             <Input

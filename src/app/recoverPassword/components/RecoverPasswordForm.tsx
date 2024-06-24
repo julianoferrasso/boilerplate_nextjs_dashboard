@@ -30,7 +30,7 @@ export function RecoverPasswordForm() {
             const { email } = data
             setIsLoading(true)
             setIsErrorMessage('')
-            const response = await api.post('/auth/recoverPassword', { email })
+            const response = await api.post('/auth/resetPassword', { email })
             console.log(response.data.message)
             reset()
             setIsSuccessMessage('Email de recuperação enviado com sucesso! Acesse o link dentro de 1 hora e redefina sua senha.')
