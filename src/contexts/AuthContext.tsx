@@ -3,6 +3,12 @@ import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { api } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
 
+type ApiResponse = {
+    data: {
+        message: string
+    };
+};
+
 type SignInData = {
     email: string;
     password: string;
@@ -18,10 +24,9 @@ type SignUpData = {
 }
 
 type User = {
-    id: string;
     name: string;
     email: string;
-    avatarUrl: string;
+    tokenEmailVerified: string;
 }
 
 type AuthContextType = {
@@ -31,7 +36,7 @@ type AuthContextType = {
     isErrorLogin: string;
     isErrorSignUp: string;
     signIn: (data: SignInData) => Promise<void>;
-    signUp: (data: SignUpData) => Promise<void>;
+    signUp: (data: SignUpData) => Promise<ApiResponse>;
     signOut: () => void;
 }
 
@@ -42,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isErrorLogin, setIsErrorLogin] = useState<string>("")
     const [isErrorSignUp, setIsErrorSignUp] = useState<string>("")
-    const isAuthenticated = !!user;
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
     const router = useRouter();
 
@@ -86,10 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             api.defaults.headers['Authorization'] = `Bearer ${token}`
             setUser(user)
-            // console.log('Dados do estato user:', JSON.stringify(user));
-            // console.log(`user: ${JSON.stringify(user)}`)
-            // console.log(`token: ${token}`)
-            // console.log(`user no estado: ${user}`)
+            setIsAuthenticated(true)
             router.push('/app')
         } catch (error: any) {
             if (error.response.status === 401) {
@@ -107,11 +109,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setIsErrorSignUp('')
             const response = await api.post('/auth/signup', { name, email, celular, cpf, cnpj, password })
-
-            console.log(`Usuario cadastrado com sucesso: ${response.data.message}`)
+            const { tokenEmailVerified } = response.data.userCreated
+            const newUser = { name, email, tokenEmailVerified }
+            setUser(newUser)
+            return (response)
         } catch (error: any) {
-            console.log(`Erro no cadastro ${error}`)
-            setIsErrorSignUp(`Erro no cadastro ${error.response.data.message}`)
+            setIsErrorSignUp(`${error.response.data.message}`)
+            throw new Error(`Erro no cadastro: ${error.response.data.message}`)
         } finally {
             setIsLoading(false)
         }
@@ -136,8 +140,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.log("logout error na pagina Contexto: ", error.message)
         }
     }
-
-
 
     return (
         <AuthContext.Provider value={{ user, isAuthenticated, isLoading, isErrorLogin, isErrorSignUp, signIn, signUp, signOut }}>

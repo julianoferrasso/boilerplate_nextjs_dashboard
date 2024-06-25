@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FaSpinner } from 'react-icons/fa';
 import { AuthContext } from "@/contexts/AuthContext"
+import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import Image from "next/image";
 import logo from "../../../../public/logo.png"
@@ -45,10 +46,14 @@ export function SignUpForm() {
         resolver: zodResolver(signUpSchema)
     })
 
+    const router = useRouter()
+
     async function handleSignUp(data: SignUpSchema) {
         try {
-            await signUp(data)
+            const response = await signUp(data)
+            // console.log("response:", response)
             reset()
+            router.push('/welcome')
         } catch (error) {
             console.log(`Erro na pagina AuthForm ${error}`)
         }
@@ -57,16 +62,16 @@ export function SignUpForm() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-blue-500">
             <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-lg">
-
                 {/* Logo empresa */}
-                <Image
+                {/* <Image
                     src={logo}
                     width={300}
                     height={300}
                     alt="Logo do SaaS"
-                />
+                /> */}
                 <h2 className="mb-6 text-xl font-bold text-center">Crie sua conta no Admin Places</h2>
 
+                {/* Se tive rmensagem de erro no cadastro */}
                 {isErrorSignUp != '' && (
                     <div className="rounded-md my-2 py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-orange-600">
                         <div className="text-zinc-600">{isErrorSignUp}</div>
@@ -104,6 +109,7 @@ export function SignUpForm() {
                             )}
                         </div>
 
+                        {/* Input ceular */}
                         <div className="relative">
                             <CelularIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                             <Input
@@ -159,7 +165,7 @@ export function SignUpForm() {
                             )}
                         </div>
 
-
+                        {/* botao cadastrar */}
                         <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
                             {isLoading ? (
                                 <FaSpinner className="animate-spin mx-auto" />
@@ -171,6 +177,7 @@ export function SignUpForm() {
 
                 </form>
                 <div >
+                    {/* Link voltar */}
                     <div className="mt-6 text-center text-sm text-gray-500">
                         <Link href="/auth">
                             Voltar

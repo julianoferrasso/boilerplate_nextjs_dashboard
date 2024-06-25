@@ -93,15 +93,15 @@ export function AuthForm() {
                             Crie sua conta
                         </Link>
                     </Button>
-                    <div className="mt-6 text-center text-sm text-gray-500">
+                    <div className="mt-6 text-center text-sm text-zinc-600 hover:text-zinc-800">
                         <Link href="/recoverPassword">
                             Esqueci minha senha
                         </Link>
-                        <p className="mt-6 text-center text-sm text-gray-500">
+                        <p className="mt-6 text-center text-sm text-zinc-600">
                             Não é um membro?{' '}<br />
-                            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                            <Link href="/signUp" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                                 Inicie uma avaliação gratuita de 14 dias
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </div>
