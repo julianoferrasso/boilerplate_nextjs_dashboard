@@ -21,7 +21,7 @@ TO-DO:
 [] - tratar o token no middleware para verificar se o token é valido
 [] - Transformar cookie http only
 [] - Tratar imagens 
+[] - chamadas à API fazer Server
 [] - Publicar
 
 [[]] V2
-[] - chamadas à API fazer ServerSide
