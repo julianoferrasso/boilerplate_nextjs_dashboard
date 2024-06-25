@@ -24,3 +24,4 @@ TO-DO:
 [] - Publicar
 
 [[]] V2
+[] - chamadas à API fazer ServerSide

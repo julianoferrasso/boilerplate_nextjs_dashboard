@@ -12,7 +12,7 @@ import Link from 'next/link';
 import Image from "next/image";
 import logo from "../../../../public/logo.png"
 
-// Definindo o esquema de validação com zod
+// Define o esquema de validação com zod
 const loginSchema = z.object({
     email: z.string().email({ message: 'Email inválido' }).min(1, { message: 'Email é obrigatório' }),
     password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' })
@@ -21,7 +21,7 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>
 
 export function AuthForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema)
     })
     const { signIn, isAuthenticated, user, isLoading, isErrorLogin } = useContext(AuthContext)
@@ -29,10 +29,7 @@ export function AuthForm() {
     async function handleSignIn(data: LoginSchema) {
         try {
             await signIn(data)
-            // console.log(`Fazendo sigIn no AuthForm`)
-            // console.log(`isAuthenticated: ${isAuthenticated}`)
-            // console.log(`user: ${user}`)
-            // console.log(`data: ${JSON.stringify(data)}`)
+            reset()
         } catch (error) {
             console.log(`Erro na pagina AuthForm ${error}`)
         }
@@ -60,7 +57,7 @@ export function AuthForm() {
                                 {...register('email')}
                             />
                             {errors.email && (
-                                <span className="text-red-400 text-sm">{errors.email.message}</span>
+                                <span className="text-red-400 text-sm pl-4">{errors.email.message}</span>
                             )}
                         </div>
                         <div className="relative">
@@ -72,7 +69,7 @@ export function AuthForm() {
                                 {...register('password')}
                             />
                             {errors.password && (
-                                <span className="text-red-400 text-sm">{errors.password.message}</span>
+                                <span className="text-red-400 text-sm pl-4">{errors.password.message}</span>
                             )}
                             {isErrorLogin != '' && (
                                 <div className="rounded-md py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-red-400">

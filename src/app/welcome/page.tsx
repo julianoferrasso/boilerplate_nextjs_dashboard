@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from '@/contexts/AuthContext'
 import { useRouter } from "next/navigation";
 
-import { SignUpForm } from "./components/SignUpForm";
+import { Welcome } from "./components/Welcome";
 
 export default function RecoverPassword() {
     const { isAuthenticated } = useContext(AuthContext)
@@ -18,6 +18,6 @@ export default function RecoverPassword() {
     }, [router])
 
     return (
-        <SignUpForm />
+        <Welcome />
     )
 }

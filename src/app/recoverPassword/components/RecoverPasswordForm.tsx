@@ -69,7 +69,7 @@ export function RecoverPasswordForm() {
                                 {...register('email')}
                             />
                             {errors.email && (
-                                <span className="text-red-400 text-sm">{errors.email.message}</span>
+                                <span className="text-red-400 text-sm pl-4">{errors.email.message}</span>
                             )}
                             {isErrorMessage != '' && (
                                 <div className="flex items-center justify-center">

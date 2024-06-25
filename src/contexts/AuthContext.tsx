@@ -8,6 +8,15 @@ type SignInData = {
     password: string;
 }
 
+type SignUpData = {
+    name: string;
+    email: string;
+    celular: string;
+    cpf?: string;
+    cnpj?: string;
+    password: string;
+}
+
 type User = {
     id: string;
     name: string;
@@ -20,7 +29,9 @@ type AuthContextType = {
     isAuthenticated: boolean;
     isLoading: boolean;
     isErrorLogin: string;
+    isErrorSignUp: string;
     signIn: (data: SignInData) => Promise<void>;
+    signUp: (data: SignUpData) => Promise<void>;
     signOut: () => void;
 }
 
@@ -30,8 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isErrorLogin, setIsErrorLogin] = useState<string>("")
+    const [isErrorSignUp, setIsErrorSignUp] = useState<string>("")
     const isAuthenticated = !!user;
-
 
     const router = useRouter();
 
@@ -91,6 +102,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
+    async function signUp({ name, email, celular, cpf, cnpj, password }: SignUpData) {
+        try {
+            setIsLoading(true);
+            setIsErrorSignUp('')
+            const response = await api.post('/auth/signup', { name, email, celular, cpf, cnpj, password })
+
+            console.log(`Usuario cadastrado com sucesso: ${response.data.message}`)
+        } catch (error: any) {
+            console.log(`Erro no cadastro ${error}`)
+            setIsErrorSignUp(`Erro no cadastro ${error.response.data.message}`)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     async function signOut() {
         try {
             // Remover o cookie do token
@@ -114,7 +140,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, isLoading, isErrorLogin, signIn, signOut }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, isLoading, isErrorLogin, isErrorSignUp, signIn, signUp, signOut }}>
             {children}
         </AuthContext.Provider>
     )

@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Controller, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { useContext } from "react"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -12,38 +12,34 @@ import Link from 'next/link';
 import Image from "next/image";
 import logo from "../../../../public/logo.png"
 
-// Definindo o esquema de validação com zod
-// const celularSchema = z.string().regex(/^\+?[0-9]+$/, { message: 'Celular inválido' }).min(10, { message: 'Celular deve ter pelo menos 10 dígitos' });
-// const cpfCnpjSchema = z.string().regex(/^[0-9]{11,14}$/, { message: 'CPF/CNPJ inválido' }).min(11, { message: 'CPF/CNPJ deve ter pelo menos 11 dígitos' });
-
 const signUpSchema = z.object({
     // nome Captaliza prima letra da cada nome
     name: z.string()
         .min(1, { message: 'Nome é obrigatório' })
         .transform(name => {
-            return name.trim().split(' ').map(word => {
-                return word[0].toLocaleUpperCase().concat(word.substring(1))
-            }).join('')
+            return name.trim() // Remove espaços em branco no início e no fim da string
+                .toLowerCase() // Converte todas as letras para minúsculas
+                .split(' ') // Divide a string em palavras usando o espaço como delimitador
+                .map(word => {  // Aplica a transformação a cada palavra
+                    return word[0].toLocaleUpperCase().concat(word.substring(1))  // Capitaliza a primeira letra e concatena com o resto da palavra
+                }).join(' ')  // Junta as palavras transformadas de volta em uma única string, separadas por espaços
         }),
-    email: z.string().email({ message: 'Email inválido' }).min(1, { message: 'Email é obrigatório' }),
+    email: z.string().email({ message: 'Email inválido' }),
     celular: z.string().min(10, { message: 'Celular deve ter pelo menos 10 dígitos' }),
-    cpf_cnpj: z.string().min(1, { message: 'CPF/CNPJ é obrigatório' }),
+    cpf_cnpj: z.string().min(14, { message: 'CPF/CNPJ é obrigatório' }),
     password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' }),
-    confirmPassword: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' }).refine(data => data.password === data.confirmPassword, {
-        message: 'As senhas devem ser iguais',
-        path: ['confirmPassword'], // Define onde a mensagem de erro será exibida
-    })
+    confirmPassword: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' })
 })
 
 type SignUpSchema = z.infer<typeof signUpSchema>
 
 export function SignUpForm() {
-    const { signIn, isAuthenticated, user, isLoading, isErrorLogin } = useContext(AuthContext)
+    const { signUp, isLoading, isErrorSignUp } = useContext(AuthContext)
 
     const {
-        control,
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm<SignUpSchema>({
         resolver: zodResolver(signUpSchema)
@@ -51,7 +47,8 @@ export function SignUpForm() {
 
     async function handleSignUp(data: SignUpSchema) {
         try {
-            await signIn(data)
+            await signUp(data)
+            reset()
         } catch (error) {
             console.log(`Erro na pagina AuthForm ${error}`)
         }
@@ -69,6 +66,12 @@ export function SignUpForm() {
                     alt="Logo do SaaS"
                 />
                 <h2 className="mb-6 text-xl font-bold text-center">Crie sua conta no Admin Places</h2>
+
+                {isErrorSignUp != '' && (
+                    <div className="rounded-md my-2 py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-orange-600">
+                        <div className="text-zinc-600">{isErrorSignUp}</div>
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit(handleSignUp)}>
                     <div className="space-y-4">
@@ -140,11 +143,6 @@ export function SignUpForm() {
                             {errors.password && (
                                 <span className="text-red-400 text-sm">{errors.password.message}</span>
                             )}
-                            {isErrorLogin != '' && (
-                                <div className="rounded-md py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-red-400">
-                                    <div className="text-red-600">{isErrorLogin}</div>
-                                </div>
-                            )}
                         </div>
 
                         {/* Input confirma senha */}
@@ -158,11 +156,6 @@ export function SignUpForm() {
                             />
                             {errors.confirmPassword && (
                                 <span className="text-red-400 text-sm">{errors.confirmPassword.message}</span>
-                            )}
-                            {isErrorLogin != '' && (
-                                <div className="rounded-md py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-red-400">
-                                    <div className="text-red-600">{isErrorLogin}</div>
-                                </div>
                             )}
                         </div>
 
@@ -287,7 +280,6 @@ function CardIcon(props: any) {
         </svg>
     )
 }
-
 
 function InfoIcon(props: any) {
     return (
