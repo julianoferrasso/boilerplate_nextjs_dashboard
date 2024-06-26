@@ -6,13 +6,22 @@ import { useForm, Controller } from "react-hook-form"
 import { useContext } from "react"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import InputMask from 'react-input-mask';
 import { FaSpinner } from 'react-icons/fa';
 import { AuthContext } from "@/contexts/AuthContext"
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import Image from "next/image";
 import logo from "../../../../public/logo.png"
+import MaskedInput from './MaskedInput';
 
+
+interface MaskedInputProps {
+    mask: string;
+    value: string;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    placeholder?: string;
+}
 
 const signUpSchema = z.object({
     // nome Captaliza prima letra da cada nome
@@ -26,10 +35,9 @@ const signUpSchema = z.object({
                     return word[0].toLocaleUpperCase().concat(word.substring(1))  // Capitaliza a primeira letra e concatena com o resto da palavra
                 }).join(' ')  // Junta as palavras transformadas de volta em uma única string, separadas por espaços
         }),
-    email: z.string().email({ message: 'Email inválido' }).transform(email => {
-        return email.toLowerCase()
-    }),
+    email: z.string().email({ message: 'Email inválido' }),
     celular: z.string().min(10, { message: 'Celular deve ter pelo menos 10 dígitos' }),
+    cpf_cnpj: z.string().min(14, { message: 'CPF/CNPJ é obrigatório' }),
     password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' }),
     confirmPassword: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres' })
 }).refine(data => data.password === data.confirmPassword, {
@@ -43,10 +51,13 @@ export function SignUpForm() {
     const { signUp, isLoading, isErrorSignUp } = useContext(AuthContext)
     const router = useRouter()
     const {
+        control,
         register,
         handleSubmit,
         reset,
-        formState: { errors }
+        formState: { errors },
+        setValue,
+        watch
     } = useForm<SignUpSchema>({
         resolver: zodResolver(signUpSchema)
     })
@@ -61,6 +72,38 @@ export function SignUpForm() {
         }
     }
 
+    const formatCellNumber = (cellNumber) => {
+        // console.log("cellNumber => ", cellNumber)
+        const onlyNumbers = cellNumber.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        if (onlyNumbers.length <= 2) return `${onlyNumbers}`; // Formata DDD inicial
+        if (onlyNumbers.length <= 6) return `(${onlyNumbers.slice(0, 2)}) ${onlyNumbers.slice(2)}`; // Formata DDD e início do número
+
+        const ddd = onlyNumbers.slice(0, 2);
+        const firstDigitAfterDDD = onlyNumbers[2];
+
+        if (firstDigitAfterDDD === '9') {
+            // Se o número começar com 9 após o DDD, formato (21) 99999-9999
+            console.log(`firstDigitAfterDDD === 9: (${ddd}) ${onlyNumbers.slice(2, 7)}-${onlyNumbers.slice(7, 11)}`)
+            return `(${ddd}) ${onlyNumbers.slice(2, 7)}-${onlyNumbers.slice(7, 11)}`;
+        } else {
+            // Caso contrário, formato (21) 9999-9999
+            console.log(`firstDigitAfterDDD != 9:(${ddd}) ${onlyNumbers.slice(2, 6)}-${onlyNumbers.slice(6, 10)}`)
+            return `(${ddd}) ${onlyNumbers.slice(2, 6)}-${onlyNumbers.slice(6, 10)}`;
+        }
+    };
+
+
+    const handleCellChange = (event) => {
+        const { value } = event.target;
+        const formattedCell = formatCellNumber(value);
+        setValue('celular', formattedCell, { shouldValidate: true });
+        console.log("formattedCell => ", formattedCell)
+    };
+    // const handleCellChange = (event: any) => {
+    //     const formattedCell = formatCellNumber(event.target.value);
+    //     console.log(formattedCell)
+    //     setValue('celular', formattedCell);
+    // };
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-blue-500">
@@ -76,7 +119,7 @@ export function SignUpForm() {
 
                 {/* Se tive rmensagem de erro no cadastro */}
                 {isErrorSignUp != '' && (
-                    <div className="rounded-md my-2 py-2 px-5 mt-3 flex items-center justify-center bg-red-200 border-1 border-red-600">
+                    <div className="rounded-md my-2 py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-orange-600">
                         <div className="text-zinc-600">{isErrorSignUp}</div>
                     </div>
                 )}
@@ -115,6 +158,35 @@ export function SignUpForm() {
                         {/* Input ceular */}
                         <div className="relative">
                             <CelularIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
+                            {/* <InputMask
+                                mask="(99) 99999-9999"
+                                value={watch('celular') || ''}
+                                onChange={handleCellChange}
+                                maskChar={null}
+                            >
+                                {(inputProps) => <input {...inputProps} placeholder="Celular" className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />}
+                            </InputMask> */}
+                            {/* <InputMask
+                                mask="(99) 99999-9999"
+                                placeholder="Celular"
+                                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                {...register('celular')}
+                                onChange={handleCellChange}
+                            /> */}
+                            {/* <Controller
+                                name="celular"
+                                control={control}
+                                defaultValue=""
+                                render={({ field }) => (
+                                    <MaskedInput
+                                        mask="(99) 99999-9999"
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        placeholder="Celular"
+                                        className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                )}
+                            /> */}
                             <Input
                                 type="number"
                                 placeholder="Celular"

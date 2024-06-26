@@ -24,9 +24,9 @@ export function Welcome() {
             setIsErrorMessage('')
             setIsSuccessMessage('')
             if (user) {
-                const { email, tokenEmailVerified } = user
+                const { email } = user
                 // console.log('Dados do user do estado contexto', { email, tokenEmailVerified })
-                const response = await api.post('/auth/resendemail', { email, tokenEmailVerified })
+                const response = await api.post('/auth/resendemail', { email })
                 // console.log(response.data.message)
                 setIsSuccessMessage('Email de ativação enviado com sucesso!')
             }
