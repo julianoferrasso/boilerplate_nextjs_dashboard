@@ -24,9 +24,9 @@ type SignUpData = {
 }
 
 type User = {
-    name: string;
-    email: string;
-    tokenEmailVerified: string;
+    name?: string;
+    email?: string;
+    tokenEmailVerified?: string;
 }
 
 type AuthContextType = {
@@ -76,7 +76,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setIsErrorLogin('')
             const response = await api.post('/auth/login', { email, password })
-            // console.log('dados response:', response.data)
             const { token, user } = response.data
             // setCookie params
             // param1 = contexto da req - no lado do cliente
@@ -89,15 +88,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 // httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
             })
 
-            api.defaults.headers['Authorization'] = `Bearer ${token}`
+            api.defaults.headers['authorization'] = `Bearer ${token}`
             setUser(user)
             setIsAuthenticated(true)
             router.push('/app')
         } catch (error: any) {
             if (error.response.status === 401) {
-                setIsErrorLogin('Usuário ou senha incorreta')
+                if (error.response.data.message == "Email não verificado") {
+                    // definir user com email
+                    const newUser = { email }
+                    setUser(newUser)
+                    // redirecionar para welcome
+                    router.push('/emailVerify')
+                } else {
+                    setIsErrorLogin("Usuário ou senha incorreta")
+                }
             } else {
-                console.log('Erro ao fazer login, tente novamente.');
+                console.log('Erro ao fazer login, tente novamente');
             }
         } finally {
             setIsLoading(false);

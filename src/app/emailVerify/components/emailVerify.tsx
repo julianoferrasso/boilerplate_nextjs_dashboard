@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "@/contexts/AuthContext";
 
 
-export function Welcome() {
+export function EmailVerify() {
     const { user } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
     const [isErrorMessage, setIsErrorMessage] = useState('')
@@ -25,6 +25,7 @@ export function Welcome() {
             setIsSuccessMessage('')
             if (user) {
                 const { email } = user
+                console.log('Dados do user do estado contexto', { email })
                 const response = await api.post('/auth/resendemail', { email })
                 console.log(response.data.message)
                 setIsSuccessMessage('Email de ativação enviado com sucesso!')
@@ -47,17 +48,14 @@ export function Welcome() {
                     alt="Logo do SaaS"
                 /> */}
                 <h5 className="text-center text-2xl font-bold leading-9 tracking-tight text-zinc-900">
-                    Cadastro realizado com sucesso!
+                    Seu email ainda não foi verificado
                 </h5>
 
                 <p className="mt-10 text-center text-lg text-zinc-700">
-                    Enviamos um link de ativação da sua conta para o seu email.
+                    Confira sua caixa de entrada. Verifique também a pasta de spam ou lixo eletrônico.
                 </p>
-                <p className="mt-2 text-center text-lg text-zinc-700">
-                    Verifique sua caixa de entrada. Verifique também a pasta de spam ou lixo eletrônico.
-                </p>
-                <p className="mt-3 text-center text-lg text-zinc-700">
-                    Se você não receber o email dentro de alguns minutos, clique no botão abaixo para reenviar o email de ativação.
+                <p className="mt-5 text-center text-lg text-zinc-700">
+                    Se você não recebeu o email, clique no botão abaixo para reenviar o email de ativação.
                 </p>
             </div>
 

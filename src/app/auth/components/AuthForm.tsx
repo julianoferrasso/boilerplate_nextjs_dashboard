@@ -29,7 +29,7 @@ export function AuthForm() {
     async function handleSignIn(data: LoginSchema) {
         try {
             await signIn(data)
-            reset()
+            //reset()
         } catch (error) {
             console.log(`Erro na pagina AuthForm ${error}`)
         }
