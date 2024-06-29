@@ -32,9 +32,15 @@ const config = {
         },
 
         text: {
-          primary: "var(--background_primary)",
-          secondary: "var(--background_secondary)",
-          tertiary: "var(--background_tertiary)",
+          primary: "var(--text_primary)",
+          secondary: "var(--text_secondary)",
+          tertiary: "var(--text_tertiary)",
+        },
+
+        link: {
+          primary: "var(--link_primary)",
+          secondary: "var(--link_secondary)",
+          tertiary: "var(--link_tertiary)",
         },
 
         border: "hsl(var(--border))",

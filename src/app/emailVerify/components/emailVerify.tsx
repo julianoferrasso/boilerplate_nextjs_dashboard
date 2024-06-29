@@ -9,6 +9,7 @@ import logo from "../../../../public/logo.png"
 import { api } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 
 export function EmailVerify() {
@@ -17,6 +18,12 @@ export function EmailVerify() {
     const [isErrorMessage, setIsErrorMessage] = useState('')
     const [isSuccessMessage, setIsSuccessMessage] = useState('')
     const { handleSubmit } = useForm()
+
+    const router = useRouter();
+
+    if (user?.email == undefined) {
+        router.push('/app')
+    }
 
     async function handleSendEmailAgain() {
         try {
@@ -39,22 +46,22 @@ export function EmailVerify() {
     }
 
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-primary">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-                {/* <Image
+                <Image
                     src={logo}
                     width={300}
                     height={300}
                     alt="Logo do SaaS"
-                /> */}
-                <h5 className="text-center text-2xl font-bold leading-9 tracking-tight text-zinc-900">
+                />
+                <h5 className="text-center text-2xl font-bold leading-9 tracking-tight text-text-primary">
                     Seu email ainda não foi verificado
                 </h5>
 
-                <p className="mt-10 text-center text-lg text-zinc-700">
+                <p className="mt-10 text-center text-lg text-text-secondary">
                     Confira sua caixa de entrada. Verifique também a pasta de spam ou lixo eletrônico.
                 </p>
-                <p className="mt-5 text-center text-lg text-zinc-700">
+                <p className="mt-5 text-center text-lg text-text-secondary">
                     Se você não recebeu o email, clique no botão abaixo para reenviar o email de ativação.
                 </p>
             </div>

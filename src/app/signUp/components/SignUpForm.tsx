@@ -63,8 +63,8 @@ export function SignUpForm() {
 
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-blue-500">
-            <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-lg">
+        <div className="flex items-center justify-center min-h-screen bg-bg-primary ">
+            <div className="w-full max-w-sm p-4 bg-fg-primary rounded-lg shadow-lg">
                 {/* Logo empresa */}
                 {/* <Image
                     src={logo}
@@ -90,7 +90,7 @@ export function SignUpForm() {
                             <Input
                                 type="text"
                                 placeholder="Nome Completo"
-                                className="pl-10 focus-visible:ring-blue-600"
+                                className="pl-10"
                                 {...register('name')}
                             />
                             {errors.name && (
@@ -104,7 +104,7 @@ export function SignUpForm() {
                             <Input
                                 type="text"
                                 placeholder="Email"
-                                className="pl-10 focus-visible:ring-blue-600"
+                                className="pl-10"
                                 {...register('email')}
                             />
                             {errors.email && (
@@ -118,7 +118,7 @@ export function SignUpForm() {
                             <Input
                                 type="number"
                                 placeholder="WhatsApp"
-                                className="pl-10 focus-visible:ring-blue-600"
+                                className="pl-10"
                                 {...register('celular')}
                             />
                             {errors.celular && (
@@ -132,7 +132,7 @@ export function SignUpForm() {
                             <Input
                                 type="password"
                                 placeholder="Senha"
-                                className="pl-10 focus-visible:ring-blue-600"
+                                className="pl-10"
                                 {...register('password')}
                             />
                             {errors.password && (
@@ -146,7 +146,7 @@ export function SignUpForm() {
                             <Input
                                 type="password"
                                 placeholder="Confirma senha"
-                                className="pl-10 focus-visible:ring-blue-600"
+                                className="pl-10"
                                 {...register('confirmPassword')}
                             />
                             {errors.confirmPassword && (

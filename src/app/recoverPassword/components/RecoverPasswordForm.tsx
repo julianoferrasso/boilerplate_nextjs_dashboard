@@ -43,7 +43,7 @@ export function RecoverPasswordForm() {
     }
 
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-primary">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
                 <Image
                     src={logo}
@@ -51,7 +51,7 @@ export function RecoverPasswordForm() {
                     height={300}
                     alt="Logo do SaaS"
                 />
-                <h5 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                <h5 className="text-center text-2xl font-bold leading-9 tracking-tight text-text-primary">
                     Recupere sua senha
                 </h5>
             </div>
@@ -95,7 +95,7 @@ export function RecoverPasswordForm() {
                                         'Enviar'
                                     )}
                                 </Button>
-                                <p className="mt-2 text-center text-sm text-gray-500">
+                                <p className="mt-2 text-center text-sm text-text-secondary">
                                     Informe seu email cadastrado que enviaremos um link para você recuperar sua senha
                                 </p>
                             </div>
@@ -104,7 +104,7 @@ export function RecoverPasswordForm() {
                     <div className="flex justify-center">
                         <Link
                             href="/auth"
-                            className="text-md text-zinc-500 hover:text-zinc-800"
+                            className="text-md text-text-secondary hover:text-text-tertiary"
                         >
                             Voltar
                         </Link>

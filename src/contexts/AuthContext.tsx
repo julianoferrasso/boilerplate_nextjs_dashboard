@@ -52,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const router = useRouter();
 
+
     // atualizar os dados do usuario
     useEffect(() => {
         const { 'boilerplateNext_token': token } = parseCookies()
@@ -76,6 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setIsErrorLogin('')
             const response = await api.post('/auth/login', { email, password, rememberMe })
             const { token, user } = response.data
+            console.log(response)
             // setCookie params
             // param1 = contexto da req - no lado do cliente
             // parma2 = nome do cookie

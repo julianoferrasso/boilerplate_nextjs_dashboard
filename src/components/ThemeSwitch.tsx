@@ -11,18 +11,16 @@ export default function ThemeSwitch() {
     const { theme, setTheme, systemTheme } = useTheme()
 
     function handleThemeDark() {
-        console.log("clicou em mudar de tema para DARK")
         setTheme('dark')
         localStorage.setItem('theme', 'dark')
     }
     function handleThemeLight() {
-        console.log("clicou em mudar de tema para LIGHT")
         setTheme('light')
         localStorage.setItem('theme', 'light')
     }
 
     useEffect(() => {
-        localStorage.setItem('theme', systemTheme || 'light');
+        //localStorage.setItem('theme', systemTheme || 'light');
         // Set mounted to true after the component has mounted
         setMounted(true);
 
@@ -38,6 +36,11 @@ export default function ThemeSwitch() {
             setTheme(initialTheme);
         }
     }, [setTheme, systemTheme]);
+
+    useEffect(() => {
+        setTheme(systemTheme || 'light');
+        console.log('modificou o tema pelo sistema');
+    }, [systemTheme]);
 
     if (!mounted) {
         return (

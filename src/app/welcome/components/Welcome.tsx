@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { FaSpinner } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
 import logo from "../../../../public/logo.png"
 import { api } from "@/lib/utils";
@@ -17,6 +18,11 @@ export function Welcome() {
     const [isErrorMessage, setIsErrorMessage] = useState('')
     const [isSuccessMessage, setIsSuccessMessage] = useState('')
     const { handleSubmit } = useForm()
+    const router = useRouter();
+
+    if (user?.email == undefined) {
+        router.push('/app')
+    }
 
     async function handleSendEmailAgain() {
         try {
@@ -38,25 +44,25 @@ export function Welcome() {
     }
 
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-primary">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-                {/* <Image
+                <Image
                     src={logo}
                     width={300}
                     height={300}
                     alt="Logo do SaaS"
-                /> */}
-                <h5 className="text-center text-2xl font-bold leading-9 tracking-tight text-zinc-900">
+                />
+                <h5 className="text-center text-2xl font-bold leading-9 tracking-tight text-text-primary">
                     Cadastro realizado com sucesso!
                 </h5>
 
-                <p className="mt-10 text-center text-lg text-zinc-700">
+                <p className="mt-10 text-center text-lg text-text-secondary">
                     Enviamos um link de ativação da sua conta para o seu email.
                 </p>
-                <p className="mt-2 text-center text-lg text-zinc-700">
+                <p className="mt-2 text-center text-lg text-text-secondary">
                     Verifique sua caixa de entrada. Verifique também a pasta de spam ou lixo eletrônico.
                 </p>
-                <p className="mt-3 text-center text-lg text-zinc-700">
+                <p className="mt-3 text-center text-lg text-text-secondary">
                     Se você não receber o email dentro de alguns minutos, clique no botão abaixo para reenviar o email de ativação.
                 </p>
             </div>

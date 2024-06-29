@@ -8,17 +8,25 @@ body {
 
 @layer base {
   :root {
-    --background_primary: #f1f5f9;
-    --background_secondary: #e5e5e5;
-    --background_tertiary: #d4d4d4;
+    --background_primary: #fafafa;
+    --background_secondary: #f4f4f5;
+    --background_tertiary: #e4e4e7;
 
-    --foreground_primary: ##e5e7eb;
-    --foregroundd_secondary: #d1d5db;
-    --foregroundd_tertiary: #9ca3af;
+    --foreground_primary: #f4f4f5;
+    --foregroundd_secondary: #e4e4e7;
+    --foregroundd_tertiary: #d4d4d8;
 
     --text_primary: #000000;
     --text_secondary: #1f2937;
     --text_tertiary: #374151;
+
+    /* --link_primary: #3b82f6;
+    --link_secondary: #2563eb;
+    --link_tertiary: #1d4ed8; */
+
+    --link_primary: #3b82f6;
+    --link_secondary: #2563eb;
+    --link_tertiary: #1d4ed8;
 
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
@@ -56,14 +64,17 @@ body {
     --background_secondary: #111827;
     --background_tertiary: #1f2937;
 
-    --foreground_primary: #374151;
-    --foregroundd_secondary: #4b5563;
-    --foregroundd_tertiary: #6b7280;
+    --foreground_primary: #111827;
+    --foregroundd_secondary: #1f2937;
+    --foregroundd_tertiary: #374151;
 
     --text_primary: #fafafa;
-    --text_secondary: #e4e4e7;
+    --text_secondary: #cbd5e1;
     --text_tertiary: ##d4d4d8;
 
+    --link_primary: #3b82f6;
+    --link_secondary: #2563eb;
+    --link_tertiary: #1d4ed8;
 
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;

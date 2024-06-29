@@ -13,6 +13,7 @@ import Image from "next/image";
 import logo from "../../../../public/logo.png"
 import ThemeSwitch from "@/components/ThemeSwitch"
 import { useTheme } from "next-themes"
+import { Checkbox } from "@/components/ui/checkbox"
 
 // Define o esquema de validação com zod
 const loginSchema = z.object({
@@ -42,46 +43,42 @@ export function AuthForm() {
 
     return (
         <div>
-            <div className="flex absolute bg-zinc-500">
-                <ThemeSwitch />
-            </div>
-
             {/* toda janela */}
-            <div className="flex items-center justify-center min-h-screen bg-zinc-100">
+            <div className="flex items-center justify-center min-h-screen bg-bg-primary">
 
                 {/* formulario login */}
-                <div className="w-full max-w-md p-4 bg-zinc-50 rounded-lg shadow-lg ">
+                <div className="w-full max-w-md p-4 rounded-lg shadow-lg bg-fg-primary">
                     <div className="flex justify-center items-center">
                         <Image
                             src={logo}
-                            width={300}
-                            height={300}
+                            width={150}
+                            height={1500}
                             alt="Logo do SaaS"
                         />
                     </div>
-                    <h2 className="mb-6 text-xl font-bold text-center">Entre com seu email e senha</h2>
+                    <h2 className="mb-6 text-xl font-bold text-center text-text-secondary">Entre com seu email e senha</h2>
 
-
+                    {/* Formulario de login */}
                     <form onSubmit={handleSubmit(handleSignIn)} >
+                        <div className="space-y-4">
 
-                        <div className="space-y-4 bg-background">
                             {/* input email */}
                             <div className="relative">
-                                <UserIcon className="absolute w-5 h-5 text-zinc-400 left-3 top-3" />
+                                <UserIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                                 <Input
                                     type="text"
                                     placeholder="Email"
-                                    // className="pl-10 placeholder:text-zinc-500 focus-visible:ring-blue-600"
-                                    className="pl-10 "
+                                    className="pl-10"
                                     {...register('email')}
                                 />
                                 {errors.email && (
                                     <span className="text-red-400 text-sm pl-4">{errors.email.message}</span>
                                 )}
                             </div>
+
                             {/* input Password */}
                             <div className="relative">
-                                <LockIcon className="absolute w-5 h-5 text-zinc-400 left-3 top-3" />
+                                <LockIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                                 <Input
                                     type="password"
                                     placeholder="Senha"
@@ -97,17 +94,17 @@ export function AuthForm() {
                                     </div>
                                 )}
                             </div>
+
                             {/* checkbox remeber me e link Esqueci Senha*/}
                             <div className="flex justify-between px-2">
                                 <div className="flex items-center">
-                                    <input
-                                        type="checkbox"
+                                    <Checkbox
                                         id="rememberMe"
-                                        className="rounded-md focus-visible:ring-blue-600 focus-visible:ring-1 focus-visible:ring-offset-1"
                                         {...register('rememberMe')}
                                     />
+
                                     <label
-                                        className="ml-1 text-zinc-700 text-sm focus-visible:ring-blue-600 focus-visible:ring-1 focus-visible:ring-offset-1"
+                                        className="ml-1 text-text-tertiary text-sm focus-visible:ring-blue-600 focus-visible:ring-1 focus-visible:ring-offset-1"
                                         htmlFor="rememberMe">
                                         Manter conectado
                                     </label>
@@ -116,13 +113,14 @@ export function AuthForm() {
                                 <div>
                                     <Link
                                         href="/recoverPassword"
-                                        className="text-md text-zinc-500 hover:text-zinc-800 "
+                                        className="text-md text-text-secondary hover:text-text-primary "
                                     >
                                         Esqueci minha senha
                                     </Link>
                                 </div>
                             </div>
                         </div>
+
                         <Button
                             name="login"
                             type="submit"
@@ -134,21 +132,14 @@ export function AuthForm() {
                                 'Entrar'
                             )}
                         </Button>
-
                     </form>
+
+                    {/* Links para termos de uso e politica de privacidade  */}
                     <div >
-                        {/* <Button className="w-full py-2 mt-4 text-white bg-indigo-600 rounded-md hover:bg-blue-800" name="signUp" type="submit">
-                        <Link href="/signUp">
-                            Crie sua conta
-                        </Link>
-                    </Button> */}
-                        <div className="mt-6 text-center text-sm text-zinc-600 hover:text-zinc-800">
-                            {/* <Link href="/recoverPassword">
-                            Esqueci minha senha
-                        </Link> */}
-                            <p className="mt-6 text-center text-sm text-zinc-600">
+                        <div className="mt-6">
+                            <p className="text-center text-sm text-text-tertiary">
                                 Não é um membro?{' '}<br />
-                                <Link href="/signUp" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                                <Link href="/signUp" className="font-semibold leading-6 text-link-primary hover:text-link-tertiary">
                                     Inicie uma avaliação gratuita de 14 dias
                                 </Link>
                             </p>
