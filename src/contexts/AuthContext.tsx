@@ -12,6 +12,7 @@ type ApiResponse = {
 type SignInData = {
     email: string;
     password: string;
+    rememberMe?: boolean;
 }
 
 type SignUpData = {
@@ -58,9 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             try {
                 if (token) {
                     const response = await api.get('/user/profile')
-                    //console.log('Dados do perfil:', response.data);
                     setUser(response.data);
-                    //console.log('Dados do estato user:', JSON.stringify(user));
                     router.push('/app')
                 }
             } catch (error: any) {
@@ -71,19 +70,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // verficar necessidade de router como dependencia
     }, [router])
 
-    async function signIn({ email, password }: SignInData) {
+    async function signIn({ email, password, rememberMe = false }: SignInData) {
         try {
             setIsLoading(true);
             setIsErrorLogin('')
-            const response = await api.post('/auth/login', { email, password })
+            const response = await api.post('/auth/login', { email, password, rememberMe })
             const { token, user } = response.data
             // setCookie params
             // param1 = contexto da req - no lado do cliente
             // parma2 = nome do cookie
             // param3 = token
             // param4 = options
+
+            const maxAge = rememberMe ? 60 * 60 * 4 : undefined  //4 horas se nao tiver opção manter logado
+
             setCookie(undefined, 'boilerplateNext_token', token, {
-                maxAge: 60 * 60 * 1, //1 hour
+                maxAge
                 // path: '/', // Certifique-se de que o cookie esteja disponível em todas as páginas
                 // httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
             })

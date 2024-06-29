@@ -64,7 +64,7 @@ export function RecoverPasswordForm() {
                             <Input
                                 type="email"
                                 placeholder="Email"
-                                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 {...register('email')}
                             />
                             {errors.email && (
@@ -95,11 +95,19 @@ export function RecoverPasswordForm() {
                                         'Enviar'
                                     )}
                                 </Button>
-                                <p className="mt-10 text-center text-sm text-gray-500">
+                                <p className="mt-2 text-center text-sm text-gray-500">
                                     Informe seu email cadastrado que enviaremos um link para você recuperar sua senha
                                 </p>
                             </div>
                         }
+                    </div>
+                    <div className="flex justify-center">
+                        <Link
+                            href="/auth"
+                            className="text-md text-zinc-500 hover:text-zinc-800"
+                        >
+                            Voltar
+                        </Link>
                     </div>
                 </form>
 

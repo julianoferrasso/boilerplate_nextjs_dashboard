@@ -90,7 +90,7 @@ export function SignUpForm() {
                             <Input
                                 type="text"
                                 placeholder="Nome Completo"
-                                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="pl-10 focus-visible:ring-blue-600"
                                 {...register('name')}
                             />
                             {errors.name && (
@@ -104,7 +104,7 @@ export function SignUpForm() {
                             <Input
                                 type="text"
                                 placeholder="Email"
-                                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="pl-10 focus-visible:ring-blue-600"
                                 {...register('email')}
                             />
                             {errors.email && (
@@ -117,8 +117,8 @@ export function SignUpForm() {
                             <CelularIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                             <Input
                                 type="number"
-                                placeholder="Celular"
-                                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="WhatsApp"
+                                className="pl-10 focus-visible:ring-blue-600"
                                 {...register('celular')}
                             />
                             {errors.celular && (
@@ -126,27 +126,13 @@ export function SignUpForm() {
                             )}
                         </div>
 
-                        {/* Input CPF/CNPJ */}
-                        {/* <div className="relative">
-                            <CardIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
-                            <Input
-                                type="number"
-                                placeholder="CPF/CNPJ"
-                                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                {...register('cpf_cnpj')}
-                            />
-                            {errors.cpf_cnpj && (
-                                <span className="text-red-400 text-sm">{errors.cpf_cnpj.message}</span>
-                            )}
-                        </div> */}
-
                         {/* Input senha */}
                         <div className="relative">
                             <LockIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                             <Input
                                 type="password"
                                 placeholder="Senha"
-                                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="pl-10 focus-visible:ring-blue-600"
                                 {...register('password')}
                             />
                             {errors.password && (
@@ -160,7 +146,7 @@ export function SignUpForm() {
                             <Input
                                 type="password"
                                 placeholder="Confirma senha"
-                                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="pl-10 focus-visible:ring-blue-600"
                                 {...register('confirmPassword')}
                             />
                             {errors.confirmPassword && (
@@ -173,19 +159,39 @@ export function SignUpForm() {
                             {isLoading ? (
                                 <FaSpinner className="animate-spin mx-auto" />
                             ) : (
-                                'Cadastrar'
+                                'Criar conta'
                             )}
                         </Button>
+
                     </div>
 
                 </form>
                 <div >
-                    {/* Link voltar */}
-                    <div className="mt-6 text-center text-sm text-gray-500">
-                        <Link href="/auth">
-                            Voltar
+                    <p className="mt-1 text-center text-sm text-zinc-600">
+                        Ao clicar em “Criar conta”, você concorda com os&nbsp;
+                        <Link href="/useTerms"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                        >
+                            Termos de Uso
                         </Link>
-                    </div>
+                        &nbsp;e a&nbsp;
+                        <Link
+                            href="/privacy"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                        >
+                            Política de Privacidade
+                        </Link> da plataforma.
+                    </p>
+                    <p className="mt-8 text-center text-sm text-zinc-600">
+                        Já tem um cadastro?&nbsp;
+                        <Link href="/auth" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                            Entre com sua conta.
+                        </Link>
+                    </p>
                 </div>
             </div>
         </div >

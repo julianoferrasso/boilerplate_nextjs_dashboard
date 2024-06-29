@@ -19,6 +19,24 @@ const config = {
     },
     extend: {
       colors: {
+        bg: {
+          primary: "var(--background_primary)",
+          secondary: "var(--background_secondary)",
+          tertiary: "var(--background_tertiary)",
+        },
+
+        fg: {
+          primary: "var(--foreground_primary)",
+          secondary: "var(--foreground_secondary)",
+          tertiary: "var(--foreground_tertiary)",
+        },
+
+        text: {
+          primary: "var(--background_primary)",
+          secondary: "var(--background_secondary)",
+          tertiary: "var(--background_tertiary)",
+        },
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

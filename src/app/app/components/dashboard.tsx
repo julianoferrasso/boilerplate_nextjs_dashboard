@@ -13,6 +13,9 @@ import {
 } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useContext } from 'react'
+import Image from "next/image"
+import logo from "../../../../public/logo.png"
+import ThemeSwitch from '@/components/ThemeSwitch'
 
 const navigation = [
     { name: 'Principal', href: '#', current: true },
@@ -57,10 +60,11 @@ export default function Dashboard() {
                                 <div className="flex h-16 items-center justify-between">
                                     <div className="flex items-center">
                                         <div className="flex-shrink-0">
-                                            <img
-                                                className="h-8 w-8"
-                                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                                alt="Your Company"
+                                            <Image
+                                                src={logo}
+                                                width={40}
+                                                height={40}
+                                                alt="Logo do SaaS"
                                             />
                                         </div>
                                         <div className="hidden md:block">
@@ -93,6 +97,8 @@ export default function Dashboard() {
                                                 <span className="sr-only">Notificações</span>
                                                 <BellIcon className="h-6 w-6" aria-hidden="true" />
                                             </button>
+
+                                            <ThemeSwitch />
 
                                             {/* Profile dropdown */}
                                             <Menu as="div" className="relative ml-3">
