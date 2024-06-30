@@ -4,25 +4,18 @@ import { Button } from "@/components/ui/button"
 import { FaSpinner } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
 
 import logo from "../../../../public/logo.png"
 import { api } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "@/contexts/AuthContext";
 
-
-export function Welcome() {
+export function WelcomePage() {
     const { user } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
     const [isErrorMessage, setIsErrorMessage] = useState('')
     const [isSuccessMessage, setIsSuccessMessage] = useState('')
     const { handleSubmit } = useForm()
-    const router = useRouter();
-
-    if (user?.email == undefined) {
-        router.push('/app')
-    }
 
     async function handleSendEmailAgain() {
         try {

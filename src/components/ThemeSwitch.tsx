@@ -10,6 +10,8 @@ export default function ThemeSwitch() {
     const [mounted, setMounted] = useState(false)
     const { theme, setTheme, systemTheme } = useTheme()
 
+    console.log("sistema tema", systemTheme)
+
     function handleThemeDark() {
         setTheme('dark')
         localStorage.setItem('theme', 'dark')
@@ -37,10 +39,10 @@ export default function ThemeSwitch() {
         }
     }, [setTheme, systemTheme]);
 
-    useEffect(() => {
-        setTheme(systemTheme || 'light');
-        console.log('modificou o tema pelo sistema');
-    }, [systemTheme]);
+    // useEffect(() => {
+    //     setTheme(systemTheme || 'light');
+    //     console.log('modificou o tema pelo sistema');
+    // }, [systemTheme]);
 
     if (!mounted) {
         return (

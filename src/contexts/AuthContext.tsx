@@ -83,15 +83,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // parma2 = nome do cookie
             // param3 = token
             // param4 = options
-
             const maxAge = rememberMe ? 60 * 60 * 4 : undefined  //4 horas se nao tiver opção manter logado
-
             setCookie(undefined, 'boilerplateNext_token', token, {
-                maxAge
-                // path: '/', // Certifique-se de que o cookie esteja disponível em todas as páginas
+                maxAge,
+                path: '/'  // Certifique-se de que o cookie esteja disponível em todas as páginas
                 // httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
             })
-
             api.defaults.headers['authorization'] = `Bearer ${token}`
             setUser(user)
             setIsAuthenticated(true)
@@ -121,8 +118,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setIsErrorSignUp('')
             const response = await api.post('/auth/signup', { name, email, celular, cpf, cnpj, password })
             const { tokenEmailVerified } = response.data.userCreated
-            const newUser = { name, email, tokenEmailVerified }
-            setUser(newUser)
+            //const newUser = { name, email, tokenEmailVerified }
+            const newUser = { email }
+            // salavar o email do usuario num cookie para poder reenviar o email de ativação na página welcome
+            setCookie(null, 'user_email', email, {
+                maxAge: 60 * 60 * 1, //1hora
+                path: '/'
+            })
+
+            //setUser(newUser)
             return (response)
         } catch (error: any) {
             setIsErrorSignUp(`${error.response.data.message}`)

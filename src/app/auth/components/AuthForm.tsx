@@ -1,9 +1,8 @@
 'use client'
 
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useForm } from "react-hook-form"
 import { useContext } from "react"
+
+import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FaSpinner } from 'react-icons/fa';
@@ -12,7 +11,9 @@ import Link from 'next/link';
 import Image from "next/image";
 import logo from "../../../../public/logo.png"
 import ThemeSwitch from "@/components/ThemeSwitch"
-import { useTheme } from "next-themes"
+
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 
 // Define o esquema de validação com zod
@@ -29,9 +30,10 @@ export function AuthForm() {
         resolver: zodResolver(loginSchema)
     })
     const { signIn, isAuthenticated, user, isLoading, isErrorLogin } = useContext(AuthContext)
-    const { theme } = useTheme()
+
 
     async function handleSignIn(data: LoginSchema) {
+        console.log(data)
         try {
             console.log(data)
             await signIn(data)
@@ -43,6 +45,9 @@ export function AuthForm() {
 
     return (
         <div>
+            <div className="bg-zinc-500">
+                <ThemeSwitch />
+            </div>
             {/* toda janela */}
             <div className="flex items-center justify-center min-h-screen bg-bg-primary">
 
@@ -59,7 +64,7 @@ export function AuthForm() {
                     <h2 className="mb-6 text-xl font-bold text-center text-text-secondary">Entre com seu email e senha</h2>
 
                     {/* Formulario de login */}
-                    <form onSubmit={handleSubmit(handleSignIn)} >
+                    <form onSubmit={handleSubmit(handleSignIn)}>
                         <div className="space-y-4">
 
                             {/* input email */}
@@ -96,11 +101,13 @@ export function AuthForm() {
                             </div>
 
                             {/* checkbox remeber me e link Esqueci Senha*/}
-                            <div className="flex justify-between px-2">
+                            <div className="flex justify-between items-center px-2">
                                 <div className="flex items-center">
-                                    <Checkbox
+                                    <Input
+                                        type="checkbox"
                                         id="rememberMe"
                                         {...register('rememberMe')}
+                                        className="w-3"
                                     />
 
                                     <label
@@ -121,11 +128,7 @@ export function AuthForm() {
                             </div>
                         </div>
 
-                        <Button
-                            name="login"
-                            type="submit"
-                            className="mt-8 w-full py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-                        >
+                        <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
                             {isLoading ? (
                                 <FaSpinner className="animate-spin mx-auto" />
                             ) : (

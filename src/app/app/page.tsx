@@ -10,6 +10,7 @@ async function fetchData() {
     return data;
 }
 
+
 export default async function Page() {
 
     const data = await fetchData();

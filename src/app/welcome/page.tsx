@@ -1,23 +1,32 @@
-'use client'
-import { useContext, useEffect } from "react";
-import { AuthContext } from '@/contexts/AuthContext'
-import { useRouter } from "next/navigation";
 
-import { Welcome } from "./components/Welcome";
+import { cookies } from 'next/headers'
+import { WelcomePage } from "./components/WelcomePage";
 
-export default function RecoverPassword() {
-    const { isAuthenticated } = useContext(AuthContext)
+async function getData() {
+    const cookieStore = cookies()
+    const user_email = cookieStore.get('user_email')
+    const email = user_email?.value
+    return { email }
+}
 
-    const router = useRouter()
 
-    // Impede de permanecer na pagina de auth caso o usuario se autentique e depois clique em voltar
-    useEffect(() => {
-        if (isAuthenticated) {
-            router.push('/app')
+export default async function Welcome() {
+
+    const { email } = await getData();
+
+    console.log(email)
+
+    if (!email) {
+        return {
+            redirect: {
+                destination: '/auth',
+                permanent: false,
+            }
         }
-    }, [router])
+    }
 
     return (
-        <Welcome />
+        // <WelcomePage />
+        <div>Welcome page - : {JSON.stringify(email)}</div>
     )
 }
