@@ -8,17 +8,26 @@ body {
 
 @layer base {
   :root {
+    /*"zinc 50"*/
     --background_primary: #fafafa;
+    /*"zinc 100"*/
     --background_secondary: #f4f4f5;
+    /*"zinc 200"*/
     --background_tertiary: #e4e4e7;
 
-    --foreground_primary: #f4f4f5;
-    --foregroundd_secondary: #e4e4e7;
-    --foregroundd_tertiary: #d4d4d8;
+    /*"zinc 300"*/
+    --foreground_primary: #d4d4d8;
+    /*"zinc 400"*/
+    --foregroundd_secondary: #a1a1aa;
+    /*"zinc 500"*/
+    --foregroundd_tertiary: #71717a;
 
-    --text_primary: #000000;
-    --text_secondary: #1f2937;
-    --text_tertiary: #374151;
+    /*"zinc 950"*/
+    --text_primary: #09090b;
+    /*"zinc 900"*/
+    --text_secondary: #18181b;
+    /*"zinc 800"*/
+    --text_tertiary: #27272a;
 
     /* --link_primary: #3b82f6;
     --link_secondary: #2563eb;
@@ -60,17 +69,26 @@ body {
   }
 
   .dark {
-    --background_primary: #030712;
-    --background_secondary: #111827;
-    --background_tertiary: #1f2937;
+    /*"zinc 950"*/
+    --background_primary: #09090b;
+    /*"zinc 900"*/
+    --background_secondary: #18181b;
+    /*"zinc 800"*/
+    --background_tertiary: #27272a;
 
-    --foreground_primary: #111827;
-    --foregroundd_secondary: #1f2937;
-    --foregroundd_tertiary: #374151;
+    /*"zinc 700"*/
+    --foreground_primary: #3f3f46;
+    /*"zinc 600"*/
+    --foregroundd_secondary: #52525b;
+    /*"zinc 500"*/
+    --foregroundd_tertiary: #71717a;
 
+    /*"zinc 100"*/
     --text_primary: #fafafa;
-    --text_secondary: #cbd5e1;
-    --text_tertiary: ##d4d4d8;
+    /*"zinc 300"*/
+    --text_secondary: #d4d4d8;
+    /*"zinc 400"*/
+    --text_tertiary: #a1a1aa;
 
     --link_primary: #3b82f6;
     --link_secondary: #2563eb;

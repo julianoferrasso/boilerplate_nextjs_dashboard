@@ -1,3 +1,5 @@
+'use client'
+
 import { useContext, useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -12,7 +14,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 
 
-export function EmailVerify() {
+export function EmailVerifyPage() {
     const { user } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
     const [isErrorMessage, setIsErrorMessage] = useState('')

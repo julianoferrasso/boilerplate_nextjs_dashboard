@@ -43,7 +43,7 @@ export function RecoverPasswordForm() {
     }
 
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-primary">
+        <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-primary">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
                 <Image
                     src={logo}
@@ -104,7 +104,7 @@ export function RecoverPasswordForm() {
                     <div className="flex justify-center">
                         <Link
                             href="/auth"
-                            className="text-md text-text-secondary hover:text-text-tertiary"
+                            className="text-md text-text-tertiary hover:text-blue-500"
                         >
                             Voltar
                         </Link>

@@ -45,14 +45,14 @@ export function AuthForm() {
 
     return (
         <div>
-            <div className="bg-zinc-500">
+            {/* <div className="bg-zinc-500">
                 <ThemeSwitch />
-            </div>
+            </div> */}
             {/* toda janela */}
             <div className="flex items-center justify-center min-h-screen bg-bg-primary">
 
                 {/* formulario login */}
-                <div className="w-full max-w-md p-4 rounded-lg shadow-lg bg-fg-primary">
+                <div className="w-full max-w-md p-4 rounded-lg shadow-lg bg-bg-secondary">
                     <div className="flex justify-center items-center">
                         <Image
                             src={logo}
@@ -120,7 +120,7 @@ export function AuthForm() {
                                 <div>
                                     <Link
                                         href="/recoverPassword"
-                                        className="text-md text-text-secondary hover:text-text-primary "
+                                        className="text-md text-text-secondary hover:text-text-primary"
                                     >
                                         Esqueci minha senha
                                     </Link>

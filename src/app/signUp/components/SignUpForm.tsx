@@ -64,7 +64,7 @@ export function SignUpForm() {
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-bg-primary ">
-            <div className="w-full max-w-sm p-4 bg-fg-primary rounded-lg shadow-lg">
+            <div className="w-full max-w-sm p-4 bg-bg-secondary rounded-lg shadow-lg">
                 {/* Logo empresa */}
                 {/* <Image
                     src={logo}
@@ -167,7 +167,7 @@ export function SignUpForm() {
 
                 </form>
                 <div >
-                    <p className="mt-1 text-center text-sm text-zinc-600">
+                    <p className="mt-1 text-center text-sm text-text-secondary">
                         Ao clicar em “Criar conta”, você concorda com os&nbsp;
                         <Link href="/useTerms"
                             target="_blank"
@@ -186,7 +186,7 @@ export function SignUpForm() {
                             Política de Privacidade
                         </Link> da plataforma.
                     </p>
-                    <p className="mt-8 text-center text-sm text-zinc-600">
+                    <p className="mt-8 text-center text-sm text-text-secondary">
                         Já tem um cadastro?&nbsp;
                         <Link href="/auth" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                             Entre com sua conta.

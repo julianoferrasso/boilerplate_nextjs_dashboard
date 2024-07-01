@@ -1,5 +1,6 @@
-import { useContext, useState } from "react";
-import { Input } from "@/components/ui/input"
+'use client'
+import { parseCookies } from 'nookies'
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { FaSpinner } from 'react-icons/fa';
 import Link from 'next/link';
@@ -11,19 +12,24 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "@/contexts/AuthContext";
 
 export function WelcomePage() {
-    const { user } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
     const [isErrorMessage, setIsErrorMessage] = useState('')
     const [isSuccessMessage, setIsSuccessMessage] = useState('')
     const { handleSubmit } = useForm()
+
+    // const cookies = parseCookies();
+    // const email = cookies.user_email;
+
+    const { 'user_email': email } = parseCookies()
+    console.log(email)
+
 
     async function handleSendEmailAgain() {
         try {
             setIsLoading(true)
             setIsErrorMessage('')
             setIsSuccessMessage('')
-            if (user) {
-                const { email } = user
+            if (email) {
                 const response = await api.post('/auth/resendemail', { email })
                 console.log(response.data.message)
                 setIsSuccessMessage('Email de ativação enviado com sucesso!')
