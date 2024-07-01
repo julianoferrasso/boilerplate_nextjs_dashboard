@@ -23,9 +23,9 @@ export function EmailVerifyPage() {
 
     const router = useRouter();
 
-    if (user?.email == undefined) {
-        router.push('/app')
-    }
+    // if (user?.email == undefined) {
+    //     router.push('/app')
+    // }
 
     async function handleSendEmailAgain() {
         try {

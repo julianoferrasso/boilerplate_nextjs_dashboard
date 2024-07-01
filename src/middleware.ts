@@ -9,6 +9,7 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get('boilerplateNext_token');
     const email = request.cookies.get('user_email');
 
+
     console.log("TOKEN da requisicao: ", token);
     console.log("email da requisicao: ", email);
     // Tratar o token - se é valido conforme o backend
@@ -27,10 +28,14 @@ export function middleware(request: NextRequest) {
     if (request.nextUrl.pathname.startsWith('/welcome') && !email) {
         return NextResponse.redirect(new URL('/auth', request.url));
     }
+    // Apenas renderiza a pagina EmailVerify caso o usuario já tenha informado o email no signIn (gravado num cookie no AthContext).
+    if (request.nextUrl.pathname.startsWith('/emailVerify') && !email) {
+        return NextResponse.redirect(new URL('/auth', request.url));
+    }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/auth/:path*', '/app/:path*', '/welcome'],
+    matcher: ['/auth/:path*', '/app/:path*', '/welcome', '/emailVerify'],
 };
