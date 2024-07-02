@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Image from "next/image";
 import logo from "../../../../public/logo.png"
 import { api } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 const recoverPasswordSchema = z.object({
     email: z.string().email({ message: 'Email inválido' }).min(1, { message: 'Email é obrigatório' })
@@ -30,7 +31,7 @@ export function RecoverPasswordForm() {
             setIsLoading(true)
             setIsErrorMessage('')
             const response = await api.post('/auth/resetPassword', { email })
-            console.log(response.data.message)
+            //console.log(response.data.message)
             reset()
             setIsSuccessMessage('Email de recuperação enviado com sucesso! Acesse o link dentro de 1 hora e redefina sua senha.')
 
@@ -90,7 +91,7 @@ export function RecoverPasswordForm() {
                             <div>
                                 <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
                                     {isLoading ? (
-                                        <FaSpinner className="animate-spin mx-auto" />
+                                        <Loader2 className="h-6 w-6 animate-spin" />
                                     ) : (
                                         'Enviar'
                                     )}

@@ -10,11 +10,10 @@ import { AuthContext } from "@/contexts/AuthContext"
 import Link from 'next/link';
 import Image from "next/image";
 import logo from "../../../../public/logo.png"
-import ThemeSwitch from "@/components/ThemeSwitch"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Loader2 } from "lucide-react";
 
 // Define o esquema de validação com zod
 const loginSchema = z.object({
@@ -33,22 +32,17 @@ export function AuthForm() {
 
 
     async function handleSignIn(data: LoginSchema) {
-        console.log(data)
         try {
             await signIn(data)
             //reset()
         } catch (error) {
-            console.log(`Erro na pagina AuthForm ${error}`)
+            console.log(`Erro na pagina AuthForm`)
         }
     }
 
 
     return (
         <div>
-            {/* <div className="bg-zinc-500">
-                <ThemeSwitch />
-            </div> */}
-            {/* toda janela */}
             <div className="flex items-center justify-center min-h-screen bg-bg-primary">
 
                 {/* formulario login */}
@@ -130,7 +124,8 @@ export function AuthForm() {
 
                         <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
                             {isLoading ? (
-                                <FaSpinner className="animate-spin mx-auto" />
+                                <Loader2 className="h-6 w-6 animate-spin" />
+                                // <FaSpinner className="animate-spin mx-auto" />
                             ) : (
                                 'Entrar'
                             )}

@@ -9,11 +9,6 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get('boilerplateNext_token');
     const email = request.cookies.get('user_email');
 
-
-    console.log("TOKEN da requisicao: ", token);
-    console.log("email da requisicao: ", email);
-    // Tratar o token - se é valido conforme o backend
-
     // Apenas renderiza a página de login se o usuário não estiver autenticado.
     if (request.nextUrl.pathname.startsWith('/auth') && token) {
         return NextResponse.redirect(new URL('/app', request.url));

@@ -12,6 +12,7 @@ import { api } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 
 export function EmailVerifyPage() {
@@ -34,9 +35,8 @@ export function EmailVerifyPage() {
             setIsSuccessMessage('')
             if (user) {
                 const { email } = user
-                console.log('Dados do user do estado contexto', { email })
                 const response = await api.post('/auth/resendemail', { email })
-                console.log(response.data.message)
+                //console.log(response.data.message)
                 setIsSuccessMessage('Email de ativação enviado com sucesso!')
             }
         } catch (error: any) {
@@ -75,7 +75,7 @@ export function EmailVerifyPage() {
                         <div>
                             <Button className="w-full py-2 mt-4 text-white bg-green-600 rounded-md hover:bg-green-700" name="login" type="submit">
                                 {isLoading ? (
-                                    <FaSpinner className="animate-spin mx-auto" />
+                                    <Loader2 className="h-6 w-6 animate-spin" />
                                 ) : (
                                     'Reenviar e-mail de ativação'
                                 )}

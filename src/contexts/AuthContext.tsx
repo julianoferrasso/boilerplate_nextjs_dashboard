@@ -74,10 +74,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
             setIsLoading(true);
             setIsErrorLogin('')
-            console.log(email, password)
             const response = await api.post('/auth/login', { email, password })
             const { token, user } = response.data
-            console.log("teste ", response)
+
             // setCookie params
             // param1 = contexto da req - no lado do cliente
             // parma2 = nome do cookie
@@ -124,16 +123,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setIsErrorSignUp('')
             const response = await api.post('/auth/signup', { name, email, celular, cpf, cnpj, password })
-            const { tokenEmailVerified } = response.data.userCreated
-            //const newUser = { name, email, tokenEmailVerified }
-            const newUser = { email }
+            //const { tokenEmailVerified } = response.data.userCreated
             // salavar o email do usuario num cookie para poder reenviar o email de ativação na página welcome
             setCookie(null, 'user_email', email, {
                 maxAge: 60 * 60 * 1, //1hora
                 path: '/'
             })
-
-            //setUser(newUser)
             return (response)
         } catch (error: any) {
             setIsErrorSignUp(`${error.response.data.message}`)
@@ -149,7 +144,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             destroyCookie(undefined, 'boilerplateNext_token')
 
             // Remover o token do cabeçalho padrão da API
-            // api.defaults.headers['Authorization'] = undefined
             delete api.defaults.headers['Authorization']
 
             // Resetar o estado do usuário

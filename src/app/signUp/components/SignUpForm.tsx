@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import Image from "next/image";
 import logo from "../../../../public/logo.png"
+import { Loader2 } from "lucide-react"
 
 
 const signUpSchema = z.object({
@@ -157,7 +158,7 @@ export function SignUpForm() {
                         {/* botao cadastrar */}
                         <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
                             {isLoading ? (
-                                <FaSpinner className="animate-spin mx-auto" />
+                                <Loader2 className="h-6 w-6 animate-spin" />
                             ) : (
                                 'Criar conta'
                             )}

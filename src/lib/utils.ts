@@ -15,7 +15,6 @@ export const api = axios.create({
 
 // Debugging
 api.interceptors.request.use(config => {
-  //console.log(`config dentro utils: ${JSON.stringify(config)}`)
   return config
 })
 
