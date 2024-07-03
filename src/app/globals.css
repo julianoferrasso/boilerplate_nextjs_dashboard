@@ -29,12 +29,11 @@ body {
     /*"zinc 800"*/
     --text_tertiary: #27272a;
 
-    /* --link_primary: #3b82f6;
-    --link_secondary: #2563eb;
-    --link_tertiary: #1d4ed8; */
-
+    /*"blue 500"*/
     --link_primary: #3b82f6;
+    /*"blue 600"*/
     --link_secondary: #2563eb;
+    /*"blue 700"*/
     --link_tertiary: #1d4ed8;
 
     --background: 0 0% 100%;
@@ -68,6 +67,7 @@ body {
     --radius: 0.5rem;
   }
 
+
   .dark {
     /*"zinc 950"*/
     --background_primary: #09090b;
@@ -90,8 +90,11 @@ body {
     /*"zinc 400"*/
     --text_tertiary: #a1a1aa;
 
+    /*"blue 500"*/
     --link_primary: #3b82f6;
+    /*"blue 600"*/
     --link_secondary: #2563eb;
+    /*"blue 700"*/
     --link_tertiary: #1d4ed8;
 
     --background: 240 10% 3.9%;

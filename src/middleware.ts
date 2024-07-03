@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
-import { useContext } from 'react';
-import { AuthContext } from './contexts/AuthContext';
 
 // https://nextjs.org/docs/app/building-your-application/routing/middleware
 

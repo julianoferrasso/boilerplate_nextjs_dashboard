@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { parseCookies } from "nookies";
 
 
 export function EmailVerifyPage() {
@@ -22,19 +23,14 @@ export function EmailVerifyPage() {
     const [isSuccessMessage, setIsSuccessMessage] = useState('')
     const { handleSubmit } = useForm()
 
-    const router = useRouter();
-
-    // if (user?.email == undefined) {
-    //     router.push('/app')
-    // }
+    const { 'user_email': email } = parseCookies()
 
     async function handleSendEmailAgain() {
         try {
             setIsLoading(true)
             setIsErrorMessage('')
             setIsSuccessMessage('')
-            if (user) {
-                const { email } = user
+            if (email) {
                 const response = await api.post('/auth/resendemail', { email })
                 //console.log(response.data.message)
                 setIsSuccessMessage('Email de ativação enviado com sucesso!')

@@ -114,7 +114,7 @@ export function AuthForm() {
                                 <div>
                                     <Link
                                         href="/recoverPassword"
-                                        className="text-md text-text-secondary hover:text-text-primary"
+                                        className="text-md text-text-tertiary hover:text-link-tertiary"
                                     >
                                         Esqueci minha senha
                                     </Link>

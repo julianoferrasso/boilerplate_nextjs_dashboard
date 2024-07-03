@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
+import { CardDashboard } from "./components/CardDashboard";
 
 
 async function fetchData() {
@@ -16,11 +18,14 @@ export default async function Page() {
     //const data = await fetchData();
 
     return (
-        <div className="flex">
-            <Button >
-                <Loader2 className="4-6 w-6 animate-spin" />
-                Click me
-            </Button>
+        <div className="flex h-60 w-full items-center justify-center bg-bg-tertiary">
+
+            {/* <CardDashboard />
+            <CardDashboard />
+            <CardDashboard />
+            <CardDashboard />
+            <CardDashboard />
+            <CardDashboard /> */}
         </div>
     )
 

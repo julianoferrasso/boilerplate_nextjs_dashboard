@@ -76,7 +76,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setIsErrorLogin('')
             const response = await api.post('/auth/login', { email, password })
             const { token, user } = response.data
-
             // setCookie params
             // param1 = contexto da req - no lado do cliente
             // parma2 = nome do cookie
@@ -89,22 +88,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 // httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
             })
             api.defaults.headers['authorization'] = `Bearer ${token}`
-
-            // salavar o email do usuario num cookie para poder reenviar o email de ativação na página emailVerify
-            setCookie(null, 'user_email', email, {
-                maxAge: 60 * 60 * 1, //1hora
-                path: '/'
-            })
-
             setUser(user)
             setIsAuthenticated(true)
             router.push('/app')
         } catch (error: any) {
             if (error.response.status === 401) {
                 if (error.response.data.message == "Email não verificado") {
-                    // definir user com email
-                    const newUser = { email }
-                    setUser(newUser)
+                    // salavar o email do usuario num cookie para poder reenviar o email de ativação na página emailVerify
+                    setCookie(null, 'user_email', email, {
+                        maxAge: 60 * 60 * 1, //1hora
+                        path: '/'
+                    })
                     // redirecionar para welcome
                     router.push('/emailVerify')
                 } else {

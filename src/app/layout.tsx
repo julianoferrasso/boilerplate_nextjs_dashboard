@@ -15,7 +15,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
   return (
     <html lang="pt-BR">
       {/* <html lang="pt-BR" suppressHydrationWarning> */}
-      <body className={inter.className}>
+      <body className={`${inter.className} `}>
         <Providers>
           {children}
         </Providers>

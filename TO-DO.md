@@ -15,6 +15,7 @@ TO-DO:
 [] - chamadas à API fazer Server
 [] - Criar Logo 
 [] - mensagens de erro
+[] - pagina para pegar os parametro da url do emailverify e enviar no body para a API para verificar o email
 [] - Publicar
 
 [[]] V2
