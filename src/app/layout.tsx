@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Gerenciador de marketplaces",
 };
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
       {/* <html lang="pt-BR" suppressHydrationWarning> */}

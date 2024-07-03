@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { CardDashboard } from "./components/CardDashboard";
+import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 
 async function fetchData() {
@@ -18,14 +20,14 @@ export default async function Page() {
     //const data = await fetchData();
 
     return (
-        <div className="flex h-60 w-full items-center justify-center bg-bg-tertiary">
+        <div className="flex items-center justify-center ">
 
-            {/* <CardDashboard />
             <CardDashboard />
             <CardDashboard />
             <CardDashboard />
             <CardDashboard />
-            <CardDashboard /> */}
+            <CardDashboard />
+            <CardDashboard />
         </div>
     )
 

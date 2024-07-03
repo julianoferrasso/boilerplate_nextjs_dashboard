@@ -28,6 +28,7 @@ type User = {
     name?: string;
     email?: string;
     tokenEmailVerified?: string;
+    avatarUrl?: string;
 }
 
 type AuthContextType = {

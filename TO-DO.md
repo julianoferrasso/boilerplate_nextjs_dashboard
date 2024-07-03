@@ -8,6 +8,11 @@ TO-DO:
 [X] - checkbox "manter logado"
 [X] - Tema Dark/Light - https://www.davegray.codes/posts/light-dark-mode-nextjs-app-router-tailwind
 [] - desenvolver Dashboard
+  - Otimizar layout (conteudo esta escondendo quando diminui a tela, tem que encolher ou quebrar a linha)
+  - fazer botao switch para o tema
+  - paginas filhas nao abrem
+  - layout esta recarregando o estado
+  - implementar responsividade mediaquery? min-md? min-sm?
 [] - função imagem perfil
 [] - refresh token
 [] - tratar o token no middleware para verificar se o token é valido
