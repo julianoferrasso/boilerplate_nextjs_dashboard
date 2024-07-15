@@ -7,6 +7,7 @@ TO-DO:
 [X] - emailVerified
 [X] - checkbox "manter logado"
 [X] - Tema Dark/Light - https://www.davegray.codes/posts/light-dark-mode-nextjs-app-router-tailwind
+[] - Input e-mail definir lowercase
 [] - desenvolver Dashboard
   - Otimizar layout (conteudo esta escondendo quando diminui a tela, tem que encolher ou quebrar a linha)
   - fazer botao switch para o tema
