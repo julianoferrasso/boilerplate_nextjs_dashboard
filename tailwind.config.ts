@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        'sm': '480px',
+      },
       colors: {
         bg: {
           primary: "var(--background_primary)",

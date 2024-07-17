@@ -16,7 +16,7 @@ async function fetchData() {
     //return data;
 }
 
-export default async function Page() {
+export default async function Dashboard() {
     //const data = await fetchData();
 
     return (

@@ -61,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 if (token) {
                     const response = await api.get('/user/profile')
                     setUser(response.data);
-                    router.push('/app')
+                    //router.push('/app')
                 }
             } catch (error: any) {
                 console.log('Erro ao chamar /user/profile:', error.response.data.message);
