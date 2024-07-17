@@ -1,6 +1,6 @@
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
-import SidebarMobile from "./components/SidebarMobile"
+import HeaderMobile from "./components/HeaderMobile"
 
 export default function SideBarLayout({
     children,
@@ -13,7 +13,7 @@ export default function SideBarLayout({
                 <Sidebar />
             </div>
             <div className="sm:hidden w-full">
-                <SidebarMobile />
+                <HeaderMobile />
             </div>
             <main className="flex flex-col w-full h-full overflow-hidden">
                 <div className="hidden sm:block ">

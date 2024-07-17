@@ -1,7 +1,7 @@
-export default function Profile() {
+export default function Reports() {
     return (
         <div className="bg-bg-secondary w-full h-full">
-            Perfil
+            Relatórios
         </div>
     )
 }
