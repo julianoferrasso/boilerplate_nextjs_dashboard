@@ -65,7 +65,7 @@ export function AuthForm() {
                             <div className="relative">
                                 <UserIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
                                 <Input
-                                    type="text"
+                                    type="email"
                                     placeholder="Email"
                                     className="pl-10"
                                     {...register('email')}
