@@ -12,6 +12,7 @@ TO-DO:
   - implementar responsividade mediaquery? min-md? min-sm?
   - fazer botao switch para o tema
   - layout esta recarregando o estado
+  - responsividade tela login 
 [] - função imagem perfil
 [] - refresh token
 [] - tratar o token no middleware para verificar se o token é valido
