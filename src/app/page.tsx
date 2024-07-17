@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button"
 export default function Component() {
   return (
     <div className="flex flex-col min-h-[100dvh]">
-      <header className="bg-background px-4 lg:px-6 h-14 flex items-center justify-between">
+      <header className="bg-bg-primary px-4 lg:px-6 h-14 flex items-center justify-between">
         <Link href="#" className="flex items-center" prefetch={false}>
           <MountainIcon className="h-6 w-6" />
           <span className="sr-only">Uma</span>
@@ -36,14 +36,14 @@ export default function Component() {
           </nav>
           <Link
             href="/signUp"
-            className="inline-flex h-9 items-center justify-center rounded-md bg-bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-9 items-center justify-center rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-green-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             prefetch={false}
           >
             Crie sua conta
           </Link>
           <Link
             href="//auth"
-            className="inline-flex h-9 items-center justify-center rounded-md bg-bg-secondary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-9 items-center justify-center rounded-md bg-green-800 px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-green-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             prefetch={false}
           >
             Login
