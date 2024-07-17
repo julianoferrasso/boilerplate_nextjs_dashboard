@@ -30,7 +30,7 @@ export default function Component() {
             <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
               Clientes
             </Link>
-            <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
+            <Link href="/auth" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
               Login
             </Link>
           </nav>
