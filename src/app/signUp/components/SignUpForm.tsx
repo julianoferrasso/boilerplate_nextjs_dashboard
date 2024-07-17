@@ -63,6 +63,7 @@ export function SignUpForm() {
     }
 
 
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-bg-primary ">
             <div className="w-full max-w-sm p-4 bg-bg-secondary rounded-lg shadow-lg">

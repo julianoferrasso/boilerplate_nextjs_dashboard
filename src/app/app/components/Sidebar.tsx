@@ -42,19 +42,11 @@ export default function Sidebar() {
                 <div className="flex-1 overflow-y-auto">
                     <nav className="mt-4 space-y-2 px-4">
                         <div>
-                            <div className="mb-2 text-xs font-medium text-muted-foreground">Main</div>
+                            {/* <div className="mb-2 text-xs font-medium text-muted-foreground border-b broder-bg-secondary w-full"></div> */}
                             <div className="grid gap-1">
+
                                 <Link
-                                    href="#"
-                                    className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${isCollapsed ? "justify-center" : "hover:text-foreground focus:text-foreground"
-                                        }`}
-                                    prefetch={false}
-                                >
-                                    <HomeIcon className="h-5 w-5" />
-                                    <span className={`${isCollapsed ? "hidden" : ""}`}>Home</span>
-                                </Link>
-                                <Link
-                                    href="#"
+                                    href="/app"
                                     className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${isCollapsed ? "justify-center" : "hover:text-foreground focus:text-foreground"
                                         }`}
                                     prefetch={false}
@@ -62,31 +54,53 @@ export default function Sidebar() {
                                     <LayoutDashboardIcon className="h-5 w-5" />
                                     <span className={`${isCollapsed ? "hidden" : ""}`}>Dashboard</span>
                                 </Link>
+
                                 <Link
-                                    href="#"
+                                    href="/app/sales"
+                                    className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${isCollapsed ? "justify-center" : "hover:text-foreground focus:text-foreground"
+                                        }`}
+                                    prefetch={false}
+                                >
+                                    <HomeIcon className="h-5 w-5" />
+                                    <span className={`${isCollapsed ? "hidden" : ""}`}>Vendas</span>
+                                </Link>
+
+                                <Link
+                                    href="/app/products"
                                     className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${isCollapsed ? "justify-center" : "hover:text-foreground focus:text-foreground"
                                         }`}
                                     prefetch={false}
                                 >
                                     <CalendarIcon className="h-5 w-5" />
-                                    <span className={`${isCollapsed ? "hidden" : ""}`}>Calendar</span>
+                                    <span className={`${isCollapsed ? "hidden" : ""}`}>Produtos</span>
+                                </Link>
+
+                                <Link
+                                    href="/app/reports"
+                                    className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${isCollapsed ? "justify-center" : "hover:text-foreground focus:text-foreground"
+                                        }`}
+                                    prefetch={false}
+                                >
+                                    <CalendarIcon className="h-5 w-5" />
+                                    <span className={`${isCollapsed ? "hidden" : ""}`}>Relatórios</span>
                                 </Link>
                             </div>
                         </div>
                         <div>
-                            <div className="mb-2 text-xs font-medium text-muted-foreground">Settings</div>
+                            <div className="mb-2 text-xs font-medium text-muted-foreground border-b broder-bg-secondary w-full"></div>
+                            <div className="mb-2 text-xs font-medium text-muted-foreground"></div>
                             <div className="grid gap-1">
                                 <Link
-                                    href="#"
+                                    href="/app/settings"
                                     className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${isCollapsed ? "justify-center" : "hover:text-foreground focus:text-foreground"
                                         }`}
                                     prefetch={false}
                                 >
                                     <SettingsIcon className="h-5 w-5" />
-                                    <span className={`${isCollapsed ? "hidden" : ""}`}>Settings</span>
+                                    <span className={`${isCollapsed ? "hidden" : ""}`}>Configurações</span>
                                 </Link>
                                 <Link
-                                    href="#"
+                                    href="profile"
                                     className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${isCollapsed ? "justify-center" : "hover:text-foreground focus:text-foreground"
                                         }`}
                                     prefetch={false}

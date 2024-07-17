@@ -50,7 +50,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isErrorLogin, setIsErrorLogin] = useState<string>("")
     const [isErrorSignUp, setIsErrorSignUp] = useState<string>("")
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
-
     const router = useRouter()
 
     // atualizar os dados do usuario
@@ -61,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 if (token) {
                     const response = await api.get('/user/profile')
                     setUser(response.data);
-                    //router.push('/app')
+                    console.log('Dados do usuario:', response.data);
                 }
             } catch (error: any) {
                 console.log('Erro ao chamar /user/profile:', error.response.data.message);
@@ -86,12 +85,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setCookie(undefined, 'boilerplateNext_token', token, {
                 maxAge,
                 path: '/'  // Certifique-se de que o cookie esteja disponível em todas as páginas
-                // httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
+                //httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
             })
             api.defaults.headers['authorization'] = `Bearer ${token}`
             setUser(user)
             setIsAuthenticated(true)
-            router.push('/app')
+            router.push('/app');
+
         } catch (error: any) {
             if (error.response.status === 401) {
                 if (error.response.data.message == "Email não verificado") {
@@ -133,6 +133,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
+
     async function signOut() {
         try {
             // Remover o cookie do token
@@ -144,7 +145,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // Resetar o estado do usuário
             setUser(null)
 
-            // Redirecionar o usuário para a página de login
             router.push('/auth')
 
         } catch (error: any) {

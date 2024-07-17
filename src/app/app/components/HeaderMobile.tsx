@@ -15,7 +15,7 @@ export default function HeaderMobile() {
     const { signOut } = useContext(AuthContext)
 
     async function handleSignOut() {
-        await signOut()
+        signOut()
     }
 
     function navigateLink(route: string) {
@@ -68,7 +68,7 @@ export default function HeaderMobile() {
                         <span className="text-text-primary">Perfil</span>
                     </div>
 
-                    <button className="flex w-full h-10 justify-center items-center py-2 bg-bg-tertiary hover:bg-bg-secondary border-y border-fg-primary" onClick={() => handleSignOut()}>
+                    <button className="flex w-full h-10 justify-center items-center py-2 bg-bg-tertiary hover:bg-bg-secondary border-y border-fg-primary" onClick={handleSignOut}>
                         <div className="flex w-full h-10 justify-center items-center py-2 bg-bg-tertiary hover:bg-bg-secondary border-y border-fg-primary">
                             <span className="text-text-primary">Sair</span>
                         </div>
