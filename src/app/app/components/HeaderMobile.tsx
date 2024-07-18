@@ -3,7 +3,7 @@
 import { useContext, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, Divide, Sun } from "lucide-react";
+import { ChevronDown, Mountain } from "lucide-react";
 import Dashboard from "../page";
 import ThemeSwitch from "@/components/ThemeSwitch";
 import { AuthContext } from "@/contexts/AuthContext";
@@ -28,7 +28,7 @@ export default function HeaderMobile() {
         <>
             <div className="flex w-full h-14 items-center justify-between border-b px-4 bg-bg-tertiary ">
                 <Link href="#" className="flex items-center gap-4" prefetch={false}>
-                    <Sun className="h-6 w-6" />
+                    <Mountain className="h-6 w-6" />
                     <span className="text-lg font-semibold text-text-primary">mPlaces Admin</span>
                 </Link>
                 <ThemeSwitch />

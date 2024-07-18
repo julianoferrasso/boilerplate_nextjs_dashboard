@@ -100,7 +100,7 @@ export default function Sidebar() {
                                     <span className={`${isCollapsed ? "hidden" : ""}`}>Configurações</span>
                                 </Link>
                                 <Link
-                                    href="profile"
+                                    href="/app/profile"
                                     className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${isCollapsed ? "justify-center" : "hover:text-foreground focus:text-foreground"
                                         }`}
                                     prefetch={false}
