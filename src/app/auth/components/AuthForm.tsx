@@ -43,10 +43,10 @@ export function AuthForm() {
 
     return (
         <div>
-            <div className="flex items-center justify-center min-h-screen bg-bg-primary">
+            <div className="flex items-center px-4 justify-center min-h-screen bg-bg-primary">
 
                 {/* formulario login */}
-                <div className="w-full max-w-md p-4 rounded-lg shadow-lg bg-bg-secondary">
+                <div className="w-full max-w-md px-8 sm:px-4 rounded-lg shadow-lg bg-bg-tertiary">
                     <div className="flex justify-center items-center">
                         <Image
                             src={logo}
@@ -101,7 +101,7 @@ export function AuthForm() {
                                         type="checkbox"
                                         id="rememberMe"
                                         {...register('rememberMe')}
-                                        className="w-3"
+                                        className="w-3 h-3"
                                     />
 
                                     <label
