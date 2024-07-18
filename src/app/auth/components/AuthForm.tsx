@@ -14,6 +14,7 @@ import logo from "../../../../public/logo.png"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // Define o esquema de validação com zod
 const loginSchema = z.object({
@@ -29,123 +30,120 @@ export function AuthForm() {
         resolver: zodResolver(loginSchema)
     })
     const { signIn, isAuthenticated, user, isLoading, isErrorLogin } = useContext(AuthContext)
-
+    const router = useRouter()
 
     async function handleSignIn(data: LoginSchema) {
         try {
             await signIn(data)
-            //reset()
+            reset()
+            router.push('/app')
         } catch (error) {
             console.log(`Erro na pagina AuthForm`)
         }
     }
 
-
     return (
-        <div>
-            <div className="flex items-center px-2 justify-center min-h-screen bg-bg-primary">
+        <div className="flex items-center px-2 justify-center min-h-screen bg-bg-primary">
+            {/* Box login */}
+            <div className="w-full max-w-md px-4 sm:px-4 rounded-lg shadow-lg bg-bg-tertiary">
+                <div className="flex justify-center items-center">
+                    <Image
+                        src={logo}
+                        width={150}
+                        height={1500}
+                        alt="Logo do SaaS"
+                    />
+                </div>
+                <h2 className="mb-6 text-xl font-bold text-center text-text-secondary">Entre com seu email e senha</h2>
 
-                {/* formulario login */}
-                <div className="w-full max-w-md px-4 sm:px-4 rounded-lg shadow-lg bg-bg-tertiary">
-                    <div className="flex justify-center items-center">
-                        <Image
-                            src={logo}
-                            width={150}
-                            height={1500}
-                            alt="Logo do SaaS"
-                        />
-                    </div>
-                    <h2 className="mb-6 text-xl font-bold text-center text-text-secondary">Entre com seu email e senha</h2>
+                {/* Formulario de login */}
+                <form onSubmit={handleSubmit(handleSignIn)}>
+                    <div className="space-y-4">
 
-                    {/* Formulario de login */}
-                    <form onSubmit={handleSubmit(handleSignIn)}>
-                        <div className="space-y-4">
-
-                            {/* input email */}
-                            <div className="relative">
-                                <UserIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
-                                <Input
-                                    type="email"
-                                    placeholder="Email"
-                                    className="pl-10 border-zinc-400 border-1"
-                                    {...register('email')}
-                                />
-                                {errors.email && (
-                                    <span className="text-red-400 text-sm pl-4">{errors.email.message}</span>
-                                )}
-                            </div>
-
-                            {/* input Password */}
-                            <div className="relative">
-                                <LockIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
-                                <Input
-                                    type="password"
-                                    placeholder="Senha"
-                                    className="pl-10 border-zinc-400 border-1"
-                                    {...register('password')}
-                                />
-                                {errors.password && (
-                                    <span className="text-red-400 text-sm pl-4">{errors.password.message}</span>
-                                )}
-                                {isErrorLogin != '' && (
-                                    <div className="rounded-md py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-red-400">
-                                        <div className="text-red-600">{isErrorLogin}</div>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* checkbox remeber me e link Esqueci Senha*/}
-                            <div className="flex justify-between items-center px-2">
-                                <div className="flex items-center">
-                                    <Input
-                                        type="checkbox"
-                                        id="rememberMe"
-                                        {...register('rememberMe')}
-                                        className="w-4 h-4"
-                                    />
-
-                                    <label
-                                        className="ml-1 text-text-tertiary text-sm focus-visible:ring-blue-600 focus-visible:ring-1 focus-visible:ring-offset-1"
-                                        htmlFor="rememberMe">
-                                        Manter conectado
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <Link
-                                        href="/recoverPassword"
-                                        className="text-sm text-text-tertiary hover:text-link-tertiary"
-                                    >
-                                        Esqueci minha senha
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-
-                        <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
-                            {isLoading ? (
-                                <Loader2 className="h-6 w-6 animate-spin" />
-                                // <FaSpinner className="animate-spin mx-auto" />
-                            ) : (
-                                'Entrar'
+                        {/* input email */}
+                        <div className="relative">
+                            <UserIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
+                            <Input
+                                type="email"
+                                placeholder="Email"
+                                className="pl-10 border-zinc-400 border-1"
+                                {...register('email')}
+                            />
+                            {errors.email && (
+                                <span className="text-red-400 text-sm pl-4">{errors.email.message}</span>
                             )}
-                        </Button>
-                    </form>
-
-                    {/* Links para termos de uso e politica de privacidade  */}
-                    <div >
-                        <div className="mt-6">
-                            <p className="text-center text-sm text-text-tertiary">
-                                Não é um membro?{' '}<br />
-                                <Link href="/signUp" className="font-semibold leading-6 text-link-primary hover:text-link-tertiary">
-                                    Inicie uma avaliação gratuita de 14 dias
-                                </Link>
-                            </p>
                         </div>
+
+                        {/* input Password */}
+                        <div className="relative">
+                            <LockIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
+                            <Input
+                                type="password"
+                                placeholder="Senha"
+                                className="pl-10 border-zinc-400 border-1"
+                                {...register('password')}
+                            />
+                            {errors.password && (
+                                <span className="text-red-400 text-sm pl-4">{errors.password.message}</span>
+                            )}
+                            {isErrorLogin != '' && (
+                                <div className="rounded-md py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-red-400">
+                                    <div className="text-red-600">{isErrorLogin}</div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* checkbox remeber me e link Esqueci Senha*/}
+                        <div className="flex justify-between items-center px-2">
+                            <div className="flex items-center">
+                                <Input
+                                    type="checkbox"
+                                    id="rememberMe"
+                                    {...register('rememberMe')}
+                                    className="w-4 h-4"
+                                />
+
+                                <label
+                                    className="ml-1 text-text-tertiary text-sm focus-visible:ring-blue-600 focus-visible:ring-1 focus-visible:ring-offset-1"
+                                    htmlFor="rememberMe">
+                                    Manter conectado
+                                </label>
+                            </div>
+
+                            <div>
+                                <Link
+                                    href="/recoverPassword"
+                                    className="text-sm text-text-tertiary hover:text-link-tertiary"
+                                >
+                                    Esqueci minha senha
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
+                        {isLoading ? (
+                            <Loader2 className="h-6 w-6 animate-spin" />
+                        ) : (
+                            'Entrar'
+                        )}
+                    </Button>
+                </form>
+
+                {/* Links para termos de uso e politica de privacidade  */}
+                <div >
+                    <div className="mt-6">
+                        <p className="text-center text-sm text-text-tertiary">
+                            Não é um membro?{' '}<br />
+                            <Link href="/signUp" className="font-semibold leading-6 text-link-primary hover:text-link-tertiary">
+                                Inicie uma avaliação gratuita de 14 dias
+                            </Link>
+                        </p>
                     </div>
                 </div>
-            </div >
-        </div>
+            </div>
+        </div >
+
     )
 }
 

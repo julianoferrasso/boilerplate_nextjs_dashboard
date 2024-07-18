@@ -63,18 +63,19 @@ export function SignUpForm() {
     }
 
 
-
     return (
-        <div className="flex items-center justify-center min-h-screen bg-bg-primary ">
-            <div className="w-full max-w-sm p-4 bg-bg-secondary rounded-lg shadow-lg">
-                {/* Logo empresa */}
-                {/* <Image
-                    src={logo}
-                    width={300}
-                    height={300}
-                    alt="Logo do SaaS"
-                /> */}
-                <h2 className="mb-6 text-xl font-bold text-center">Crie sua conta no Admin Places</h2>
+        <div className="flex items-center px-2 justify-center min-h-screen bg-bg-primary">
+            {/* Box login */}
+            <div className="w-full max-w-md px-4 sm:px-4 rounded-lg shadow-lg bg-bg-tertiary">
+                <div className="flex justify-center items-center">
+                    <Image
+                        src={logo}
+                        width={150}
+                        height={1500}
+                        alt="Logo do SaaS"
+                    />
+                </div>
+                <h2 className="mb-6 text-xl font-bold text-center text-text-secondary">Crie sua conta no Admin Places</h2>
 
                 {/* Se tive rmensagem de erro no cadastro */}
                 {isErrorSignUp != '' && (
@@ -83,6 +84,7 @@ export function SignUpForm() {
                     </div>
                 )}
 
+                {/* Formulario de login */}
                 <form onSubmit={handleSubmit(handleSignUp)}>
                     <div className="space-y-4">
 
@@ -92,7 +94,7 @@ export function SignUpForm() {
                             <Input
                                 type="text"
                                 placeholder="Nome Completo"
-                                className="pl-10"
+                                className="pl-10 border-zinc-400 border-1"
                                 {...register('name')}
                             />
                             {errors.name && (
@@ -106,7 +108,7 @@ export function SignUpForm() {
                             <Input
                                 type="text"
                                 placeholder="Email"
-                                className="pl-10"
+                                className="pl-10 border-zinc-400 border-1"
                                 {...register('email')}
                             />
                             {errors.email && (
@@ -120,7 +122,7 @@ export function SignUpForm() {
                             <Input
                                 type="number"
                                 placeholder="WhatsApp"
-                                className="pl-10"
+                                className="pl-10 border-zinc-400 border-1"
                                 {...register('celular')}
                             />
                             {errors.celular && (
@@ -134,7 +136,7 @@ export function SignUpForm() {
                             <Input
                                 type="password"
                                 placeholder="Senha"
-                                className="pl-10"
+                                className="pl-10 border-zinc-400 border-1"
                                 {...register('password')}
                             />
                             {errors.password && (
@@ -148,7 +150,7 @@ export function SignUpForm() {
                             <Input
                                 type="password"
                                 placeholder="Confirma senha"
-                                className="pl-10"
+                                className="pl-10 border-zinc-400 border-1"
                                 {...register('confirmPassword')}
                             />
                             {errors.confirmPassword && (
