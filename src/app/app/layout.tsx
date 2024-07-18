@@ -28,7 +28,7 @@ export default function SideBarLayout({
                 {/* Conteudo principal */}
                 <main className="flex items-start justify-start w-full h-[calc(100vh-64px)] overflow-hidden bg-bg-primary">
 
-                    <div className="overflow-y-auto overflow-x-hidden w-full h-full pl-1 pt-1 box-border break-words">
+                    <div className="overflow-y-auto overflow-x-hidden w-full h-full pl-0 sm:pl-1 pt-1 box-border break-words">
                         <div className="w-full h-full flex items-start flex-wrap">
                             {children}
                         </div>
