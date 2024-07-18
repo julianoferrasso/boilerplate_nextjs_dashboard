@@ -43,10 +43,10 @@ export function AuthForm() {
 
     return (
         <div>
-            <div className="flex items-center px-4 justify-center min-h-screen bg-bg-primary">
+            <div className="flex items-center px-2 justify-center min-h-screen bg-bg-primary">
 
                 {/* formulario login */}
-                <div className="w-full max-w-md px-8 sm:px-4 rounded-lg shadow-lg bg-bg-tertiary">
+                <div className="w-full max-w-md px-4 sm:px-4 rounded-lg shadow-lg bg-bg-tertiary">
                     <div className="flex justify-center items-center">
                         <Image
                             src={logo}
@@ -67,7 +67,7 @@ export function AuthForm() {
                                 <Input
                                     type="email"
                                     placeholder="Email"
-                                    className="pl-10"
+                                    className="pl-10 border-zinc-400 border-1"
                                     {...register('email')}
                                 />
                                 {errors.email && (
@@ -81,7 +81,7 @@ export function AuthForm() {
                                 <Input
                                     type="password"
                                     placeholder="Senha"
-                                    className="pl-10 "
+                                    className="pl-10 border-zinc-400 border-1"
                                     {...register('password')}
                                 />
                                 {errors.password && (
@@ -101,7 +101,7 @@ export function AuthForm() {
                                         type="checkbox"
                                         id="rememberMe"
                                         {...register('rememberMe')}
-                                        className="w-3 h-3"
+                                        className="w-4 h-4"
                                     />
 
                                     <label
@@ -114,7 +114,7 @@ export function AuthForm() {
                                 <div>
                                     <Link
                                         href="/recoverPassword"
-                                        className="text-md text-text-tertiary hover:text-link-tertiary"
+                                        className="text-sm text-text-tertiary hover:text-link-tertiary"
                                     >
                                         Esqueci minha senha
                                     </Link>
