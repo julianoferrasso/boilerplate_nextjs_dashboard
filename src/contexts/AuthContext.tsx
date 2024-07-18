@@ -75,7 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setIsErrorLogin('')
             const response = await api.post('/auth/login', { email, password })
-            const { token, user } = response.data
+            const { token, user: usuario } = response.data
             // setCookie params
             // param1 = contexto da req - no lado do cliente
             // parma2 = nome do cookie
@@ -88,9 +88,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 //httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
             })
             api.defaults.headers['authorization'] = `Bearer ${token}`
-            setUser(user)
+            setUser(usuario)
             setIsAuthenticated(true)
-            console.log("dados do usuario no signIn", JSON.stringify(user))
             router.push('/app');
 
         } catch (error: any) {

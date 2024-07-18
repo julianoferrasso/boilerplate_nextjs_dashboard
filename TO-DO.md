@@ -23,6 +23,7 @@ TO-DO:
 [] - Criar Logo 
 [] - eliminar mensagens de erro do console e implementar Toast
 [] - Publicar
+[] - criar User DTO para compartilhar entre api e app
 
 [[]] V2
 [] - SignUP - Input mask para celular
