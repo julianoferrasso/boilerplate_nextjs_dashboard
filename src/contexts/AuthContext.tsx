@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 if (token) {
                     const response = await api.get('/user/profile')
                     setUser(response.data);
-                    console.log('Dados do usuario:', response.data);
+                    console.log('Dados do usuario no useEffect Do Auth Provider:', response.data);
                 }
             } catch (error: any) {
                 console.log('Erro ao chamar /user/profile:', error.response.data.message);
@@ -68,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
         getProfile()
         // verficar necessidade de router como dependencia
-    }, [router])
+    }, [])
 
     async function signIn({ email, password, rememberMe = false }: SignInData) {
         try {
@@ -90,6 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             api.defaults.headers['authorization'] = `Bearer ${token}`
             setUser(user)
             setIsAuthenticated(true)
+            console.log("dados do usuario no signIn", JSON.stringify(user))
             router.push('/app');
 
         } catch (error: any) {

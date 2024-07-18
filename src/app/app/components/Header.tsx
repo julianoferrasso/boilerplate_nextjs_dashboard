@@ -10,6 +10,8 @@ export default function Header() {
     const [isLoading, setIsLoading] = useState(true)
     const { user } = useContext(AuthContext)
 
+    console.log("user dendro de Header antes de chamar useEffect", JSON.stringify(user))
+
     // Função para pegar as iniciais
     const getInitials = (name: string | undefined) => {
         if (!name) return "CN";
@@ -21,6 +23,8 @@ export default function Header() {
 
     useEffect(() => {
         setIsLoading(false)
+        console.log("user useEffect do Header", user?.avatarUrl)
+        console.log("user useEffect do Header", JSON.stringify(user))
     }, [])
 
     return (
@@ -28,7 +32,9 @@ export default function Header() {
             <ThemeSwitch />
             <BellIcon className="w-8 h-8" />
             {isLoading ? (
-                <Loader2 className="h-6 w-6 text-blue-600 animate-spin" />
+                <div className="h-12 w-12 rounded-full bg-blue-700 flex items-center justify-center">
+                    <Loader2 className="h-6 w-6 text-zinc-200 animate-spin" />
+                </div>
             ) : (
                 <Avatar className="h-12 w-12">
                     <AvatarImage src={user?.avatarUrl} className="h-12 w-12" />
