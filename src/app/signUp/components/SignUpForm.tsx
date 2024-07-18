@@ -66,7 +66,7 @@ export function SignUpForm() {
     return (
         <div className="flex items-center px-2 justify-center min-h-screen bg-bg-primary">
             {/* Box login */}
-            <div className="w-full max-w-md px-4 sm:px-4 rounded-lg shadow-lg bg-bg-tertiary">
+            <div className="w-full max-w-md px-4 sm:px-6 pb-6 rounded-lg shadow-lg bg-bg-tertiary">
                 <div className="flex justify-center items-center">
                     <Image
                         src={logo}

@@ -45,7 +45,7 @@ export function AuthForm() {
     return (
         <div className="flex items-center px-2 justify-center min-h-screen bg-bg-primary">
             {/* Box login */}
-            <div className="w-full max-w-md px-4 sm:px-4 rounded-lg shadow-lg bg-bg-tertiary">
+            <div className="w-full max-w-md px-4 sm:px-6 pb-6 rounded-lg shadow-lg bg-bg-tertiary">
                 <div className="flex justify-center items-center">
                     <Image
                         src={logo}
@@ -87,8 +87,8 @@ export function AuthForm() {
                                 <span className="text-red-400 text-sm pl-4">{errors.password.message}</span>
                             )}
                             {isErrorLogin != '' && (
-                                <div className="rounded-md py-1 mt-3 flex items-center justify-center bg-red-200 border-1 border-red-400">
-                                    <div className="text-red-600">{isErrorLogin}</div>
+                                <div className="rounded-md py-1 mt-3 flex items-center justify-center bg-zinc-200 border-1 border-red-400">
+                                    <span className="text-red-600 font-medium">{isErrorLogin}</span>
                                 </div>
                             )}
                         </div>
