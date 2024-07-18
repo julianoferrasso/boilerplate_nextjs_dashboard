@@ -16,7 +16,7 @@ export default function Profile() {
 
     };
     return (
-        <div className="bg-bg-secondary w-full h-full">
+        <div className="bg-bg-secondary ">
 
             <div className="bg-indigo-400 dark:bg-indigo-700 h-20 flex items-center justify-center">
                 <div className="-mb-14 ">
