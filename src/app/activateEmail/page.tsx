@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { ActivateEmailForm } from "./components/ActivateEmailForm";
 
-export default function ResetPassword() {
+export default function ActivateEmail() {
     const { isAuthenticated } = useContext(AuthContext)
 
     const router = useRouter()
