@@ -33,7 +33,7 @@ export function RecoverPasswordForm() {
             const response = await api.post('/auth/resetPassword', { email })
             //console.log(response.data.message)
             reset()
-            setIsSuccessMessage('Email de recuperação enviado com sucesso! Acesse o link dentro de 1 hora e redefina sua senha.')
+            setIsSuccessMessage('Email de recuperação enviado com sucesso. Acesse o link dentro de 1 hora e redefina sua senha.')
 
         } catch (error: any) {
             console.log(`Error  ${error.response.data.message}`)
@@ -78,7 +78,9 @@ export function RecoverPasswordForm() {
                             )}
                             {isSuccessMessage && (
                                 <div>
-                                    <div className="text-green-700 mt-4 text-center">{isSuccessMessage}</div>
+                                    <div className="rounded-md px-4 py-2 mt-3 flex items-center justify-center bg-zinc-100/10 border-1 border-green-700">
+                                        <span className="text-green-700 font-medium">{isSuccessMessage}</span>
+                                    </div>
                                     <Button className="w-full py-2 mt-4 text-white bg-green-600 rounded-md hover:bg-green-800" name="login" type="submit">
                                         <Link href="/auth">
                                             Voltar para login
