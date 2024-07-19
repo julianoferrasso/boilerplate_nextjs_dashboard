@@ -7,8 +7,9 @@ TO-DO:
 [X] - emailVerified
 [X] - checkbox "manter logado"
 [X] - Tema Dark/Light - https://www.davegray.codes/posts/light-dark-mode-nextjs-app-router-tailwind
-[] - responsividade tela login 
+[X] - responsividade tela login 
 [] - pagina para pegar os parametro da url do emailverify e enviar no body para a API para verificar o email
+[] - nao esta redirecionando para emailVerify no login
 [] - desenvolver Dashboard
   - Otimizar layout (conteudo esta escondendo quando diminui a tela, tem que encolher ou quebrar a linha)
   - implementar responsividade mediaquery? min-md? min-sm?
