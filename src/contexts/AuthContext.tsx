@@ -27,6 +27,7 @@ type SignUpData = {
 type User = {
     name?: string;
     email?: string;
+    celular?: string;
     tokenEmailVerified?: string;
     avatarUrl?: string;
 }
@@ -40,6 +41,7 @@ type AuthContextType = {
     signIn: (data: SignInData) => Promise<void>;
     signUp: (data: SignUpData) => Promise<ApiResponse>;
     signOut: () => void;
+    updateUser: (data: Partial<User>) => Promise<void>;
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -54,6 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // atualizar os dados do usuario
     useEffect(() => {
+        console.log("useEffect do auth context ...")
         const { 'boilerplateNext_token': token } = parseCookies()
         async function getProfile() {
             try {
@@ -133,7 +136,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
-
     async function signOut() {
         try {
             // Remover o cookie do token
@@ -152,8 +154,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
+    async function updateUser(data: Partial<User>) {
+        try {
+            setIsLoading(true);
+            const response = await api.put('/user/update', data);
+            setUser(prevState => ({ ...prevState, ...data }));
+            console.log('Dados do usuario atualizados:', response.data);
+        } catch (error: any) {
+            console.log('Erro ao atualizar dados do usuário:', error.response.data.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, isLoading, isErrorLogin, isErrorSignUp, signIn, signUp, signOut }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, isLoading, isErrorLogin, isErrorSignUp, signIn, signUp, signOut, updateUser }}>
             {children}
         </AuthContext.Provider>
     )

@@ -2,6 +2,7 @@ import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 import HeaderMobile from "./components/HeaderMobile"
 
+
 export default function SideBarLayout({
     children,
 }: {
