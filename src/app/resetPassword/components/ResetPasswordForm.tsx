@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
@@ -22,7 +22,7 @@ const resetPasswordSchema = z.object({
 
 type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>
 
-export function ResetPasswordForm() {
+function ResetPasswordFormContent() {
     const [isLoading, setIsLoading] = useState(false)
     const [isErrorMessage, setIsErrorMessage] = useState('')
     const [isSuccessMessage, setIsSuccessMessage] = useState('')
@@ -164,4 +164,12 @@ function LockIcon(props: any) {
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
         </svg>
     )
+}
+
+export function ResetPasswordForm() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResetPasswordFormContent />
+        </Suspense>
+    );
 }

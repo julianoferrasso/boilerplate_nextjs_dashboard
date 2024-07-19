@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
@@ -14,7 +14,7 @@ import { useSearchParams } from 'next/navigation'
 
 
 
-export function ActivateEmailForm() {
+function ActivateEmailFormContent() {
     const [isLoading, setIsLoading] = useState(false)
     const [isErrorMessage, setIsErrorMessage] = useState('')
     const [isSuccessMessage, setIsSuccessMessage] = useState('')
@@ -105,3 +105,10 @@ export function ActivateEmailForm() {
     )
 }
 
+export function ActivateEmailForm() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ActivateEmailFormContent />
+        </Suspense>
+    );
+}
