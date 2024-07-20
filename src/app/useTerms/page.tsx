@@ -6,14 +6,11 @@ export default function UseTerms() {
             Aceitação dos Termos
             Ao acessar ou usar o Wejobi, o usuário concorda em cumprir e estar vinculado a estes Termos. Caso não concorde, não deve utilizar o nosso Serviço.
             Descrição do Serviço
-            Wejobi fornece uma ferramenta de automação para blogs WordPress que utiliza a Inteligência Artificial para criar conteúdos.
-            Cadastro
+            Wejobi fornece uma ferramenta de gestão para os Marketplaces denominados Mercadolivre, Amazon e Shoppe.
             Para utilizar o Wejobi, o usuário deve se cadastrar, fornecendo informações verídicas e mantendo-as atualizadas.
             Limitações do Serviço
             a) Ainda em desenvolvimento das funcinalidades
-            b) O conteúdo gerado pertence ao usuário, mas o usuário concede à Wejobi uma licença perpétua, global e não exclusiva para usar esse conteúdo para fins de melhoria do Serviço e promoção.
-            Isenção de Responsabilidade
-            a) O Wejobi é fornecido “como está” e não oferecemos garantias de que estará sempre disponível ou será livre de erros.b) Não nos responsabilizamos pelo conteúdo gerado ou por decisões tomadas com base nesse conteúdo.
+            b) O Wejobi é fornecido “como está” e não oferecemos garantias de que estará sempre disponível ou será livre de erros.
             Limitação de Responsabilidade
             A Wejobi, seus diretores, empregados e afiliados, não serão responsáveis por danos indiretos, incidentais ou consequentes resultantes do uso ou incapacidade de usar o Serviço.
             Lei Aplicável e Jurisdição

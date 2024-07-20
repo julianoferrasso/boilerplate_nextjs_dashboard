@@ -2,7 +2,7 @@ export default function Privacy() {
     return (
         <div className="className">
             Política de Privacidade
-            A Política de Privacidade da Empresa foi atualizada em outubro de 2023.
+            A Política de Privacidade da Empresa foi atualizada em julho de 2024.
             Com o objetivo de proteger os direitos fundamentais de liberdade e de privacidade e o livre desenvolvimento da personalidade da pessoa natural, a Empresa elaborou a presente Política de Privacidade, observadas as disposições da Lei Geral de Proteção de Dados Pessoais (LGPD) – Lei n° 13.709/2018.
             É fundamental dedicar um momento para se familiarizar com nossas práticas de privacidade e falar conosco se tiver dúvidas.
             Para nós é importante ser transparente sobre o tratamento dos dados pessoais dos Usuários que utilizam os Serviços oferecidos pela Empresa, nos termos do Artigo 9º da LGPD. Esta Política se aplica quando o Usuário utiliza os nossos Serviços.
@@ -16,7 +16,6 @@ export default function Privacy() {
             QUAIS TIPOS DE DADOS PESSOAIS SÃO COLETADOS PELA EMPRESA?
             Considerando que a Empresa oferece seus Serviços por meio de um site, é necessário que a pessoa interessada em utilizar os Serviços da Empresa, em primeiro lugar, realize um cadastro. Esse cadastro inicial é chamado de Cadastro do Usuário.
             No Cadastro do Usuário são coletados os seguintes Dados Pessoais:
-
             nome completo;
             email;
             Referidos Dados Pessoais são coletados com a finalidade de identificar a pessoa do Usuário.
@@ -24,7 +23,7 @@ export default function Privacy() {
             POR QUE A EMPRESA TRATA OS DADOS PESSOAIS DOS USUÁRIOS?
             O Cadastro de Usuário se submete à hipótese legal de execução do Contrato, ou seja, só é possível a Empresa executar os Serviços contratados se o Usuário realizar o Cadastro de Usuário. Neste cenário, aplica-se o inciso VI do Artigo 7º da LGPD.
             COMO A EMPRESA ARMAZENA OS DADOS PESSOAIS?
-            A Empresa utiliza os serviços da Bubble para armazenar e hospedar seu aplicativo, utilizando a infraestrutura da Amazon AWS. A Bubble trata os dados pessoais nos termos da GDPR, conforme previsto em sua Política de Privacidade disponível no site https://bubble.io/privacy . Por essa razão, a eventual transferência internacional de dados pessoais pela Empresa para a Bubble obedece o inciso I do artigo 33 da LGPD.
+
             A EMPRESA PODE REALIZAR PROCESSAMENTO AUTOMÁTICO?
             A Empresa utiliza as informações e os dados que o Usuário forneceu para fazer recomendações de conexões, conteúdos e recursos que possam ser úteis para o Usuário. Por exemplo, são utilizados dados e informações a respeito do Usuário para recomendar conexões de outros Usuários e recomendar conteúdo adequado. O Usuário manter seu perfil atualizado e correto ajudará a tornar essas recomendações mais precisas e relevantes.
             QUAL A DURAÇÃO DO TRATAMENTO DE DADOS PESSOAIS PELA EMPRESA?
@@ -33,8 +32,7 @@ export default function Privacy() {
             Conforme previsto nos incisos VII e VIII do Artigo 6º da LGPD, que tratam do princípio da segurança e prevenção, respectivamente, a Empresa utiliza os mais modernos recursos existentes na área de segurança da informação para o ambiente da internet, garantindo assim seu acesso de forma segura. As informações transmitidas entre O Usuário e a Empresa passam por um processo de criptografia utilizando o SSL (Secure Sockets Layer), permitindo a decodificação dos dados, de forma legível, apenas para o Usuário e para nosso site e aplicativo. Assim, a cada acesso realizado, essa chave de segurança não pode ser decifrada por terceiros, sendo de uso exclusivo do site e aplicativo Empresa. Essa chave é a garantia de que o Usuário está operando em sistema seguro.
             QUAIS SÃO OS BROWSERS COMPATÍVEIS COM A SEGURANÇA DA INFORMAÇÃO DA EMPRESA?
             A utilização de determinados browsers pode criar incompatibilidade com o sistema de segurança e recursos utilizados pela Empresa. Os browsers mais adequados para navegar são sempre os navegadores mais modernos e conhecidos (Google Chrome, Mozilla Firefox, Microsoft Edge). O Google Analytics coleta informações de forma anônima, ou seja, relata as tendências do site, como páginas visitadas, tempo de permanência no site, entre outras informações, sem identificar visitantes individuais. Portanto, os dados pessoais compartilhados pelo Google Analytics com a Empresa são anonimizados, nos termos do inciso III do Artigo 5º da LGPD. Neste sentido, não se aplica a LGPD, conforme previsto no seu Artigo 12. Vale ressaltar que nenhuma informação pessoal, como nome, e-mail ou telefone, é recolhida pelo Google Analytics. Mais detalhes sobre a política de privacidade do Google Analytics pode ser encontrada aqui http://www.google.com/intl/en_uk/analytics/privacyoverview.html
-            O aplicativo da Empresa foi desenvolvido com a plataforma Bubble, para hospedar e armazenar os aplicativos desenvolvidos, utilizando a infraestrutura da Amazon AWS. Neste sentido, tanto o Bubble como a Amazon AWS poderão ter acesso a determinadas informações inseridas no aplicativo da Empresa. Fica consignado que tais empresas só acessarão os dados pessoais inseridos no aplicativo da Empresa, se necessário, e nos estritos termos previstos na LGPD.
-            DO DIREITO DO USUÁRIO, COMO TITULAR DOS DADOS PESSOAIS
+
             Conforme previsto no Artigo 18 da LGPD, é assegurado ao Usuário, a qualquer momento, mediante requisição à Empresa por meio do e-mail contato@wejobi.com, requerer:
 
             Confirmação da existência de tratamento dos Dados Pessoais;
