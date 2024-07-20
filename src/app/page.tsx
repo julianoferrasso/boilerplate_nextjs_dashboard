@@ -155,7 +155,7 @@ export default function Component() {
               </p>
             </div>
             <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch justify-center gap-6">
-              <Card className="p-6 bg-background shadow-sm transition-shadow hover:shadow-md">
+              {/* <Card className="p-6 bg-background shadow-sm transition-shadow hover:shadow-md">
                 <CardHeader>
                   <div className="flex items-center space-x-4">
                     <Avatar>
@@ -214,7 +214,7 @@ export default function Component() {
                     expectativas.&quot;
                   </blockquote>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           </div>
         </section>
