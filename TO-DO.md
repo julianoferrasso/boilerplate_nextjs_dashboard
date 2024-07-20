@@ -11,6 +11,7 @@ TO-DO:
 [] - pagina para pegar os parametro da url do emailverify e enviar no body para a API para verificar o email
   - verificar tratamento de erro Email e TOken
 [] - nao esta redirecionando para emailVerify no login
+[] - signIn e signOut inconsistente no redirecionamento
 [] - desenvolver Dashboard
   - Otimizar layout (conteudo esta escondendo quando diminui a tela, tem que encolher ou quebrar a linha)
   - implementar responsividade mediaquery? min-md? min-sm?

@@ -84,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // parma2 = nome do cookie
             // param3 = token
             // param4 = options
-            const maxAge = rememberMe ? 60 * 60 * 4 : undefined  //4 horas se nao tiver opção manter logado
+            const maxAge = rememberMe ? 60 * 60 * 24 * 7 : undefined  //4 horas se nao tiver opção manter logado
             setCookie(undefined, 'boilerplateNext_token', token, {
                 maxAge,
                 path: '/'  // Certifique-se de que o cookie esteja disponível em todas as páginas
