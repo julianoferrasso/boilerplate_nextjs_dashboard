@@ -49,8 +49,6 @@ export default function Privacy() {
             Caso o Usuário queira ter a confirmação de existência ou o acesso aos seus Dados Pessoais, a Empresa providenciará em até 5 dias úteis, contado da data do requerimento do Usuário, observados os segredos comercial e industrial.
             ALTERAÇÃO NESTA POLÍTICA DE PRIVACIDADE
             Na hipótese de ocorrer qualquer alteração em relação à finalidade específica do tratamento de Dados Pessoais e Dados Pessoais Sensíveis prevista, ou na forma e duração do referido tratamento, na identificação da Empresa como controladora dos dados ou nas informações compartilhadas pela Empresa e sua finalidade, esta se compromete a informar aos Usuários, com destaque de forma específica do teor das alterações, conforme previsto no § 6º do Artigo 8º da LGPD.
-            ENCARREGADO DA EMPRESA
-            Caso o Usuário tenha qualquer dúvida em relação ao tratamento de seus Dados Pessoais ou queira exercer quaisquer de seus direitos como titular do dado pessoal, basta entrar em contato com o Encarregado da Empresa, o Sr. Tiago Fonseca Costa por meio do e-mail tiagofonsecacosta@gmail.com
         </div>
     )
 }
