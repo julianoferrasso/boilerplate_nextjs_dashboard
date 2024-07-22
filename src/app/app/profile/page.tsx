@@ -21,6 +21,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 
+import ChangePictureProfileModal from './components/ChangePictureProfileModal';
+
 
 export const userProfileSchema = z.object({
     name: z.string().min(1, "Nome é obrigatório"),
@@ -32,6 +34,7 @@ export const avatarUploadSchema = z.object({
     profilePicture: z.instanceof(File).optional(),
 });
 
+type UserProfileSchema = z.infer<typeof userProfileSchema>
 
 export default function Profile() {
     const { user, updateUser } = useContext(AuthContext)
@@ -39,24 +42,25 @@ export default function Profile() {
     const [email, setEmail] = useState(user?.email || '');
     const [celular, setCelular] = useState(user?.celular || '');
     const [isLoading, setIsLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [uploadingAvatar, setUploadingAvatar] = useState(false);
-    const [showCropper, setShowCropper] = useState(false);
-    const [croppedImage, setCroppedImage] = useState<string | null>(null);
-    const [file, setFile] = useState<File | null>(null);
-    const [avatarUrl, setAvatarUrl] = useState(user?.avatarUrl || '');
+    // Form para atualizar dados usuario 
+    const { control, register, handleSubmit, reset, formState: { errors } } = useForm<UserProfileSchema>({
+        resolver: zodResolver(userProfileSchema)
+    })
 
-    const { control, handleSubmit: handleProfileSubmit, setValue: setProfileValue } = useForm({
-        resolver: zodResolver(userProfileSchema),
-        defaultValues: { name, email, celular }
-    });
+    function handleOpenModalChangePicture() {
+        setIsModalOpen(true);
+    };
 
-    const { handleSubmit: handleAvatarSubmit, setValue: setAvatarValue } = useForm({
-        resolver: zodResolver(avatarUploadSchema),
-    });
+    function handleCloseModalChangePicture() {
+        setIsModalOpen(false);
+    };
 
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const cropperRef = useRef<any>(null);
+    const handlePhotoUpload = (file: any) => {
+        // Função para fazer o upload da foto para a API 
+        console.log('Upload file:', file);
+    };
 
     // Função para pegar as iniciais
     const getInitials = (name: string | undefined) => {
@@ -71,92 +75,8 @@ export default function Profile() {
             setName(user.name || '');
             setEmail(user.email || '');
             setCelular(user.celular || '');
-            setAvatarUrl(user.avatarUrl || '');
         }
     }, [user]);
-
-
-    const handleProfileFormSubmit = async (data: any) => {
-        setIsLoading(true);
-        try {
-            await updateUser({ name: data.name, email: data.email });
-            toast.success('Dados atualizados com sucesso!', {
-                position: "top-center",
-                autoClose: 3000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
-        } catch (error) {
-            console.error('Erro ao atualizar dados do usuário:', error);
-            toast.error('Erro ao atualizar dados do usuário.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const handleUploadAvatar = async () => {
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append('profilePicture', file);
-
-        setUploadingAvatar(true);
-
-        try {
-            const response = await fetch('/api/user/update-profile-picture', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`, // Ajuste conforme necessário
-                },
-                body: formData,
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                toast.success('Foto de perfil atualizada com sucesso!', {
-                    position: "top-center",
-                    autoClose: 3000,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
-                setAvatarUrl(result.avatarUrl); // Atualize o URL da foto de perfil
-            } else {
-                toast.error(result.message || 'Erro ao atualizar a foto de perfil.');
-            }
-        } catch (error) {
-            toast.error('Erro ao atualizar a foto de perfil.');
-        } finally {
-            setUploadingAvatar(false);
-            setFile(null);
-            setShowCropper(false);
-        }
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = e.target.files?.[0];
-        if (selectedFile) {
-            setFile(selectedFile);
-            setShowCropper(true);
-        }
-    };
-
-    const handleCrop = () => {
-        if (cropperRef.current) {
-            setCroppedImage(cropperRef.current.getCroppedCanvas().toDataURL());
-        }
-    };
-
-    const handleCropSubmit = async () => {
-        if (croppedImage) {
-            const blob = await fetch(croppedImage).then(r => r.blob());
-            const file = new File([blob], 'profile-picture.png', { type: blob.type });
-            setFile(file);
-            handleUploadAvatar();
-        }
-    };
-
 
     const showToast = () => {
         toast.success('A foto foi clicada!', {
@@ -165,14 +85,17 @@ export default function Profile() {
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            progress: undefined,
-            // theme: "colored",
+            progress: undefined
         });
     };
-
-
     return (
         <div className="bg-bg-primary w-full h-full">
+            <ChangePictureProfileModal
+                isOpen={isModalOpen}
+                onRequestClose={handleCloseModalChangePicture}
+                onPhotoUpload={handlePhotoUpload}
+                currentPhoto={user?.avatarUrl}
+            />
 
             <div className="bg-indigo-400 dark:bg-indigo-700 h-32 flex items-center justify-center">
                 <div className="relative -mb-14 ">
@@ -180,18 +103,12 @@ export default function Profile() {
                         <AvatarImage src={user?.avatarUrl} className="h-36 w-36" />
                         <AvatarFallback className="bg-blue-500"> {getInitials(user?.name)}</AvatarFallback>
                     </Avatar>
-                    <div onClick={() => fileInputRef.current?.click()}
+                    <div
+                        onClick={handleOpenModalChangePicture}
                         className="absolute bottom-0 right-0 m-1 ring-2 rounded-full p-1 bg-zinc-700/70 ring-green-400 dark:ring-white cursor-pointer"
                     >
                         <RefreshCw className="h-6 w-6 stroke-green-400 dark:stroke-green-500 stroke-2 " />
                     </div>
-                    <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        onChange={handleFileChange}
-                    />
                 </div>
             </div>
 
@@ -203,6 +120,7 @@ export default function Profile() {
                             <label className="block text-text-secondary text-sm font-normal mb-1" htmlFor="name">
                                 Nome
                             </label>
+
                             <Controller
                                 name="name"
                                 control={control}

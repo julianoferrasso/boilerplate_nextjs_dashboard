@@ -1,6 +1,15 @@
+'use client'
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 import HeaderMobile from "./components/HeaderMobile"
+
+//o react-modal precisa saber qual elemento do DOM é o "root" da sua aplicação, 
+// de modo que ele possa esconder o conteúdo principal da tela para 
+// leitores de tela quando o modal estiver aberto.
+// definido div id="__next" como root pro modal - poderia ser no layout root tambem
+// chama dentro do useEffect
+import Modal from 'react-modal';
+import { useEffect } from "react";
 
 
 export default function SideBarLayout({
@@ -8,8 +17,12 @@ export default function SideBarLayout({
 }: {
     children: React.ReactNode
 }) {
+
+    useEffect(() => {
+        Modal.setAppElement('#__next');
+    }, []);
     return (
-        <div className="flex flex-col sm:flex-row items-start justify-start bg-bg-primary">
+        <div id="__next" className="flex flex-col sm:flex-row items-start justify-start bg-bg-primary">
 
             {/* Sidebar para Tablet e Desktop */}
             <div className="min-h-screen hidden sm:block">
