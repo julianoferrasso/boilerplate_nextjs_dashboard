@@ -51,11 +51,11 @@ export default function ThemeSwitch() {
         //otimizar botao de tema https://www.youtube.com/watch?v=MNf8DUej1Vo
         <div className="flex justify-center items-center ">
             {effectiveTheme === 'dark' ? (
-                <button onClick={handleThemeLight} className="w-9 h-9 bg-zinc-950 rounded-full flex items-center justify-center">
+                <button onClick={handleThemeLight} className="w-9 h-9 rounded-full flex items-center justify-center">
                     <SunIcon className="text-zinc-200 w-8 h-8" />
                 </button>
             ) : (
-                <button onClick={handleThemeDark} className="w-9 h-9 bg-zinc-400 rounded-full flex items-center justify-center">
+                <button onClick={handleThemeDark} className="w-9 h-9  rounded-full flex items-center justify-center">
                     <MoonIcon className="text-zinc-900 w-8 h-8" />
                 </button>
             )}

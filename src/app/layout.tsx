@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+// Imprtaões para usr o react-toastify - TOAST
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,6 +23,8 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
       <body className={`${inter.className} `}>
         <Providers>
           {children}
+          <ToastContainer />
+          {/* https://fkhadra.github.io/react-toastify/introduction */}
         </Providers>
       </body>
     </html>
