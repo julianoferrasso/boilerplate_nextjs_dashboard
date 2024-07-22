@@ -46,6 +46,7 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, onPh
             const response = await api.post('/user/updateuseravatar', { avatar: photoData });
 
             // pegar a nova url e setar no avatar e atualizar o avatar do estado
+            // https://www.youtube.com/watch?v=NZElg91l_ms
             if (response.status !== 200) {
                 throw new Error('Erro ao atualizar a foto de perfil');
             }
