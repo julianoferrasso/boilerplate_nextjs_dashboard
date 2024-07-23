@@ -42,6 +42,14 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, onPh
 
     async function handleUpdateProfilePhoto(photoData: string) {
         try {
+            //https://www.youtube.com/watch?v=6dxngWXxgb4
+
+            // - quero que adapte o meu codigo para continuar usando o react-hook-form e 
+            // - inclua o zod para fazer o schema e que tenha dois submits independente um do outro, 
+            // - um que seja para a alteração de nome email e celular e 
+            // - outro para o upload da foto e 
+            // - quero tambem que ao selecionar uma foto seja exibido um modal para o usuario posicionar a 
+            // foto num quadrado que ira recortar somente a parte selecionada
             // set isLoading
             const response = await api.post('/user/updateuseravatar', { avatar: photoData });
 

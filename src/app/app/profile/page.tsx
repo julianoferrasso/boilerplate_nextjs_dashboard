@@ -1,15 +1,4 @@
-//https://www.youtube.com/watch?v=6dxngWXxgb4
-
-// - quero que adapte o meu codigo para continuar usando o react-hook-form e 
-// - inclua o zod para fazer o schema e que tenha dois submits independente um do outro, 
-// - um que seja para a alteração de nome email e celular e 
-// - outro para o upload da foto e 
-// - quero tambem que ao selecionar uma foto seja exibido um modal para o usuario posicionar a 
-// foto num quadrado que ira recortar somente a parte selecionada
-
-
 "use client"
-
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -18,21 +7,16 @@ import { toast } from 'react-toastify';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
-import Cropper from 'react-cropper';
-import 'cropperjs/dist/cropper.css';
 
 import ChangePictureProfileModal from './components/ChangePictureProfileModal';
 
 
-export const userProfileSchema = z.object({
+const userProfileSchema = z.object({
     name: z.string().min(1, "Nome é obrigatório"),
     email: z.string().email("Email inválido"),
     celular: z.string().optional(),
 });
 
-export const avatarUploadSchema = z.object({
-    profilePicture: z.instanceof(File).optional(),
-});
 
 type UserProfileSchema = z.infer<typeof userProfileSchema>
 
