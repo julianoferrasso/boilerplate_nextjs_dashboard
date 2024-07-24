@@ -77,8 +77,9 @@ export default function Profile() {
             <ChangePictureProfileModal
                 isOpen={isModalOpen}
                 onRequestClose={handleCloseModalChangePicture}
-                onPhotoUpload={handlePhotoUpload}
-                currentPhoto={user?.avatarUrl}
+                user={user}
+            // onPhotoUpload={handlePhotoUpload}
+            // currentPhoto={user?.avatarUrl}
             />
 
             <div className="bg-indigo-400 dark:bg-indigo-700 h-32 flex items-center justify-center">

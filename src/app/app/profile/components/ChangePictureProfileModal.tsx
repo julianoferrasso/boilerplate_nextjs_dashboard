@@ -6,16 +6,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { api } from '@/lib/utils';
 
+
 // Esquema de validação
 const schema = z.object({
     profilePicture: z.instanceof(File).optional(),
 });
 
 
-export default function ChangePictureProfileModal({ isOpen, onRequestClose, onPhotoUpload }: any) {
+export default function ChangePictureProfileModal({ isOpen, onRequestClose, user }: any) {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const editorRef = useRef<AvatarEditor | null>(null);
     const [scaleAVatar, setScaleAvatar] = useState(1)
+    const [isUploading, setIsUploading] = useState(false)
+
+    // ajustar controle de isUploading para habilitar e desabilitar o botao
+
+    let userId = 'jdjd-5-565-gdfdgdf'
 
     const { handleSubmit, control, setValue, reset } = useForm({
         resolver: zodResolver(schema),
@@ -28,49 +34,60 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, onPh
         }
     };
 
-    function handleClose() {
-        reset();
-        setSelectedFile(null);
-        onRequestClose();
-    };
-
     function handleSacale(event: React.ChangeEvent<HTMLInputElement>) {
         const scale = parseFloat(event.target.value)
         setScaleAvatar(scale)
         console.log(scale)
     };
 
-    async function handleUpdateProfilePhoto(photoData: string) {
+    function handleClose() {
+        reset();
+        setSelectedFile(null);
+        onRequestClose();
+    };
+
+    async function handleUpdateProfilePhoto(photoBlob: Blob) {
         try {
-            //https://www.youtube.com/watch?v=6dxngWXxgb4
+            setIsUploading(true)
+            console.log("isUploading true = ", isUploading)
+            const formData = new FormData();
+            formData.append('profilePicture', photoBlob, 'profilePicture.jpg');
+            formData.append('userId', userId);
 
-            // - quero que adapte o meu codigo para continuar usando o react-hook-form e 
-            // - inclua o zod para fazer o schema e que tenha dois submits independente um do outro, 
-            // - um que seja para a alteração de nome email e celular e 
-            // - outro para o upload da foto e 
-            // - quero tambem que ao selecionar uma foto seja exibido um modal para o usuario posicionar a 
-            // foto num quadrado que ira recortar somente a parte selecionada
-            // set isLoading
-            const response = await api.post('/user/updateuseravatar', { avatar: photoData });
-
-            // pegar a nova url e setar no avatar e atualizar o avatar do estado
-            // https://www.youtube.com/watch?v=NZElg91l_ms
-            if (response.status !== 200) {
-                throw new Error('Erro ao atualizar a foto de perfil');
-            }
+            const response = await api.put('/user/updateprofilepicture', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
 
             console.log('Foto de perfil atualizada com sucesso');
         } catch (error) {
             console.error('Erro:', error);
+        } finally {
+            setIsUploading(false)
+            console.log("isUploading false = ", isUploading)
         }
-    };
+    }
 
-    const onSubmit = () => {
-        if (editorRef.current) {
-            const canvas = editorRef.current.getImageScaledToCanvas().toDataURL();
-            onPhotoUpload(canvas);
-            handleUpdateProfilePhoto(canvas);
-            handleClose();
+    async function onSubmit() {
+        try {
+            if (editorRef.current) {
+                // Converte o canvas para Blob
+                // Obtem a imagem com a resolucao do canvas (200px X 200px)
+                // const canvas = editorRef.current.getImageScaledToCanvas();
+
+                // Pega o canvas original do AvatarEditor
+                const canvas = editorRef.current.getImage();
+                canvas.toBlob(async (blob: Blob | null) => {
+
+                    if (blob) {
+                        await handleUpdateProfilePhoto(blob);
+                        handleClose();
+                    }
+                }, 'image/jpg', 0.5);
+            }
+        } catch (error) {
+            alert("Algo deu errado.")
         }
     };
 
@@ -100,7 +117,6 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, onPh
                                 color={[155, 155, 155, 0.6]}
                                 scale={scaleAVatar}
                             />
-
                             <input
                                 type="range"
                                 name="sacle"
@@ -123,16 +139,17 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, onPh
                     <button
                         onClick={handleClose}
                         className="bg-zinc-500 text-white py-2 px-4 rounded"
+                        disabled={isUploading}
                     >
                         <span className='text-white text-md'>Cancelar</span>
                     </button>
                     <button
                         onClick={handleSubmit(onSubmit)}
                         className=" bg-blue-500 py-2 px-4 rounded text-text-primary"
+                        disabled={isUploading}
                     >
                         <span className='text-white text-md'>Alterar</span>
                     </button>
-
                 </div>
             </div>
         </Modal>

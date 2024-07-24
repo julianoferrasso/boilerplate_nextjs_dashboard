@@ -23,7 +23,6 @@ function ActivateEmailFormContent() {
     const email = searchParams.get('email')
     const token = searchParams.get('token')
 
-
     useEffect(() => {
         async function verifyEmail() {
             try {
