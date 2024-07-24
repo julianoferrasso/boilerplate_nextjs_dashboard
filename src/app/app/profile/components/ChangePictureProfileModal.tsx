@@ -1,17 +1,21 @@
+// adicionar forma de escolher outra foto no modal
+// desabilitar botoes no isUploading
+// tratar tamanho da foto, ela fica maior do que o arquivo original
+
 import Modal from 'react-modal';
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { api } from '@/lib/utils';
-
+import { toast } from 'react-toastify';
+import { AuthContext } from '@/contexts/AuthContext';
 
 // Esquema de validação
 const schema = z.object({
     profilePicture: z.instanceof(File).optional(),
 });
-
 
 export default function ChangePictureProfileModal({ isOpen, onRequestClose, user }: any) {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -19,9 +23,7 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
     const [scaleAVatar, setScaleAvatar] = useState(1)
     const [isUploading, setIsUploading] = useState(false)
 
-    // ajustar controle de isUploading para habilitar e desabilitar o botao
-
-    let userId = 'jdjd-5-565-gdfdgdf'
+    const { updateUser } = useContext(AuthContext)
 
     const { handleSubmit, control, setValue, reset } = useForm({
         resolver: zodResolver(schema),
@@ -37,7 +39,6 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
     function handleSacale(event: React.ChangeEvent<HTMLInputElement>) {
         const scale = parseFloat(event.target.value)
         setScaleAvatar(scale)
-        console.log(scale)
     };
 
     function handleClose() {
@@ -47,22 +48,22 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
     };
 
     async function handleUpdateProfilePhoto(photoBlob: Blob) {
+        setIsUploading(true)
         try {
-            setIsUploading(true)
             console.log("isUploading true = ", isUploading)
             const formData = new FormData();
             formData.append('profilePicture', photoBlob, 'profilePicture.jpg');
-            formData.append('userId', userId);
+            formData.append('userId', user.id);
 
             const response = await api.put('/user/updateprofilepicture', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
+            updateUser({ avatarUrl: response.data.avatarUrl })
 
-            console.log('Foto de perfil atualizada com sucesso');
-        } catch (error) {
-            console.error('Erro:', error);
+        } catch (error: any) {
+            console.error('Erro:', error.response.data.message);
         } finally {
             setIsUploading(false)
             console.log("isUploading false = ", isUploading)
@@ -70,6 +71,7 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
     }
 
     async function onSubmit() {
+        setIsUploading(true)
         try {
             if (editorRef.current) {
                 // Converte o canvas para Blob
@@ -84,11 +86,33 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
                         await handleUpdateProfilePhoto(blob);
                         handleClose();
                     }
-                }, 'image/jpg', 0.5);
+                }, 'image/jpg', 0.1);
             }
         } catch (error) {
-            alert("Algo deu errado.")
+            console.log("Algo deu errado.", error);
         }
+    };
+
+    const showToast = () => {
+        toast.success('A foto foi clicada!', {
+            position: "top-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+        });
+    };
+
+    function handleClickFileInputDiv() {
+        const fileInput = document.getElementById('inputFile');
+        if (fileInput) {
+            fileInput.click(); // Aciona o clique no input de arquivo
+        }
+    };
+    const handleOpenGalleryAgain = () => {
+        setSelectedFile(null);
+        handleClickFileInputDiv()
     };
 
     return (
@@ -106,7 +130,7 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
                 {/* Corpo - Avatar Editor */}
                 <div className='bg-bg-primary flex flex-col items-center justify-center h-[400px] w-[350px] sm:w-[450px] md:w-[590px] border-t-1 border-b-1 border-zinc-500 dark:border-zinc-200'>
                     {selectedFile ? (
-                        <div>
+                        <div className='flex flex-col'>
                             <AvatarEditor
                                 ref={editorRef}
                                 image={selectedFile}
@@ -117,22 +141,41 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
                                 color={[155, 155, 155, 0.6]}
                                 scale={scaleAVatar}
                             />
-                            <input
-                                type="range"
-                                name="sacle"
-                                defaultValue={1}
-                                step={0.01}
-                                min={0.5}
-                                max={2}
-                                onChange={handleSacale}
-                                className='w-full mt-4'
-                            />
+                            <div className='flex flex-row items-center justify-between mt-2'>
+                                <input
+                                    type="range"
+                                    name="sacle"
+                                    defaultValue={1}
+                                    step={0.01}
+                                    min={0.5}
+                                    max={2}
+                                    onChange={handleSacale}
+                                    className='w-44'
+                                />
+                                <div className='border-2 border-blue-600 rounded-2xl px-2 py-1 cursor-pointer'
+                                    onClick={handleOpenGalleryAgain}
+                                >
+                                    <span>Abrir galeria</span>
+                                </div>
+                            </div>
                         </div>
                     ) : (
-                        <div>
-                            <input type="file" onChange={handleFileChange} />
+                        <div className="flex items-center justify-center h-[450px] w-[350px] sm:w-[450px] md:w-[590px]  cursor-pointer"
+                            onClick={handleClickFileInputDiv}
+                        >
+                            <input
+                                type="file"
+                                accept="image/jpeg, image/jpg, image/png"
+                                onChange={handleFileChange}
+                                className="hidden"
+                                id="inputFile"
+                            />
+                            <div className='border-2 border-blue-600 rounded-2xl p-3'>
+                                <span className="text-text-primary">Abrir galeria</span>
+                            </div>
                         </div>
                     )}
+
                 </div>
                 {/* Footer - botoes de Cancelar e Alterar foto */}
                 <div className='flex items-center justify-center gap-4 mt-4'>

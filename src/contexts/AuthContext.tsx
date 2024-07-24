@@ -1,3 +1,5 @@
+// transferir estados isLoading, isError, isSuccess para os componentes que chamam??
+
 import { createContext, useEffect, useState, ReactNode } from "react"
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { api } from "@/lib/utils";
@@ -154,12 +156,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
+
     async function updateUser(data: Partial<User>) {
         try {
             setIsLoading(true);
-            const response = await api.put('/user/update', data);
+            //const response = await api.put('/user/update', data);
             setUser(prevState => ({ ...prevState, ...data }));
-            console.log('Dados do usuario atualizados:', response.data);
+            //console.log('Dados do usuario atualizados:', response.data);
         } catch (error: any) {
             console.log('Erro ao atualizar dados do usuário:', error.response.data.message);
         } finally {
