@@ -1,6 +1,7 @@
-// adicionar forma de escolher outra foto no modal
 // desabilitar botoes no isUploading
+// adicionar forma de escolher outra foto no modal
 // tratar tamanho da foto, ela fica maior do que o arquivo original
+
 
 import Modal from 'react-modal';
 import { useState, useRef, useContext } from 'react';
@@ -110,9 +111,9 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
             fileInput.click(); // Aciona o clique no input de arquivo
         }
     };
-    const handleOpenGalleryAgain = () => {
+
+    const handleResetFileInput = () => {
         setSelectedFile(null);
-        handleClickFileInputDiv()
     };
 
     return (
@@ -150,17 +151,17 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
                                     min={0.5}
                                     max={2}
                                     onChange={handleSacale}
-                                    className='w-44'
+                                    className='w-44 ml-2'
                                 />
-                                <div className='border-2 border-blue-600 rounded-2xl px-2 py-1 cursor-pointer'
-                                    onClick={handleOpenGalleryAgain}
+                                <div className='border-2 border-blue-600 rounded-2xl px-2 py-1 cursor-pointer mr-2'
+                                    onClick={handleResetFileInput}
                                 >
-                                    <span>Abrir galeria</span>
+                                    <span className='text-text-secondary text-sm'>Trocar foto</span>
                                 </div>
                             </div>
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center h-[450px] w-[350px] sm:w-[450px] md:w-[590px]  cursor-pointer"
+                        <div className="flex items-center justify-center h-[360px] w-[350px] sm:w-[450px] md:w-[590px]  cursor-pointer"
                             onClick={handleClickFileInputDiv}
                         >
                             <input
@@ -170,7 +171,7 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
                                 className="hidden"
                                 id="inputFile"
                             />
-                            <div className='border-2 border-blue-600 rounded-2xl p-3'>
+                            <div className='flex items-center justify-center border-2 border-blue-600 rounded-2xl p-3'>
                                 <span className="text-text-primary">Abrir galeria</span>
                             </div>
                         </div>
