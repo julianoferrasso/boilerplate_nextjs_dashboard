@@ -1,5 +1,4 @@
 // desabilitar botoes no isUploading
-// adicionar forma de escolher outra foto no modal
 // tratar tamanho da foto, ela fica maior do que o arquivo original
 
 

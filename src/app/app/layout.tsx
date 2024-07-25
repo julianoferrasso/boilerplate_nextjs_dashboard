@@ -2,6 +2,7 @@
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 import HeaderMobile from "./components/HeaderMobile"
+import SidebarMobile from "./components/SidebarMobile"
 
 //o react-modal precisa saber qual elemento do DOM é o "root" da sua aplicação, 
 // de modo que ele possa esconder o conteúdo principal da tela para 
@@ -31,6 +32,8 @@ export default function SideBarLayout({
             {/* Header para Mobile */}
             <div className="sm:hidden w-full">
                 <HeaderMobile />
+                {/* <div className="sm:hidden ">
+                <SidebarMobile /> */}
             </div>
             <main className="flex flex-col w-full h-full overflow-hidden">
 
