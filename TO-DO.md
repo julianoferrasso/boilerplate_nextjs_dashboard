@@ -1,5 +1,6 @@
 TO-DO:
 [[ ]] V1
+[x] - enviar manterLogado pro signIn para manipular expiração do cookie
 [x] - exibir mensagem de erro se user/senha incorreto
 [x] - signOut
 [x] - recoverPassword
@@ -13,19 +14,23 @@ TO-DO:
 [x] - função trocar imagem perfil
   [x] - UX botao trocar foto
   [] - tratar erro tamanho foto
+[] - Sidebar mobile
+[x] - Sidebar desktop 
+  [] - recolher no tamanho medio
+  [] - no hover do mouse exibir nome (https://www.youtube.com/watch?v=T9TnTH7gp8Q)
 [] - funcao atualizar dados
 [] - funcao trocar senha
 [x] - nao esta redirecionando para emailVerify no login
-[] - signIn e signOut inconsistente no redirecionamento
+[x] - signIn e signOut inconsistente no redirecionamento
 [] - desenvolver Dashboard
   [x] - Otimizar layout (conteudo esta escondendo quando diminui a tela, tem que encolher ou quebrar a linha)
   [x] - implementar responsividade mediaquery? min-md? min-sm?
-  [] - fazer botao switch para o tema
-  [] - layout esta recarregando o estado
+  [x] - fazer botao switch para o tema
 [x] - usar o S3 da Amazon para salavar as foto num bucket
   [] - criar mecanismo de url temporaria
-[] - menu suspenso na foto user versao Desktop
-[] - tratar o token no middleware para verificar se o token é valido
+[x] - menu suspenso na foto user versao Desktop
+  [] - melhorar estilo
+  [x] - fechar menu ao clicar fora da foto?
 [x] - Transformar cookie http only
 [] - Criar Logo 
 [] - eliminar mensagens de erro do console e implementar Toast

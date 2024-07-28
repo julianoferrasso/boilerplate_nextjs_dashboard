@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
             setIsLoading(true);
             setIsErrorLogin('')
-            const response = await api.post('/auth/signin', { email, password })
+            const response = await api.post('/auth/signin', { email, password, rememberMe })
             const { user: usuario } = response.data
             // const { token, user: usuario } = response.data
             // console.log('Dados do token: ', token)

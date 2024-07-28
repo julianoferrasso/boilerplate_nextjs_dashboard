@@ -4,19 +4,49 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { AuthContext } from "@/contexts/AuthContext";
 import { BellIcon } from "@heroicons/react/24/outline"
 import { Loader2 } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+import Link from "next/link";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useRouter } from 'next/navigation'
 
 export default function Header() {
     const { user, signOut } = useContext(AuthContext)
     const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false)
+    const router = useRouter()
+    const menuRef = useRef<HTMLInputElement>(null);
 
     function handleOpenAvatarMenu() {
         setIsAvatarMenuOpen(!isAvatarMenuOpen)
     }
 
+    function navigateLink(route: string) {
+        setIsAvatarMenuOpen(false)
+        router.push(route);
+    }
+
     function handleSignOut() {
         signOut()
     }
+
+    // Adiciona evento de clique global para fechar o menu quando clicar fora dele
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsAvatarMenuOpen(false)
+            }
+        }
+        if (isAvatarMenuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+            console.log('adiconou eventListner')
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+            console.log('removeu eventListner')
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            console.log('adiconou eventListner no return')
+        };
+    }, [isAvatarMenuOpen])
 
     // Função para pegar as iniciais
     const getInitials = (name: string | undefined) => {
@@ -45,13 +75,25 @@ export default function Header() {
                 </div>
             )}
             {isAvatarMenuOpen &&
-                <div className="absolute top-[60px] flex flex-col gap-2 py-2 items-center rounded-md bg-bg-secondary opacity-80 border-1 border-fg-secondary w-36 transition-all 
-                    duration-300 ">
-                    <button className="hover:bg-bg-primary w-full">
-                        <span className="text-text-primary">Perfil</span>
+                <div ref={menuRef}
+                    className="absolute top-[60px] flex flex-col gap-2 py-2 items-center rounded-md  bg-bg-secondary border-1 border-fg-tertiary w-36 transition-all 
+                    duration-300"
+                >
+                    <button
+                        className="hover:bg-white dark:hover:bg-black w-full relative"
+                        onClick={() => navigateLink('/app/profile')}
+                    >
+                        <span className="text-text-primary">
+                            Perfil
+                        </span>
                     </button>
-                    <button className="hover:bg-bg-primary w-full" onClick={handleSignOut}>
-                        <span className="text-text-primary">Sair</span>
+                    <button
+                        className="hover:bg-white dark:hover:bg-black w-full opacity-100"
+                        onClick={handleSignOut}
+                    >
+                        <span className="text-text-primary">
+                            Sair
+                        </span>
                     </button>
                 </div>}
 
