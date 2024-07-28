@@ -62,7 +62,6 @@ export function SignUpForm() {
         }
     }
 
-
     return (
         <div className="flex items-center px-2 justify-center min-h-screen bg-bg-primary">
             {/* Box login */}
@@ -159,7 +158,10 @@ export function SignUpForm() {
                         </div>
 
                         {/* botao cadastrar */}
-                        <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
+                        <Button
+                            className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit"
+                            disabled={isLoading}
+                        >
                             {isLoading ? (
                                 <Loader2 className="h-6 w-6 animate-spin" />
                             ) : (

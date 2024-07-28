@@ -7,7 +7,16 @@ import { Loader2 } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 
 export default function Header() {
-    const { user } = useContext(AuthContext)
+    const { user, signOut } = useContext(AuthContext)
+    const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false)
+
+    function handleOpenAvatarMenu() {
+        setIsAvatarMenuOpen(!isAvatarMenuOpen)
+    }
+
+    function handleSignOut() {
+        signOut()
+    }
 
     // Função para pegar as iniciais
     const getInitials = (name: string | undefined) => {
@@ -18,7 +27,7 @@ export default function Header() {
     };
 
     return (
-        <div className="w-full h-16 px-4 gap-4 flex items-center justify-end bg-bg-tertiary" >
+        <div className="relative w-full h-16 px-4 gap-4 flex items-center justify-end bg-bg-tertiary" >
             <ThemeSwitch />
             <BellIcon className="w-8 h-8" />
             {!user ? (
@@ -26,13 +35,25 @@ export default function Header() {
                     <Loader2 className="h-6 w-6 text-zinc-200 animate-spin" />
                 </div>
             ) : (
-                <Avatar className="h-12 w-12">
-                    <AvatarImage src={user.avatarUrl} className="h-12 w-12" />
-                    <AvatarFallback className="h-12 w-12 bg-blue-600">
-                        {getInitials(user.name)}
-                    </AvatarFallback>
-                </Avatar>
+                <div onClick={handleOpenAvatarMenu} className="cursor-pointer">
+                    <Avatar className="h-12 w-12">
+                        <AvatarImage src={user.avatarUrl} className="h-12 w-12" />
+                        <AvatarFallback className="h-12 w-12 bg-blue-600">
+                            {getInitials(user.name)}
+                        </AvatarFallback>
+                    </Avatar>
+                </div>
             )}
+            {isAvatarMenuOpen &&
+                <div className="absolute top-[60px] flex flex-col gap-2 py-2 items-center rounded-md bg-bg-secondary opacity-80 border-1 border-fg-secondary w-36 transition-all 
+                    duration-300 ">
+                    <button className="hover:bg-bg-primary w-full">
+                        <span className="text-text-primary">Perfil</span>
+                    </button>
+                    <button className="hover:bg-bg-primary w-full" onClick={handleSignOut}>
+                        <span className="text-text-primary">Sair</span>
+                    </button>
+                </div>}
 
         </div>
     )

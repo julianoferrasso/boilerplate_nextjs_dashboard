@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -61,16 +63,18 @@ export function RecoverPasswordForm() {
                 <form className="space-y-6" onSubmit={handleSubmit(handleRecoverPassword)}>
                     <div className="space-y-4">
                         <div className="relative">
-                            <EmailIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
-                            <Input
-                                type="email"
-                                placeholder="Email"
-                                className="pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                {...register('email')}
-                            />
-                            {errors.email && (
-                                <span className="text-red-400 text-sm pl-4">{errors.email.message}</span>
-                            )}
+                            <div className={`${isSuccessMessage != '' && 'hidden'}`}>
+                                <EmailIcon className="absolute w-5 h-5 text-gray-400 left-3 top-3" />
+                                <Input
+                                    type="email"
+                                    placeholder="Email"
+                                    className={`pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 `}
+                                    {...register('email')}
+                                />
+                                {errors.email && (
+                                    <span className="text-red-400 text-sm pl-4">{errors.email.message}</span>
+                                )}
+                            </div>
                             {isErrorMessage != '' && (
                                 <div className="flex items-center justify-center">
                                     <div className="text-red-400">{isErrorMessage}</div>
@@ -104,7 +108,7 @@ export function RecoverPasswordForm() {
                             </div>
                         }
                     </div>
-                    <div className="flex justify-center">
+                    <div className={`flex justify-center ${isSuccessMessage != '' && 'hidden'} `}>
                         <Link
                             href="/auth"
                             className="text-md text-text-tertiary hover:text-blue-500"

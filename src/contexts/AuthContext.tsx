@@ -1,9 +1,10 @@
 // transferir estados isLoading, isError, isSuccess para os componentes que chamam??
-
+'use client'
 import { createContext, useEffect, useState, ReactNode } from "react"
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { api } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
+import { redirectServer } from "@/lib/session";
 
 type ApiResponse = {
     data: {
@@ -36,7 +37,6 @@ type User = {
 
 type AuthContextType = {
     user: User | null;
-    isAuthenticated: boolean;
     isLoading: boolean;
     isErrorLogin: string;
     isErrorSignUp: string;
@@ -49,63 +49,62 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+    console.log("Chamou AuthContextProvider")
     const [user, setUser] = useState<User | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isErrorLogin, setIsErrorLogin] = useState<string>("")
     const [isErrorSignUp, setIsErrorSignUp] = useState<string>("")
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
     const router = useRouter()
 
-    // atualizar os dados do usuario
+    // Se tiver token (usuario autenticado) entao atualizar os dados do usuario
     useEffect(() => {
-        console.log("useEffect do auth context ...")
-        const { 'boilerplateNext_token': token } = parseCookies()
+        //const { 'session_id': token } = parseCookies()
+        //console.log("useEffect do auth context ...", token)
         async function getProfile() {
             try {
-                if (token) {
-                    const response = await api.get('/user/profile')
-                    setUser(response.data);
-                    console.log('Dados do usuario no useEffect Do Auth Provider:', response.data);
-                }
+                // if (token) {
+                const response = await api.get('/user/profile')
+                setUser(response.data);
+                console.log('Dados do usuario no useEffect Do Auth Provider:', response.data);
+                //}
             } catch (error: any) {
                 console.log('Erro ao chamar /user/profile:', error.response.data.message);
             }
         }
         getProfile()
-        // verficar necessidade de router como dependencia
     }, [])
 
     async function signIn({ email, password, rememberMe = false }: SignInData) {
         try {
             setIsLoading(true);
             setIsErrorLogin('')
-            const response = await api.post('/auth/login', { email, password })
-            const { token, user: usuario } = response.data
+            const response = await api.post('/auth/signin', { email, password })
+            const { user: usuario } = response.data
+            // const { token, user: usuario } = response.data
+            // console.log('Dados do token: ', token)
             // setCookie params
             // param1 = contexto da req - no lado do cliente
             // parma2 = nome do cookie
             // param3 = token
             // param4 = options
-            const maxAge = rememberMe ? 60 * 60 * 24 * 7 : undefined  //4 horas se nao tiver opção manter logado
-            setCookie(undefined, 'boilerplateNext_token', token, {
-                maxAge,
-                path: '/'  // Certifique-se de que o cookie esteja disponível em todas as páginas
-                //httpOnly: true, // Use se estiver configurando o cookie no lado do servidor
-            })
-            api.defaults.headers['authorization'] = `Bearer ${token}`
+            // const maxAge = rememberMe ? 60 * 60 * 24 * 30 : undefined  //30 dias se nao tiver opção manter logado 
+            // setCookie(undefined, 'session_token', token, {
+            //     maxAge,
+            //     path: '/',  // Certifique-se de que o cookie esteja disponível em todas as páginas
+            // })
+            // api.defaults.headers['authorization'] = `Bearer ${token}`
             setUser(usuario)
-            setIsAuthenticated(true)
             router.push('/app');
 
         } catch (error: any) {
             if (error.response.status === 401) {
-                if (error.response.data.message == "Email não verificado") {
+                if (error.response.data.message == "Email_nao_verificado") {
                     // salavar o email do usuario num cookie para poder reenviar o email de ativação na página emailVerify
                     setCookie(null, 'user_email', email, {
                         maxAge: 60 * 60 * 1, //1hora
-                        path: '/'
+                        path: '/',
                     })
-                    // redirecionar para welcome
+                    // redirecionar para welcome                    
                     router.push('/emailVerify')
                 } else {
                     setIsErrorLogin("Usuário ou senha incorreta")
@@ -123,7 +122,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setIsLoading(true);
             setIsErrorSignUp('')
             const response = await api.post('/auth/signup', { name, email, celular, cpf, cnpj, password })
-            //const { tokenEmailVerified } = response.data.userCreated
             // salavar o email do usuario num cookie para poder reenviar o email de ativação na página welcome
             setCookie(null, 'user_email', email, {
                 maxAge: 60 * 60 * 1, //1hora
@@ -140,12 +138,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function signOut() {
         try {
-            // Remover o cookie do token
-            destroyCookie(undefined, 'boilerplateNext_token')
-
-            // Remover o token do cabeçalho padrão da API
-            delete api.defaults.headers['Authorization']
-
+            await api.post('/auth/signout')
             // Resetar o estado do usuário
             setUser(null)
 
@@ -155,7 +148,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.log("logout error na pagina Contexto: ", error.message)
         }
     }
-
 
     async function updateUser(data: Partial<User>) {
         try {
@@ -171,7 +163,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, isLoading, isErrorLogin, isErrorSignUp, signIn, signUp, signOut, updateUser }}>
+        <AuthContext.Provider value={{ user, isLoading, isErrorLogin, isErrorSignUp, signIn, signUp, signOut, updateUser }}>
             {children}
         </AuthContext.Provider>
     )

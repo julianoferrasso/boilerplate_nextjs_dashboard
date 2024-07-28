@@ -30,7 +30,7 @@ export function WelcomePage() {
                 setIsSuccessMessage('Email de ativação enviado com sucesso!')
             }
         } catch (error: any) {
-            console.log(`Error  ${error.response.data.message}`)
+            // console.log(`Error  ${error.response.data.message}`)
             setIsErrorMessage(error.response.data.message);
         } finally {
             setIsLoading(false);

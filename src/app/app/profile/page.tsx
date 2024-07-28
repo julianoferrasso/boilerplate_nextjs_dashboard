@@ -17,11 +17,10 @@ const userProfileSchema = z.object({
     celular: z.string().optional(),
 });
 
-
 type UserProfileSchema = z.infer<typeof userProfileSchema>
 
 export default function Profile() {
-    const { user, updateUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [name, setName] = useState(user?.name || '');
     const [email, setEmail] = useState(user?.email || '');
     const [celular, setCelular] = useState(user?.celular || '');
@@ -41,10 +40,16 @@ export default function Profile() {
         setIsModalOpen(false);
     };
 
-    const handlePhotoUpload = (file: any) => {
-        // Função para fazer o upload da foto para a API 
-        console.log('Upload file:', file);
-    };
+    function handleUpdateUser() {
+        setIsLoading(true)
+        try {
+            console.log('atualizando usuario')
+        } catch (error) {
+            console.log('error: ' + error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     // Função para pegar as iniciais
     const getInitials = (name: string | undefined) => {
@@ -77,12 +82,10 @@ export default function Profile() {
             <ChangePictureProfileModal
                 isOpen={isModalOpen}
                 onRequestClose={handleCloseModalChangePicture}
-                user={user}
-            // onPhotoUpload={handlePhotoUpload}
-            // currentPhoto={user?.avatarUrl}
             />
-
+            {/* Header */}
             <div className="bg-indigo-400 dark:bg-indigo-700 h-32 flex items-center justify-center">
+                {/* Profile picture */}
                 <div className="relative -mb-14 ">
                     <Avatar className="h-36 w-36">
                         <AvatarImage src={user?.avatarUrl} className="h-36 w-36" />
@@ -96,11 +99,13 @@ export default function Profile() {
                     </div>
                 </div>
             </div>
-
             <div>
                 <div className="container mx-auto p-4">
-                    <h1 className="text-2xl font-bold mb-4 text-text-primary">Meu perfil</h1>
-                    <form className="bg-bg-secondary shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <h1 className="text-2xl font-bold mb-4 ml-4 text-text-primary">Meu perfil</h1>
+                    <form
+                        className="bg-bg-secondary shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                        onSubmit={handleSubmit(handleUpdateUser)}
+                    >
                         <div className="mb-8">
                             <label className="block text-text-secondary text-sm font-normal mb-1" htmlFor="name">
                                 Nome

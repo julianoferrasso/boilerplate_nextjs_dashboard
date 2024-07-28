@@ -1,9 +1,9 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import axios from 'axios';
-import { parseCookies } from 'nookies'
-
-const { 'boilerplateNext_token': token } = parseCookies()
+// desarivado ao implementar cookie httpOnly
+// import { parseCookies } from 'nookies'
+// const { 'session_token': token } = parseCookies()
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -17,13 +17,14 @@ if (!apiBaseUrl) {
 
 export const api = axios.create({
   baseURL: apiBaseUrl,
+  withCredentials: true, // Garante que os cookies são enviados com a requisição
 });
 
 // Debugging
 api.interceptors.request.use(config => {
+  // Inspeciona os detalhes da requisição
+  // console.log('Requisição:', config);
   return config
 })
 
-if (token) {
-  api.defaults.headers['Authorization'] = `Bearer ${token}`
-}
+

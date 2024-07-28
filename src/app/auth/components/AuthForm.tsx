@@ -29,18 +29,19 @@ export function AuthForm() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema)
     })
-    const { signIn, isAuthenticated, user, isLoading, isErrorLogin } = useContext(AuthContext)
+    const { signIn, user, isLoading, isErrorLogin } = useContext(AuthContext)
     const router = useRouter()
 
     async function handleSignIn(data: LoginSchema) {
         try {
             await signIn(data)
-            reset()
-            router.push('/app')
+            // reset()
+            // router.push('/app');
         } catch (error) {
             console.log(`Erro na pagina AuthForm`)
         }
     }
+
 
     return (
         <div className="flex items-center px-2 justify-center min-h-screen bg-bg-primary">
@@ -121,7 +122,10 @@ export function AuthForm() {
                         </div>
                     </div>
 
-                    <Button className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit">
+                    <Button
+                        className="w-full py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600" name="login" type="submit"
+                        disabled={isLoading}
+                    >
                         {isLoading ? (
                             <Loader2 className="h-6 w-6 animate-spin" />
                         ) : (

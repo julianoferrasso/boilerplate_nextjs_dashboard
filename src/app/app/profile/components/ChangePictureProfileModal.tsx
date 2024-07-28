@@ -1,6 +1,4 @@
-// desabilitar botoes no isUploading
 // tratar tamanho da foto, ela fica maior do que o arquivo original
-
 
 import Modal from 'react-modal';
 import { useState, useRef, useContext } from 'react';
@@ -8,16 +6,17 @@ import AvatarEditor from 'react-avatar-editor';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { api } from '@/lib/utils';
+import { api } from '@/lib/api';
 import { toast } from 'react-toastify';
 import { AuthContext } from '@/contexts/AuthContext';
+import { Loader2 } from 'lucide-react';
 
 // Esquema de validação
 const schema = z.object({
     profilePicture: z.instanceof(File).optional(),
 });
 
-export default function ChangePictureProfileModal({ isOpen, onRequestClose, user }: any) {
+export default function ChangePictureProfileModal({ isOpen, onRequestClose }: any) {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const editorRef = useRef<AvatarEditor | null>(null);
     const [scaleAVatar, setScaleAvatar] = useState(1)
@@ -42,9 +41,11 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
     };
 
     function handleClose() {
-        reset();
-        setSelectedFile(null);
-        onRequestClose();
+        if (!isUploading) {
+            reset();
+            setSelectedFile(null);
+            onRequestClose();
+        }
     };
 
     async function handleUpdateProfilePhoto(photoBlob: Blob) {
@@ -53,7 +54,6 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
             console.log("isUploading true = ", isUploading)
             const formData = new FormData();
             formData.append('profilePicture', photoBlob, 'profilePicture.jpg');
-            formData.append('userId', user.id);
 
             const response = await api.put('/user/updateprofilepicture', formData, {
                 headers: {
@@ -122,11 +122,11 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
             className="flex items-center justify-center h-screen"
             overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
         >
-            <div className="bg-bg-tertiary border-2 ring-2 ring-zinc-500 rounded-sm shadow-lg p-4 h-[450px] w-[350px] sm:w-[450px] md:w-[590px] flex items-center justify-center flex-col">
+            <div className="bg-bg-tertiary border-2 ring-2 ring-zinc-500 rounded-sm shadow-lg p-4 h-[500px] w-[350px] sm:w-[450px] md:w-[590px] flex items-center justify-center flex-col">
                 {/* Header - Titulo de Alterar foto */}
-                {/* <div className='flex items-center justify-center'>
+                <div className='flex items-center justify-center'>
                     <span className="text-2xl mb-4 text-text-primary">Foto de perfil</span>
-                </div> */}
+                </div>
                 {/* Corpo - Avatar Editor */}
                 <div className='bg-bg-primary flex flex-col items-center justify-center h-[400px] w-[350px] sm:w-[450px] md:w-[590px] border-t-1 border-b-1 border-zinc-500 dark:border-zinc-200'>
                     {selectedFile ? (
@@ -178,22 +178,31 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose, user
 
                 </div>
                 {/* Footer - botoes de Cancelar e Alterar foto */}
-                <div className='flex items-center justify-center gap-4 mt-4'>
-                    <button
-                        onClick={handleClose}
-                        className="bg-zinc-500 text-white py-2 px-4 rounded"
-                        disabled={isUploading}
-                    >
-                        <span className='text-white text-md'>Cancelar</span>
-                    </button>
-                    <button
-                        onClick={handleSubmit(onSubmit)}
-                        className=" bg-blue-500 py-2 px-4 rounded text-text-primary"
-                        disabled={isUploading}
-                    >
-                        <span className='text-white text-md'>Alterar</span>
-                    </button>
-                </div>
+                {isUploading ?
+                    <div className='w-full mt-4 flex items-center justify-center'>
+                        <div className='flex items-center justify-center bg-blue-500 py-2 px-4 rounded text-text-primary w-[274px]'>
+                            <Loader2 className="h-6 w-6 animate-spin text-text-primary" />
+                        </div>
+                    </div>
+                    :
+                    <div className='flex items-center justify-center gap-4 mt-4 w-full'>
+                        <button
+                            onClick={handleClose}
+                            className="bg-zinc-500 py-2 px-4 rounded text-text-primary w-32"
+                            disabled={isUploading}
+                        >
+                            <span className='text-white text-md'>Cancelar</span>
+                        </button>
+                        <button
+                            onClick={handleSubmit(onSubmit)}
+                            className=" bg-blue-500 py-2 px-4 rounded text-text-primary w-32"
+                            disabled={isUploading}
+                        >
+                            <span className='text-white text-md'>Alterar</span>
+                        </button>
+                    </div>
+                }
+
             </div>
         </Modal>
     );
