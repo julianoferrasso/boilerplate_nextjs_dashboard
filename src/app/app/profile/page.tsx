@@ -9,6 +9,7 @@ import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import ChangePictureProfileModal from './components/ChangePictureProfileModal';
+import { UserForm } from "./components/UserForm";
 
 
 const userProfileSchema = z.object({
@@ -102,7 +103,7 @@ export default function Profile() {
             <div>
                 <div className="container mx-auto p-4">
                     <h1 className="text-2xl font-bold mb-4 ml-4 text-text-primary">Meu perfil</h1>
-                    <form
+                    {/* <form
                         className="bg-bg-secondary shadow-md rounded px-8 pt-6 pb-8 mb-4"
                         onSubmit={handleSubmit(handleUpdateUser)}
                     >
@@ -168,7 +169,9 @@ export default function Profile() {
                                 {isLoading ? 'Salvando...' : 'Salvar'}
                             </button>
                         </div>
-                    </form>
+                    </form> */}
+
+                    <UserForm />
                 </div>
 
 

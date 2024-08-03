@@ -115,6 +115,7 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose }: an
         setSelectedFile(null);
     };
 
+
     return (
         <Modal
             isOpen={isOpen}
@@ -130,7 +131,7 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose }: an
                 {/* Corpo - Avatar Editor */}
                 <div className='bg-bg-primary flex flex-col items-center justify-center h-[400px] w-[350px] sm:w-[450px] md:w-[590px] border-t-1 border-b-1 border-zinc-500 dark:border-zinc-200'>
                     {selectedFile ? (
-                        <div className='flex flex-col'>
+                        <div className='flex flex-col '>
                             <AvatarEditor
                                 ref={editorRef}
                                 image={selectedFile}
@@ -140,8 +141,9 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose }: an
                                 borderRadius={100} // Tornar o recorte em círculo
                                 color={[155, 155, 155, 0.6]}
                                 scale={scaleAVatar}
+                                className=''
                             />
-                            <div className='flex flex-row items-center justify-between mt-2'>
+                            <div className='flex flex-row items-center justify-between mt-2 '>
                                 <input
                                     type="range"
                                     name="sacle"
@@ -155,12 +157,12 @@ export default function ChangePictureProfileModal({ isOpen, onRequestClose }: an
                                 <div className='border-2 border-blue-600 rounded-2xl px-2 py-1 cursor-pointer mr-2'
                                     onClick={handleResetFileInput}
                                 >
-                                    <span className='text-text-secondary text-sm'>Trocar foto</span>
+                                    <span className='text-text-secondary text-sm'>Abrir galeria</span>
                                 </div>
                             </div>
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center h-[360px] w-[350px] sm:w-[450px] md:w-[590px]  cursor-pointer"
+                        <div className="flex items-center justify-center h-[360px] w-[350px] sm:w-[450px] md:w-[590px]  cursor-pointer "
                             onClick={handleClickFileInputDiv}
                         >
                             <input

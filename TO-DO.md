@@ -26,6 +26,7 @@ TO-DO:
   [x] - Otimizar layout (conteudo esta escondendo quando diminui a tela, tem que encolher ou quebrar a linha)
   [x] - implementar responsividade mediaquery? min-md? min-sm?
   [x] - fazer botao switch para o tema
+  [] - adaptar sidebar desktop - collapse quando tela menor que media
 [x] - usar o S3 da Amazon para salavar as foto num bucket
   [] - criar mecanismo de url temporaria
 [x] - menu suspenso na foto user versao Desktop
