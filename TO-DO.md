@@ -18,7 +18,7 @@ TO-DO:
 [x] - Sidebar desktop 
   [] - recolher no tamanho medio
   [] - no hover do mouse exibir nome (https://www.youtube.com/watch?v=T9TnTH7gp8Q)
-[] - funcao atualizar dados
+[x] - funcao atualizar dados
 [] - funcao trocar senha
 [x] - nao esta redirecionando para emailVerify no login
 [x] - signIn e signOut inconsistente no redirecionamento

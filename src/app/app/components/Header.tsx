@@ -36,15 +36,15 @@ export default function Header() {
         }
         if (isAvatarMenuOpen) {
             document.addEventListener("mousedown", handleClickOutside);
-            console.log('adiconou eventListner')
+            //console.log('adiconou eventListner')
         } else {
             document.removeEventListener("mousedown", handleClickOutside);
-            console.log('removeu eventListner')
+            //console.log('removeu eventListner')
         }
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
-            console.log('adiconou eventListner no return')
+            //console.log('adiconou eventListner no return')
         };
     }, [isAvatarMenuOpen])
 

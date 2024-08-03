@@ -49,7 +49,7 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    console.log("Chamou AuthContextProvider")
+    //console.log("Chamou AuthContextProvider")
     const [user, setUser] = useState<User | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isErrorLogin, setIsErrorLogin] = useState<string>("")
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 // if (token) {
                 const response = await api.get('/user/profile')
                 setUser(response.data);
-                console.log('Dados do usuario no useEffect Do Auth Provider:', response.data);
+                //console.log('Dados do usuario no useEffect Do Auth Provider:', response.data);
                 //}
             } catch (error: any) {
                 console.log('Erro ao chamar /user/profile:', error.response.data.message);

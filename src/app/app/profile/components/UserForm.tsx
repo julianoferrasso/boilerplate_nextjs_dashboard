@@ -1,10 +1,11 @@
 import { useForm, } from 'react-hook-form';
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useMemo } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 import { api } from '@/lib/api';
 import { Loader2 } from 'lucide-react';
+import { toast, ToastOptions } from 'react-toastify';
 
 const userProfileSchema = z.object({
     name: z.string().min(1, "Nome é obrigatório"),
@@ -12,34 +13,67 @@ const userProfileSchema = z.object({
     celular: z.string().optional(),
 });
 
-type UserProfileSchema = z.infer<typeof userProfileSchema>
+type UserProfileSchema = z.infer<typeof userProfileSchema>;
 
 export function UserForm() {
-    const [isUpdating, setIsUpdating] = useState(false)
-    const { user, updateUser } = useContext(AuthContext)
+    const [isUpdating, setIsUpdating] = useState(false);
+    const { user, updateUser } = useContext(AuthContext);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<UserProfileSchema>({
+    const { register, handleSubmit, setValue, formState: { errors }, watch } = useForm<UserProfileSchema>({
         resolver: zodResolver(userProfileSchema),
     });
 
+    const initialData = useMemo(() => ({
+        name: user?.name || '',
+        email: user?.email || '',
+        celular: user?.celular || '',
+    }), [user]);
+
     useEffect(() => {
-        user?.name && setValue('name', user.name);
-        user?.email && setValue('email', user?.email);
-        user?.celular && setValue('celular', user.celular);
-    }, [setValue, user]);
+        setValue('name', initialData.name);
+        setValue('email', initialData.email);
+        setValue('celular', initialData.celular);
+    }, [setValue, initialData]);
+
+    const [name, email, celular] = watch(['name', 'email', 'celular']);
+    const isFormChanged = useMemo(() => {
+        return (
+            name !== initialData.name ||
+            email !== initialData.email ||
+            celular !== initialData.celular
+        );
+    }, [name, email, celular, initialData]);
 
     async function handleUpdateUser(data: UserProfileSchema) {
-        setIsUpdating(true)
+        setIsUpdating(true);
         try {
-            const response = await api.put('/user/updateprofile', data)
-            updateUser(data)
-        } catch (error) {
-            alert("Erro na atualizacao")
+            const response = await api.put('/user/updateprofile', data);
+            updateUser(data);
+            showToast("Perfil atualizado com sucesso.", "success");
+        } catch (error: any) {
+            const errorMessage = error.response?.data?.message || "Ocorreu um erro ao atualizar o perfil.";
+            showToast(errorMessage, "fail");
         } finally {
-            setIsUpdating(false)
+            setIsUpdating(false);
         }
     }
 
+    function showToast(message: string, status: string) {
+        const commonOptions: ToastOptions = {
+            position: "top-center",
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+        };
+
+        if (status === 'success') {
+            toast.success(message, commonOptions);
+        } else {
+            toast.error(message, commonOptions);
+        }
+    };
 
     return (
         <form
@@ -48,7 +82,7 @@ export function UserForm() {
         >
             <div className="mb-8">
                 <label
-                    className='className="block text-text-secondary text-sm font-normal mb-1"'
+                    className="block text-text-secondary text-sm font-normal mb-1"
                     htmlFor="name">
                     Nome
                 </label>
@@ -58,11 +92,10 @@ export function UserForm() {
                     {...register('name')}
                 />
                 {errors.name && <span>{errors.name.message}</span>}
-
             </div>
             <div className="mb-8">
                 <label
-                    className='className="block text-text-secondary text-sm font-normal mb-1"'
+                    className="block text-text-secondary text-sm font-normal mb-1"
                     htmlFor="email">
                     Email
                 </label>
@@ -75,27 +108,27 @@ export function UserForm() {
             </div>
             <div className="mb-8">
                 <label
-                    className='className="block text-text-secondary text-sm font-normal mb-1"'
+                    className="block text-text-secondary text-sm font-normal mb-1"
                     htmlFor="celular">
                     Celular
                 </label>
                 <input
                     className="bg-bg-secondary border-b-2 border-fg-secondary focus:border-indigo-600 focus:outline-none w-full py-2 px-3 text-text-secondary leading-tight"
                     id="celular"
-                    {...register('celular')} />
+                    {...register('celular')}
+                />
                 {errors.celular && <span>{errors.celular.message}</span>}
             </div>
 
             <div className="flex items-center justify-between">
                 <button
                     type="submit"
-                    className={`bg-blue-600 hover:bg-blue-700 text-text-primary font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isUpdating ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    disabled={isUpdating}
+                    className={`bg-blue-600  text-text-primary font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isUpdating || !isFormChanged ? 'opacity-50' : 'hover:bg-blue-700'}`}
+                    disabled={isUpdating || !isFormChanged}
                 >
                     {isUpdating ? (<Loader2 className="h-6 w-6 animate-spin text-text-primary" />) : 'Salvar'}
                 </button>
             </div>
         </form>
-    )
-
+    );
 }
