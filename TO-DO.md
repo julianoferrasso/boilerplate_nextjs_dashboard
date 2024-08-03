@@ -18,6 +18,8 @@ TO-DO:
 [x] - Sidebar desktop 
   [] - recolher no tamanho medio
   [] - no hover do mouse exibir nome (https://www.youtube.com/watch?v=T9TnTH7gp8Q)
+  [] - ajustar cabeçalho
+  [] - melhorar layout
 [x] - funcao atualizar dados
 [] - funcao trocar senha
 [x] - nao esta redirecionando para emailVerify no login
@@ -26,7 +28,6 @@ TO-DO:
   [x] - Otimizar layout (conteudo esta escondendo quando diminui a tela, tem que encolher ou quebrar a linha)
   [x] - implementar responsividade mediaquery? min-md? min-sm?
   [x] - fazer botao switch para o tema
-  [] - adaptar sidebar desktop - collapse quando tela menor que media
 [x] - usar o S3 da Amazon para salavar as foto num bucket
   [] - criar mecanismo de url temporaria
 [x] - menu suspenso na foto user versao Desktop
@@ -41,5 +42,5 @@ TO-DO:
 [[]] V2
 [] - SignUP - Input mask para celular
 [] - refresh token
-[] - Transformar cookie http only
+[x] - Transformar cookie http only
 [] - criar User DTO para compartilhar entre api e app
